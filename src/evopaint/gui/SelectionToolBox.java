@@ -4,6 +4,8 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
@@ -125,7 +127,14 @@ public class SelectionToolBox extends JPanel implements Observer {
 		private void showContextMenu(MouseEvent arg) {
 			JPopupMenu menu = new JPopupMenu("Selection");
 			JMenuItem deleteMenuItem = new JMenuItem("Delete");
-			deleteMenuItem.addActionListener(new DeleteCurrentSelectionCommand(showcase));
+			deleteMenuItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showcase.setActiveSelection(selection);
+					DeleteCurrentSelectionCommand csc = new DeleteCurrentSelectionCommand(showcase);
+					csc.execute();
+				}
+			});
 			menu.add(deleteMenuItem);
 			
 			JMenuItem setName = new JMenuItem("Set name");
