@@ -28,6 +28,7 @@ import evopaint.commands.CopySelectionCommand;
 import evopaint.commands.DeleteCurrentSelectionCommand;
 import evopaint.commands.ImportCommand;
 import evopaint.commands.SelectAllCommand;
+import evopaint.commands.ShowConfigurationDialogCommand;
 import evopaint.gui.listeners.SelectionListenerFactory;
 import evopaint.interfaces.IChangeListener;
 import evopaint.util.ExceptionHandler;
@@ -92,7 +93,10 @@ public class MenuBar extends JMenuBar implements Observer {
         
         worldMenu.add(exportItem);
         
-        worldMenu.add(new JMenuItem("Options..."));
+        JMenuItem opt = new JMenuItem("Options");
+        opt.addActionListener(new ShowConfigurationDialogCommand(configuration));
+		worldMenu.add(opt);
+		
         JMenuItem endItem = new JMenuItem();
         endItem.setText("End");
         endItem.addActionListener(new ActionListener() {
@@ -128,7 +132,6 @@ public class MenuBar extends JMenuBar implements Observer {
         JMenuItem copySelection = new JMenuItem("Copy");
         copySelection.addActionListener(showcase.getCopySelectionCommand());
         selectionMenu.add(copySelection);
-        selectionMenu.add(new JMenuItem("Options..."));
         activeSelections = new JMenu("Selections");
         JMenuItem deleteCurrentSelection = new JMenuItem("Delete current");
         selectionMenu.add(deleteCurrentSelection);
