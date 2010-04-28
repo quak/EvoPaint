@@ -52,7 +52,7 @@ public class SelectionToolBox extends JPanel implements Observer {
             }
         }
         
-        this.revalidate();
+        this.revalidate();		//This does not always cause the UI to update??
 	}
 	
 	private class SelectionWrapper extends JPanel implements Observer, MouseListener {

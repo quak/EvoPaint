@@ -292,6 +292,10 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
             setActiveSelection(selection);
             Logger.log.error("Selection from %s-%s to %s-%s", selection.getStartPoint().getX(), selection.getStartPoint().getY(), selection.getEndPoint().getX(), selection.getEndPoint().getY());
         }
+        else if (selectionEvent.getChangeType() == SelectionList.ChangeType.ITEM_DELETED) {
+        	Selection selection = selectionEvent.getSelection();
+        	unsubscribe(selection);
+        }
     }
 
     private class Painter implements ActionListener {
