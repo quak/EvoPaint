@@ -290,7 +290,6 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         if (selectionEvent.getChangeType() == SelectionList.ChangeType.ITEM_ADDED) {
             Selection selection = selectionEvent.getSelection();
             setActiveSelection(selection);
-            Logger.log.error("Selection from %s-%s to %s-%s", selection.getStartPoint().getX(), selection.getStartPoint().getY(), selection.getEndPoint().getX(), selection.getEndPoint().getY());
         }
         else if (selectionEvent.getChangeType() == SelectionList.ChangeType.ITEM_DELETED) {
         	Selection selection = selectionEvent.getSelection();
