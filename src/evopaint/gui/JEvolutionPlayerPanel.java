@@ -20,6 +20,7 @@
 package evopaint.gui;
 
 import evopaint.Configuration;
+import evopaint.commands.ResetWorldCommand;
 import evopaint.interfaces.IChangeListener;
 import evopaint.util.ExceptionHandler;
 import java.awt.Dimension;
@@ -158,18 +159,8 @@ public class JEvolutionPlayerPanel extends JPanel {
                     addActionListener(new ActionListener() {
 
                             public void actionPerformed(ActionEvent e) {
-                                SwingUtilities.invokeLater(new Runnable() {
-
-                                    public void run() {
-
-                                        configuration.world.addChangeListener(new IChangeListener() {
-
-                                            public void changed() {
-                                                configuration.world.reset();
-                                            }
-                                        });
-                                    }
-                                });
+                                ResetWorldCommand rwc = new ResetWorldCommand(configuration);
+                                rwc.execute();
                             }
                         });
                 }});
