@@ -195,12 +195,9 @@ public class MenuBar extends JMenuBar implements Observer {
         about.setText("About");
         about.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String msg = "EvoPaint is being developed as part of a software lab\n" +
-                                "for the Bachelor's Degree at the\n" +
-                                "University of Klagenfurt, Austria.\n" +
-                                "\n" +
-                                "Enjoy.";
-                JOptionPane.showMessageDialog(getRootPane(), msg, "About EvoPaint", JOptionPane.INFORMATION_MESSAGE);
+                JAboutDialog aboutDialog = new JAboutDialog(configuration.mainFrame);
+                aboutDialog.pack();
+                aboutDialog.setVisible(true);
             }
         });
         infoMenu.add(about);
