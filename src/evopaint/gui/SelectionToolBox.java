@@ -73,6 +73,7 @@ public class SelectionToolBox extends JPanel implements Observer {
             }
 
             this.revalidate();		//This does not always cause the UI to update??
+            this.repaint();             // it does, but deletion needs a repaint() call too
 	}
 	
 	private class SelectionWrapper extends JPanel implements Observer, MouseListener {
