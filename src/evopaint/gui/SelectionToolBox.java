@@ -1,8 +1,26 @@
+/*
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
+ *
+ *  This file is part of EvoPaint.
+ *
+ *  EvoPaint is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package evopaint.gui;
 
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +30,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -33,28 +50,29 @@ public class SelectionToolBox extends JPanel implements Observer {
 	
 	private void initializeComponents(){
 		this.setLayout(new GridLayout(0, 1));
+                setBackground(new Color(0xF2F2F5));
 	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		SelectionList.SelectionListEventArgs updateEvent = (SelectionList.SelectionListEventArgs) arg1;
-        if (updateEvent.getChangeType() == SelectionList.ChangeType.LIST_CLEARED) {
-            this.removeAll();
-        }
-        if (updateEvent.getChangeType() == SelectionList.ChangeType.ITEM_ADDED) {
-            this.add(new SelectionWrapper(updateEvent.getSelection(), showcase));
-        }
-        if (updateEvent.getChangeType() == SelectionList.ChangeType.ITEM_DELETED) {
-            for(int i = 0; i < this.getComponentCount() ; i++) {
-                SelectionWrapper wrapper = (SelectionWrapper)this.getComponent(i);
-                if (wrapper.getSelection() == updateEvent.getSelection()) {
-                    this.remove(i);
-                    break;
+            if (updateEvent.getChangeType() == SelectionList.ChangeType.LIST_CLEARED) {
+                this.removeAll();
+            }
+            if (updateEvent.getChangeType() == SelectionList.ChangeType.ITEM_ADDED) {
+                this.add(new SelectionWrapper(updateEvent.getSelection(), showcase));
+            }
+            if (updateEvent.getChangeType() == SelectionList.ChangeType.ITEM_DELETED) {
+                for(int i = 0; i < this.getComponentCount() ; i++) {
+                    SelectionWrapper wrapper = (SelectionWrapper)this.getComponent(i);
+                    if (wrapper.getSelection() == updateEvent.getSelection()) {
+                        this.remove(i);
+                        break;
+                    }
                 }
             }
-        }
-        
-        this.revalidate();		//This does not always cause the UI to update??
+
+            this.revalidate();		//This does not always cause the UI to update??
 	}
 	
 	private class SelectionWrapper extends JPanel implements Observer, MouseListener {
@@ -76,7 +94,8 @@ public class SelectionToolBox extends JPanel implements Observer {
 			selectionName = new JLabel(selection.getSelectionName());
 			this.add(selectionName);
 			this.addMouseListener(this);
-			
+
+                        setBackground(new Color(0xF2F2F5));
 			backColor = this.getBackground();
 			selectionListenerFactory = new SelectionListenerFactory(showcase);
 		}

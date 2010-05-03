@@ -21,8 +21,8 @@ package evopaint.gui;
 
 import evopaint.Configuration;
 import evopaint.commands.ResetWorldCommand;
-import evopaint.interfaces.IChangeListener;
 import evopaint.util.ExceptionHandler;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -34,7 +34,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
 
 /**
  *

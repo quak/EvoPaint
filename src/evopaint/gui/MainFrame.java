@@ -23,7 +23,6 @@ package evopaint.gui;
 
 
 import evopaint.Configuration;
-import evopaint.EvoPaint;
 import evopaint.commands.*;
 import evopaint.gui.listeners.SelectionListenerFactory;
 import evopaint.gui.rulesetmanager.JRuleSetManager;
@@ -32,6 +31,7 @@ import evopaint.util.ExceptionHandler;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -109,7 +109,7 @@ public class MainFrame extends JFrame {
         getContentPane().setLayout(new CardLayout());
 
         this.mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout(0, 0));
+        mainPanel.setLayout(new GridBagLayout());
         add(mainPanel, "main");
         this.jRuleSetManager = new JRuleSetManager(configuration,
                 new RuleSetManagerOKListener(), new RuleSetManagerCancelListener());
@@ -123,69 +123,100 @@ public class MainFrame extends JFrame {
 
         addKeyListener(new MainFrameKeyListener());
 
+        GridBagConstraints cMainPanel = new GridBagConstraints();
+        cMainPanel.anchor = GridBagConstraints.NORTH;
 
         // some hand crafted GUI stuff for the panel on the left
         leftPanel = new JPanel();
         leftPanel.setLayout(new GridBagLayout());
-        mainPanel.add(leftPanel, BorderLayout.WEST);
+        mainPanel.add(leftPanel, cMainPanel);
 
-        JEvolutionPlayerPanel evolutionPlayer = new JEvolutionPlayerPanel(configuration);
         GridBagConstraints constraintsLeftPanel = new GridBagConstraints();
         constraintsLeftPanel.anchor = GridBagConstraints.CENTER;
-        leftPanel.add(evolutionPlayer, constraintsLeftPanel);
+        constraintsLeftPanel.fill = GridBagConstraints.HORIZONTAL;
+        constraintsLeftPanel.insets = new Insets(8, 10, 8, 10);
 
-        JPanel wrapperPanelLeft = new JPanel();
-        wrapperPanelLeft.setLayout(new GridBagLayout());
-        wrapperPanelLeft.setBackground(new Color(0xF2F2F5));
-        wrapperPanelLeft.setBorder(new LineBorder(Color.GRAY));
-        GridBagConstraints constraintsWrapper = new GridBagConstraints();
-        constraintsWrapper.anchor = GridBagConstraints.NORTHWEST;
-        constraintsWrapper.insets = new Insets(3, 0, 3, 0);
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(3, 3, 3, 3);
+        c.anchor = GridBagConstraints.NORTHWEST;
 
-        constraintsLeftPanel.insets = new Insets(10, 10, 10, 10);
+        JPanel playerWrapperPanel = new JPanel();
+        playerWrapperPanel.setLayout(new GridBagLayout());
+        //playerWrapperPanel.setBackground(new Color(0xF2F2F5));
+        //playerWrapperPanel.setBorder(new LineBorder(Color.GRAY));
+
+        JEvolutionPlayerPanel evolutionPlayer = new JEvolutionPlayerPanel(configuration);
+        playerWrapperPanel.add(evolutionPlayer, c);
+        leftPanel.add(playerWrapperPanel, constraintsLeftPanel);
+
+        JPanel toolWrapperPanel = new JPanel();
+        toolWrapperPanel.setLayout(new GridBagLayout());
+        toolWrapperPanel.setBackground(new Color(0xF2F2F5));
+        toolWrapperPanel.setBorder(new LineBorder(Color.GRAY));
+
+
         constraintsLeftPanel.gridy = 1;
-        leftPanel.add(wrapperPanelLeft, constraintsLeftPanel);
+        leftPanel.add(toolWrapperPanel, constraintsLeftPanel);
 
         toolBox = new ToolBox(this);
-        constraintsWrapper.gridy = 0;
-        constraintsWrapper.fill = GridBagConstraints.HORIZONTAL;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0, 0, 0, 0);
 
-        wrapperPanelLeft.add(toolBox, constraintsWrapper);
+        toolWrapperPanel.add(toolBox, c);
         
         JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
-        constraintsWrapper.gridy++;
-        constraintsWrapper.fill = GridBagConstraints.HORIZONTAL;
-        wrapperPanelLeft.add(separator, constraintsWrapper);
-        
+        c.gridy++;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        toolWrapperPanel.add(separator, c);
+
+        c.gridy++;
+        c.fill = GridBagConstraints.NONE;
+        toolWrapperPanel.add(jOptionsPanel, c);
+
+        JPanel paintWrapperPanel = new JPanel();
+        paintWrapperPanel.setLayout(new GridBagLayout());
+        paintWrapperPanel.setBackground(new Color(0xF2F2F5));
+        paintWrapperPanel.setBorder(new LineBorder(Color.GRAY));
+
+        paintPanel = new PaintOptionsPanel(configuration, new OpenRuleSetManagerListener());
+        c.gridy = 0;
+        c.fill = GridBagConstraints.NONE;
+        paintWrapperPanel.add(paintPanel, c);
+
+        constraintsLeftPanel.gridy = 2;
+        leftPanel.add(paintWrapperPanel, constraintsLeftPanel);
+
+        JPanel selectionWrapperPanel = new JPanel();
+        selectionWrapperPanel.setLayout(new GridBagLayout());
+        selectionWrapperPanel.setBackground(new Color(0xF2F2F5));
+        selectionWrapperPanel.setBorder(new LineBorder(Color.GRAY));
+
+        GridBagConstraints cSelectionLabel = new GridBagConstraints(); // not at all clean, but fastest to implement solution atm
+        cSelectionLabel.anchor = GridBagConstraints.NORTHWEST;
+        cSelectionLabel.weightx = 1;
+        cSelectionLabel.fill = GridBagConstraints.HORIZONTAL;
+        cSelectionLabel.gridx = 0;
+        cSelectionLabel.gridy = 0;
+        cSelectionLabel.insets = new Insets(5, 8, 0, 5);
+        selectionWrapperPanel.add(new JLabel("<html><b>Selections</b></html>"), cSelectionLabel);
+
         selectionToolBox = new SelectionToolBox(showcase);
         //selectionToolBox.setPreferredSize(new Dimension(200, 200));
         JScrollPane scroller = new JScrollPane(selectionToolBox,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroller.setPreferredSize(new Dimension(100, 100));
+        scroller.setViewportBorder(null);
+        scroller.setBorder(null);
+        scroller.setMinimumSize(new Dimension(100, 100));
+        scroller.setPreferredSize(new Dimension(leftPanel.getPreferredSize().width - 20, 120));
 
-        constraintsWrapper.gridy++;
-        constraintsWrapper.fill = GridBagConstraints.HORIZONTAL;
-        wrapperPanelLeft.add(scroller, constraintsWrapper);
+        c.gridy = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        selectionWrapperPanel.add(scroller, c);
 
-        separator = new JSeparator(JSeparator.HORIZONTAL);
-        constraintsWrapper.gridy++;
-        constraintsWrapper.fill = GridBagConstraints.HORIZONTAL;
-        wrapperPanelLeft.add(separator, constraintsWrapper);
-
-        paintPanel = new PaintOptionsPanel(configuration, new OpenRuleSetManagerListener());
-        constraintsWrapper.gridy++;
-        constraintsWrapper.fill = GridBagConstraints.NONE;
-        wrapperPanelLeft.add(paintPanel, constraintsWrapper);
-
-        separator = new JSeparator(JSeparator.HORIZONTAL);
-        constraintsWrapper.gridy++;
-        constraintsWrapper.fill = GridBagConstraints.HORIZONTAL;
-        wrapperPanelLeft.add(separator, constraintsWrapper);
-
-        constraintsWrapper.gridy++;
-        constraintsWrapper.fill = GridBagConstraints.NONE;
-        wrapperPanelLeft.add(jOptionsPanel, constraintsWrapper);
+        constraintsLeftPanel.gridy = 3;
+        leftPanel.add(selectionWrapperPanel, constraintsLeftPanel);
 
         JPanel wrapperPanelRight = new JPanel();
         wrapperPanelRight.setBackground(Color.WHITE);
@@ -209,7 +240,12 @@ public class MainFrame extends JFrame {
         showCaseScrollPane.setBorder(new LineBorder(Color.GRAY));
 
         showCaseScrollPane.getViewport().addMouseWheelListener(showcase);
-        mainPanel.add(showCaseScrollPane, BorderLayout.CENTER);
+
+        cMainPanel.gridx = 1;
+        cMainPanel.weightx = 1;
+        cMainPanel.weighty = 1;
+        cMainPanel.fill = GridBagConstraints.BOTH;
+        mainPanel.add(showCaseScrollPane, cMainPanel);
 
         setPreferredSize(new Dimension(900, 800));
 

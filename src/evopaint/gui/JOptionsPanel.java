@@ -20,9 +20,13 @@
 package evopaint.gui;
 
 import evopaint.Configuration;
+import evopaint.commands.EraseCommand;
+import evopaint.commands.FillSelectionCommand;
 import evopaint.commands.MoveCommand;
 import evopaint.commands.PaintCommand;
+import evopaint.commands.PickCommand;
 import evopaint.commands.SelectCommand;
+import evopaint.commands.ZoomCommand;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -33,33 +37,52 @@ import javax.swing.JPanel;
  */
 public class JOptionsPanel extends JPanel {
     private Configuration configuration;
+    private JPanel currentPanel;
 
     public void displayOptions(Class toolClass) {
-        if (toolClass == MoveCommand.class) {
-            ((CardLayout)getLayout()).show(this, "empty");
-            return;
-        }
 
-        if (toolClass == PaintCommand.class) {
-            ((CardLayout)getLayout()).show(this, "paint");
-            return;
+        if (currentPanel != null) {
+            remove(currentPanel);
         }
+        currentPanel = null;
 
         if (toolClass == SelectCommand.class) {
-            ((CardLayout)getLayout()).show(this, "empty");
+
+        }
+        else if (toolClass == MoveCommand.class) {
+
+        }
+        else if (toolClass == ZoomCommand.class) {
+
+        }
+        else if (toolClass == PaintCommand.class) {
+            currentPanel = new BrushOptionsPanel(configuration);
+            add(currentPanel);
             return;
         }
+        else if (toolClass == FillSelectionCommand.class) {
+
+        }
+        else if (toolClass == EraseCommand.class) {
+
+        }
+        else if (toolClass == PickCommand.class) {
+
+        }
+
+        revalidate();
     }
 
     public JOptionsPanel(Configuration configuration) {
         this.configuration = configuration;
-        setLayout(new CardLayout());
+        setBackground(new Color(0xF2F2F5));
+        //setLayout(new CardLayout());
 
-        JPanel emptyPanel = new JPanel();
-        emptyPanel.setBackground(new Color(0xF2F2F5));
-        add(emptyPanel, "empty");
+        //JPanel emptyPanel = new JPanel();
+        //emptyPanel.setBackground(new Color(0xF2F2F5));
+        //add(emptyPanel, "empty");
 
-        BrushOptionsPanel paintOptionsPanel = new BrushOptionsPanel(configuration);
-        add(paintOptionsPanel, "paint");
+        //BrushOptionsPanel paintOptionsPanel = new BrushOptionsPanel(configuration);
+        //add(paintOptionsPanel, "paint");
     }
 }
