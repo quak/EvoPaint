@@ -23,6 +23,7 @@ import evopaint.Configuration;
 import evopaint.pixel.rulebased.Rule;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.pixel.rulebased.RuleSetCollection;
+import evopaint.util.ExceptionHandler;
 import evopaint.util.RuleSetNode;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -31,6 +32,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -201,10 +207,23 @@ public class JRuleSetManager extends JPanel implements TreeSelectionListener {
                 return;
             }
 
+            Rule newRule = null;
+            try {
+                ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+                ObjectOutputStream out = new ObjectOutputStream(outByteStream);
+                out.writeObject(selectedRule);
+                ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(outByteStream.toByteArray()));
+                newRule = (Rule) in.readObject();
+            } catch (ClassNotFoundException ex) {
+                ExceptionHandler.handle(ex, true);
+            } catch (IOException ex) {
+                ExceptionHandler.handle(ex, true);
+            }
+
             if (jRuleEditor != null) {
                 remove(jRuleEditor);
             }
-            jRuleEditor = new JRuleEditorPanel(configuration, selectedRule, new RuleEditorOKListener(), new RuleEditorCancelListener());
+            jRuleEditor = new JRuleEditorPanel(configuration, newRule, new RuleEditorOKListener(), new RuleEditorCancelListener());
             add(jRuleEditor, "editor");
             ((CardLayout)contentPane.getLayout()).show(contentPane, "editor");
         }
@@ -224,10 +243,23 @@ public class JRuleSetManager extends JPanel implements TreeSelectionListener {
 
                 assert (selectedRule != null);
 
+                Rule newRule = null;
+                try {
+                    ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+                    ObjectOutputStream out = new ObjectOutputStream(outByteStream);
+                    out.writeObject(selectedRule);
+                    ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(outByteStream.toByteArray()));
+                    newRule = (Rule) in.readObject();
+                } catch (ClassNotFoundException ex) {
+                    ExceptionHandler.handle(ex, true);
+                } catch (IOException ex) {
+                    ExceptionHandler.handle(ex, true);
+                }
+
                 if (jRuleEditor != null) {
                     remove(jRuleEditor);
                 }
-                jRuleEditor = new JRuleEditorPanel(configuration, selectedRule, new RuleEditorOKListener(), new RuleEditorCancelListener());
+                jRuleEditor = new JRuleEditorPanel(configuration, newRule, new RuleEditorOKListener(), new RuleEditorCancelListener());
                 add(jRuleEditor, "editor");
                 ((CardLayout)contentPane.getLayout()).show(contentPane, "editor");
              }
