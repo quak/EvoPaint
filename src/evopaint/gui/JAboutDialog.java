@@ -48,7 +48,7 @@ public class JAboutDialog extends JDialog {
         add(messagePane, BorderLayout.NORTH);
 
         JPanel controlPanel = new JPanel();
-        JButton okButton = new JButton("I <3 U");
+        JButton okButton = new JButton("I love EvoPaint");
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -65,7 +65,7 @@ public class JAboutDialog extends JDialog {
                 "\"A godlike act - I create creation,<br />I experience it, then I disintegrate it.\"<br /><span style='font-size: smaller;'>(Absurd Minds - The Focus)</span>" +
                 "</p>" +
                 "<p style='margin: 0; margin-top: 10px;'>" +
-                "EvoPaint has been developed for a software lab in applied computer science at the Universität Klagenfurt, Austria and was initally released in May 2010, consisting of roughly 13,000 lines of code not counting blank lines or comments." +
+                "The vision of EvoPaint is to be a tool to experience evolutionary, dynamic and/or complex system development in a playful, artistic and accessible way. EvoPaint has been initially developed for a software lab in applied computer science at the Universität Klagenfurt, Austria and was first released in May 2010, consisting of roughly 13,000 lines of code not counting blank lines or comments. EvoPaint is maintained by Markus Echterhoff." +
                 "</p>" +
                 "<h2 style='margin: 0; margin-top: 8px;'>Contact</h2>" +
                 "<p style='margin: 0;'>" +
@@ -73,7 +73,7 @@ public class JAboutDialog extends JDialog {
                 "</p>" +
                 "<h2 style='margin: 0; margin-top: 8px;'>License</h2>" +
                 "<p style='margin: 0;'>" +
-                "EvoPaint is free software as envisioned by Richard Stallman and shall stay free. Therefore EvoPaint is licensed under the GNU Public License version 3 or higher.<br />EvoPaint uses source files and libraries that are licensed differently, please see the corresponding licenses for more information." +
+                "EvoPaint is free software as envisioned by Richard Stallman and shall stay free. Therefore EvoPaint is licensed under the GNU Public License version 3 or higher. EvoPaint uses source files and libraries that are licensed differently, please see the corresponding licenses for more information." +
                 "</p>" +
                 "<h2 style='margin: 0; margin-top: 8px;'>Credits</h2>" +
                 "<table><tr><td style='white-space: nowrap;'>Markus Echterhoff <tam@edu.uni-klu.ac.at></td><td>(vision, project management, core engine, user interface, rule set manager, user-guide texts)</td></tr>" +
