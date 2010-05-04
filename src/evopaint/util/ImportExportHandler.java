@@ -50,6 +50,10 @@ public class ImportExportHandler {
             version = 0;
             xml = importString;
         }
+
+        if (version > Configuration.PROTOCOL_VERSION) {
+            ExceptionHandler.handle(new Exception(), true, "<p>The rule set I am trying to import is too new for me. Please update me to the newest Version!</p>");
+        }
         
         xml = update(version, xml);
 

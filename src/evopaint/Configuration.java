@@ -20,8 +20,6 @@
 package evopaint;
 
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import evopaint.gui.MainFrame;
 import evopaint.interfaces.IRandomNumberGenerator;
 import evopaint.interfaces.ITool;
