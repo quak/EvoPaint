@@ -19,7 +19,6 @@
 
 package evopaint;
 
-import evopaint.gui.MainFrame;
 import evopaint.util.ExceptionHandler;
 
 /**

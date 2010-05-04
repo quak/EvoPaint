@@ -26,8 +26,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -70,10 +68,10 @@ public class Perception {
             return false;
         }
         try {
-            videoFile = new File(configuration.FILE_HANDLER.getHomeDir(),
+            videoFile = new File(Configuration.FILE_HANDLER.getHomeDir(),
                     "EvoPaint-recording.avi");
             for (int i = 1; videoFile.exists(); i++) {
-                videoFile = new File(configuration.FILE_HANDLER.getHomeDir(),
+                videoFile = new File(Configuration.FILE_HANDLER.getHomeDir(),
                     "EvoPaint-recording_" + i + ".avi");
             }
             videoOut = new AVIOutputStream(
