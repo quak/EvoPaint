@@ -19,8 +19,7 @@
 
 package evopaint.util;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.XStreamException;
+import evopaint.Configuration;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.pixel.rulebased.RuleSetCollection;
 import java.io.BufferedReader;
@@ -32,7 +31,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URL;
@@ -51,7 +49,6 @@ public class FileHandler implements TreeModelListener {
 
     private File homeDir;
     private File collectionsDir;
-    private XStream xStream;
 
     public File getHomeDir() {
         return homeDir;
@@ -163,7 +160,7 @@ public class FileHandler implements TreeModelListener {
             File ruleSetFile = new File(collectionsDir,
                     makeDirectoryName(collectionNode.getName()) + File.separator +
                     makeFileName(ruleSetNode.getName()));
-            exportToFile((RuleSet)ruleSetNode.getUserObject(), ruleSetFile);
+            writeToFile((RuleSet)ruleSetNode.getUserObject(), ruleSetFile);
             return;
         }
 
@@ -192,7 +189,7 @@ public class FileHandler implements TreeModelListener {
                                 makeDirectoryName(collectionNode.getName()) +
                                 "/metadata.xml");
 
-                        exportToFile(collectionNode.getUserObject(), metaDataFile);
+                        writeToFile(collectionNode.getUserObject(), metaDataFile);
                     }
                     break;
                 }
@@ -217,7 +214,7 @@ public class FileHandler implements TreeModelListener {
             }
 
             File metaDataFile = new File(collectionDir, "metadata.xml");
-            exportToFile(addedNode.getUserObject(), metaDataFile);
+            writeToFile(addedNode.getUserObject(), metaDataFile);
             return;
         }
 
@@ -228,7 +225,7 @@ public class FileHandler implements TreeModelListener {
                 makeDirectoryName(collectionNode.getName() +
                 File.separator +
                 makeFileName(((RuleSetNode)addedNode).getName())));
-            exportToFile(addedNode.getUserObject(), ruleSetFile);
+            writeToFile(addedNode.getUserObject(), ruleSetFile);
             return;
         }
 
@@ -270,18 +267,21 @@ public class FileHandler implements TreeModelListener {
     }
 
     private Object importFromFile(File file) {
-        Reader reader = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader reader = null;
+        String line = null;
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
         } catch (UnsupportedEncodingException ex) {
             ExceptionHandler.handle(ex, false);
         } catch (FileNotFoundException ex) {
             ExceptionHandler.handle(ex, true);
-        }
-        try {
-            return xStream.fromXML(reader);
-        } catch (XStreamException ex) {
-            ExceptionHandler.handle(ex, false, "<p>I could not parse the file \"" + file.getAbsolutePath() + "\".</p><p>This either means this file is corrupted in some way or some internals have changed and we have no proper backwards compability yet. Please have a look at the message below and try to fix your rule set if you can. They are stored in XML format, so any text editor will do. Except Notepad.exe, because it sucks and will display your rule set without line breaks</p><p>If you cannot fix it, you can always delete the file in question and recreate the rule set using the rule set editor.</p>");
+        } catch(IOException ex) {
+            ExceptionHandler.handle(ex, true);
         } finally {
             try {
                 if (reader != null) {
@@ -291,14 +291,15 @@ public class FileHandler implements TreeModelListener {
                 ExceptionHandler.handle(ex, true);
             }
         }
-        return null;
+
+        return Configuration.IMPORT_EXPORT_HANDLER.importFromString(stringBuilder.toString(), file);
     }
 
-    public void exportToFile(Object object, File file) {
+    public void writeToFile(Object object, File file) {
         Writer writer = null;
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
-            writer.write(xStream.toXML(object));
+            writer.write(Configuration.IMPORT_EXPORT_HANDLER.exportToString(object));
         } catch (UnsupportedEncodingException ex) {
             ExceptionHandler.handle(ex, false);
         } catch (FileNotFoundException ex) {
@@ -316,8 +317,7 @@ public class FileHandler implements TreeModelListener {
         }
     }
 
-    public FileHandler(XStream xStream) {
-        this.xStream = xStream;
+    public FileHandler() {
         checkFiles();
     }
 }

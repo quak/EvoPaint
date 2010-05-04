@@ -70,10 +70,10 @@ public class Perception {
             return false;
         }
         try {
-            videoFile = new File(configuration.fileHandler.getHomeDir(),
+            videoFile = new File(configuration.FILE_HANDLER.getHomeDir(),
                     "EvoPaint-recording.avi");
             for (int i = 1; videoFile.exists(); i++) {
-                videoFile = new File(configuration.fileHandler.getHomeDir(),
+                videoFile = new File(configuration.FILE_HANDLER.getHomeDir(),
                     "EvoPaint-recording_" + i + ".avi");
             }
             videoOut = new AVIOutputStream(

@@ -45,6 +45,7 @@ import evopaint.pixel.rulebased.targeting.qualifiers.ColorLikenessMyColorQualifi
 import evopaint.pixel.rulebased.targeting.qualifiers.ExistenceQualifier;
 import evopaint.pixel.rulebased.targeting.qualifiers.EnergyQualifier;
 import evopaint.util.FileHandler;
+import evopaint.util.ImportExportHandler;
 import evopaint.util.RandomNumberGeneratorWrapper;
 import evopaint.util.logging.Logger;
 import java.awt.Dimension;
@@ -60,6 +61,9 @@ import org.uncommons.maths.random.SeedGenerator;
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class Configuration {
+    public static final String VERSION = "1.0";
+    public static final int PROTOCOL_VERSION = 1;
+
     public static final int OPERATIONMODE_AGENT_SIMULATION = 0;
     public static final int OPERATIONMODE_CELLULAR_AUTOMATON = 1;
 
@@ -93,8 +97,8 @@ public class Configuration {
     }};
 
     public IRandomNumberGenerator rng;
-    public XStream xStream;
-    public FileHandler fileHandler;
+    public static FileHandler FILE_HANDLER = new FileHandler();
+    public static ImportExportHandler IMPORT_EXPORT_HANDLER = new ImportExportHandler();
     public World world;
     public Perception perception;
     public MainFrame mainFrame;
@@ -148,8 +152,6 @@ public class Configuration {
         perception = new Perception(this);
         brush = new Brush(this);
         paint = new Paint(this);
-        xStream = new XStream(new DomDriver());
-        fileHandler = new FileHandler(xStream);
         usedActions = new ArrayList<Action>();
         mainFrame = new MainFrame(this);
     }

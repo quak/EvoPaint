@@ -83,7 +83,7 @@ public class JRuleSetManager extends JPanel implements TreeSelectionListener {
 
         setLayout(new CardLayout());
 
-        DefaultTreeModel treeModel = configuration.fileHandler.readCollections();
+        DefaultTreeModel treeModel = configuration.FILE_HANDLER.readCollections();
         jRuleSetTree = new JRuleSetTree(treeModel, new TreeDoubleClickListener());
         jRuleSetTree.addTreeSelectionListener(this);
 

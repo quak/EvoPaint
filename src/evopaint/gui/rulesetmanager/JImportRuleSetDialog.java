@@ -25,6 +25,7 @@ import evopaint.gui.rulesetmanager.util.NamedObjectListCellRenderer;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.util.CollectionNode;
 import evopaint.util.ExceptionHandler;
+import evopaint.util.ImportExportHandler;
 import evopaint.util.RuleSetNode;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -148,12 +149,9 @@ public class JImportRuleSetDialog extends JDialog {
                     collectionComboBox.getSelectedItem();
             
             RuleSet ruleSet = null;
-            
-            try {
-                ruleSet = (RuleSet)configuration.xStream.fromXML(editorTextArea.getText().trim());
-            } catch (XStreamException ex) {
-                ExceptionHandler.handle(ex, false, "<p>I could not parse the XML of the rule set you pasted there.</p><p>This could have happened due to multiple causes. First check your XML, ie. check if you selected correctly before copying. If it looks right this error means that some internals have changed and we have no proper backwards compability yet. The below message might help to try and fix your rule set.</p>");
-            }
+            ruleSet = (RuleSet)
+                    Configuration.IMPORT_EXPORT_HANDLER.importFromString(
+                    editorTextArea.getText().trim());
 
             if (ruleSet == null) {
                 return;

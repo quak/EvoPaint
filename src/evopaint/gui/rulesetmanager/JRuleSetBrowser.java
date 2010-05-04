@@ -490,14 +490,10 @@ public class JRuleSetBrowser extends JPanel implements TreeSelectionListener {
             RuleSetNode ruleSetNode = (RuleSetNode)
                     tree.getLastSelectedPathComponent();
             RuleSet ruleSet = (RuleSet)ruleSetNode.getUserObject();
-            try {
-                String xml = configuration.xStream.toXML(ruleSet);
-                StringSelection contents = new StringSelection(xml);
-                Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-                cb.setContents(contents, null);
-            } catch (XStreamException ex) {
-                ExceptionHandler.handle(ex, false);
-            }
+            String exportString = Configuration.IMPORT_EXPORT_HANDLER.exportToString(ruleSet);
+            StringSelection contents = new StringSelection(exportString);
+            Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+            cb.setContents(contents, null);
         }
     }
     
