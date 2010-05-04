@@ -74,6 +74,7 @@ public class BrushOptionsPanel extends JPanel {
         JSpinner spinnerBrushSize = new AutoSelectOnFocusSpinner(spinnerModel);
         spinnerBrushSize.addChangeListener(new SpinnerBrushSizeListener(spinnerBrushSize));
         labelForSpinner.setLabelFor(spinnerBrushSize);
+        spinnerBrushSize.setToolTipText("Size of your brush in square pixels");
         panelBrushSize.add(spinnerBrushSize);
     }
 

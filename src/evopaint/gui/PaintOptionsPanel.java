@@ -126,6 +126,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
             }
         });
         colorRadio.setSelected(true);
+        colorRadio.setToolTipText("Paint with the selected color.");
         radioColorPanel.add(colorRadio);
 
         radioColorPanel.add(Box.createHorizontalStrut(5));
@@ -133,6 +134,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         editColorBtn = new JButton(new ImageIcon(getClass().getResource("icons/button-edit.png")));
         editColorBtn.setPreferredSize(new Dimension(24, 24));
         editColorBtn.addActionListener(new EditColorListener());
+        editColorBtn.setToolTipText("Pick a different color.");
         radioColorPanel.add(editColorBtn);
 
         radioColorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -147,6 +149,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         });
         fairyDustRadio.setPreferredSize(radioColorPanel.getPreferredSize());
         fairyDustRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
+        fairyDustRadio.setToolTipText("Paint with magic fairy dust which is nothing but randomly colored pixels - but don't tell anybody!");
         panelForColorButtons.add(fairyDustRadio);
 
         // use existing button
@@ -158,6 +161,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         });
         useExistingColorRadio.setPreferredSize(radioColorPanel.getPreferredSize());
         useExistingColorRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
+        useExistingColorRadio.setToolTipText("Essentially leaves the color of existing pixels untouched and paint only rule sets. Does not do anything on free space.");
         panelForColorButtons.add(useExistingColorRadio);
 
         ButtonGroup group = new ButtonGroup();
@@ -199,6 +203,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
                 configuration.paint.changeCurrentRuleSetMode(Paint.RULE_SET);
             }
         });
+        ruleSetRadio.setToolTipText("Paint pixels using the selected rule set.");
         radioRuleSetPanel.add(ruleSetRadio);
 
         radioRuleSetPanel.add(Box.createHorizontalStrut(5));
@@ -207,6 +212,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         editRuleSetBtn = new JButton(new ImageIcon(getClass().getResource("icons/button-edit.png")));
         editRuleSetBtn.setPreferredSize(new Dimension(24, 24));
         editRuleSetBtn.addActionListener(openRuleSetManagerListener);
+        editRuleSetBtn.setToolTipText("Opens the rule set manager.");
         radioRuleSetPanel.add(editRuleSetBtn);
 
         radioRuleSetPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -222,6 +228,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         });
         noRuleSetRadio.setPreferredSize(radioRuleSetPanel.getPreferredSize());
         noRuleSetRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
+        noRuleSetRadio.setToolTipText("Paint plain colored pixels with no rule set");
         panelForRuleSetButtons.add(noRuleSetRadio);
 
         // us existing rule set button
@@ -234,6 +241,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         });
         useExistingRuleSetRadio.setPreferredSize(radioRuleSetPanel.getPreferredSize());
         useExistingRuleSetRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
+        useExistingRuleSetRadio.setToolTipText("Do not overwrite existing rule sets when painting. Has no effect on empty space.");
         panelForRuleSetButtons.add(useExistingRuleSetRadio);
 
         ButtonGroup group2 = new ButtonGroup();
