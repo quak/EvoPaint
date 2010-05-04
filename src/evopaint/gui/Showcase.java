@@ -24,7 +24,6 @@ import evopaint.Configuration;
 import evopaint.commands.*;
 import evopaint.Selection;
 import evopaint.gui.util.WrappingScalableCanvas;
-import evopaint.util.logging.Logger;
 
 import java.awt.Cursor;
 import java.awt.Dimension;

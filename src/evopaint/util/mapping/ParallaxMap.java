@@ -20,7 +20,6 @@
 package evopaint.util.mapping;
 
 import evopaint.interfaces.IRandomNumberGenerator;
-import evopaint.util.logging.Logger;
 import java.util.AbstractCollection;
 import java.util.Iterator;
 
@@ -187,9 +186,6 @@ public class ParallaxMap<T> extends AbstractCollection<T> {
             i++;
             if (i == data.length) {
                 i = 0;
-            }
-            if (i == rnd) {
-                Logger.log.warning("calling getRandom() on empty ParallaxMap", (Object[])null);
             }
         }
         return data[i];

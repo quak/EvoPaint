@@ -30,7 +30,7 @@ import evopaint.commands.ImportCommand;
 import evopaint.commands.SelectAllCommand;
 import evopaint.gui.listeners.SelectionListenerFactory;
 import evopaint.interfaces.IChangeListener;
-import evopaint.util.logging.Logger;
+import evopaint.util.ExceptionHandler;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -168,9 +168,9 @@ public class MenuBar extends JMenuBar implements Observer {
                 try {
                     java.awt.Desktop.getDesktop().browse(new URI(Manifest.USER_GUIDE_URL));
                 } catch (IOException e1) {
-                    Logger.log.error("Exception occurred during opening of Users guide: \n%s", e1);
+                    ExceptionHandler.handle(e1, false);
                 } catch (URISyntaxException e1) {
-                    Logger.log.error("Exception occurred during opening of Users guide: \n%s", e1);
+                    ExceptionHandler.handle(e1, false);
                 }
             }
         });
@@ -183,9 +183,9 @@ public class MenuBar extends JMenuBar implements Observer {
                 try {
                     java.awt.Desktop.getDesktop().browse(new URI(Manifest.CODE_DOWNLOAD_URL));
                 } catch (URISyntaxException e1) {
-                    Logger.log.error("Exception occurred during opening of Get The Code : \n%s", e1);
+                    ExceptionHandler.handle(e1, false);
                 } catch (IOException e1) {
-                    Logger.log.error("Exception occurred during opening of Get The Code : \n%s", e1);
+                    ExceptionHandler.handle(e1, false);
                 }
             }
         });

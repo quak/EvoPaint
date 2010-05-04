@@ -45,7 +45,6 @@ import evopaint.pixel.rulebased.targeting.qualifiers.EnergyQualifier;
 import evopaint.util.FileHandler;
 import evopaint.util.ImportExportHandler;
 import evopaint.util.RandomNumberGeneratorWrapper;
-import evopaint.util.logging.Logger;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +137,7 @@ public class Configuration {
             try {
                 seed = sg.generateSeed(4);
             } catch (SeedException e) {
-                Logger.log.error("got seed exception from default seed generator. this should not have happened.");
+                // log.error("got seed exception from default seed generator. this should not have happened.");
                 java.lang.System.exit(1);
             }
         }
