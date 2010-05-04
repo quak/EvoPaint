@@ -102,7 +102,7 @@ public class MainFrame extends JFrame {
 
         ExceptionHandler.init(this);
 
-        ToolTipManager.sharedInstance().setInitialDelay(500);
+        ToolTipManager.sharedInstance().setInitialDelay(600);
         ToolTipManager.sharedInstance().setReshowDelay(300);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
