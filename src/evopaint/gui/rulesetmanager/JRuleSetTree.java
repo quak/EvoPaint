@@ -22,11 +22,9 @@ package evopaint.gui.rulesetmanager;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.pixel.rulebased.RuleSetCollection;
 import evopaint.pixel.rulebased.interfaces.INamed;
-import evopaint.util.CollectionNode;
 import java.awt.Component;
 import java.awt.event.MouseListener;
 import java.util.Enumeration;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
@@ -42,7 +40,7 @@ import javax.swing.tree.TreeSelectionModel;
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
-public class JRuleSetTree extends JTree { // implements TreeModelListener {
+public class JRuleSetTree extends RuleSetDragDropTree { // implements TreeModelListener {
 
     public JRuleSetTree(DefaultTreeModel model, MouseListener mouseListener) {
         setRootVisible(false);
