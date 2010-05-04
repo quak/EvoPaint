@@ -82,6 +82,7 @@ public class ToolBox extends JPanel {
                 mf.getShowcase().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
             }
         });
+        jButtonSelect.setToolTipText("Select an area you can draw into, fill, copy and do lots of other cool stuff with.");
 
         final JToggleButton jButtonMove = buttons.get(1);
         jButtonMove.setIcon(new ImageIcon(getClass().getResource("icons/tool-move.png")));
@@ -92,6 +93,7 @@ public class ToolBox extends JPanel {
                     mf.getShowcase().setCursor(new Cursor(Cursor.MOVE_CURSOR));
             }
         });
+        jButtonMove.setToolTipText("Move the canvas with the left mouse button. Press middle mouse button to reset the view.");
 
         final JToggleButton jButtonZoom = buttons.get(2);
         jButtonZoom.setIcon(new ImageIcon(getClass().getResource("icons/tool-zoom.png")));
@@ -103,6 +105,7 @@ public class ToolBox extends JPanel {
                 mf.getShowcase().setCursor(new Cursor(Cursor.N_RESIZE_CURSOR));
             }
         });
+        jButtonZoom.setToolTipText("Zoom in using the left mouse button, zoom out with the right mouse button or reset the zoom with a click on your middle mouse button.");
 
         final JToggleButton jButtonPaint = buttons.get(3);
     	jButtonPaint.setIcon(new ImageIcon(getClass().getResource("icons/tool-paint.png")));
@@ -112,6 +115,7 @@ public class ToolBox extends JPanel {
                   mf.getShowcase().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
         });
+        jButtonPaint.setToolTipText("Paint color and rule sets using the paint brush.");
         jButtonPaint.doClick();
 
         final JToggleButton jButtonFill = buttons.get(4);
@@ -124,6 +128,7 @@ public class ToolBox extends JPanel {
                 mf.getShowcase().setCursor(new Cursor(Cursor.MOVE_CURSOR));
             }
         });
+        jButtonFill.setToolTipText("Fill the current selection or the whole canvas if nothing is selected");
 
         final JToggleButton jButtonErase = buttons.get(5);
         jButtonErase.setIcon(new ImageIcon(getClass().getResource("icons/tool-erase.png")));
@@ -135,6 +140,7 @@ public class ToolBox extends JPanel {
                 mf.getShowcase().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
             }
         });
+        jButtonErase.setToolTipText("Erase pixels from the world for ever (I know you like that!).");
 
         final JToggleButton jButtonPick = buttons.get(6);
         jButtonPick.setIcon(new ImageIcon(getClass().getResource("icons/tool-pick.png")));
@@ -146,6 +152,7 @@ public class ToolBox extends JPanel {
                 mf.getShowcase().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
             }
         });
+        jButtonPick.setToolTipText("Pick color and rule set from the pixel you click on.");
     }
 
     public void setInitialFocus() {
