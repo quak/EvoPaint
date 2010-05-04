@@ -44,7 +44,7 @@ public class JAboutDialog extends JDialog {
         messagePane.setEditable(false);
         messagePane.setBorder(new LineBorder(new JPanel().getBackground(), 10));
         messagePane.setAlignmentX(LEFT_ALIGNMENT);
-        messagePane.setPreferredSize(new Dimension(700, 700));
+        messagePane.setPreferredSize(new Dimension(800, 650));
         add(messagePane, BorderLayout.NORTH);
 
         JPanel controlPanel = new JPanel();
@@ -61,29 +61,31 @@ public class JAboutDialog extends JDialog {
         messagePane.setText(
                 "<html>" +
                 "<body style='padding:10px;'>" +
-                "<p style='text-align: center; color: GRAY; font-style: italic; margin: 0; margin-bottom: 20px;'>" +
+                "<p style='text-align: center; color: GRAY; font-style: italic; margin: 0;'>" +
                 "\"A godlike act - I create creation,<br />I experience it, then I disintegrate it.\"<br /><span style='font-size: smaller;'>(Absurd Minds - The Focus)</span>" +
                 "</p>" +
-                "<p style='margin: 0; margin-bottom: 10px;'>" +
-                "EvoPaint has been developed as a software lab at the Universität Klagenfurt, Austria and was initally released in May 2010, consisting of roughly 13,000 lines of code not counting blank lines or comments." +
+                "<p style='margin: 0; margin-top: 10px;'>" +
+                "EvoPaint has been developed for a software lab in applied computer science at the Universität Klagenfurt, Austria and was initally released in May 2010, consisting of roughly 13,000 lines of code not counting blank lines or comments." +
                 "</p>" +
-                "<h2>Contact</h2>" +
-                "<p style='margin: 0; margin-bottom: 10px;'>" +
+                "<h2 style='margin: 0; margin-top: 8px;'>Contact</h2>" +
+                "<p style='margin: 0;'>" +
                 "If you wish to talk about EvoPaint or have cool ideas for further development, if you wish to contribute or support in any way, feel free to contact Markus Echterhoff using tam@edu.uni-klu.ac.at" +
                 "</p>" +
-                "<h2>License</h2>" +
-                "<p style='margin: 0; margin-bottom: 10px;'>" +
+                "<h2 style='margin: 0; margin-top: 8px;'>License</h2>" +
+                "<p style='margin: 0;'>" +
                 "EvoPaint is free software as envisioned by Richard Stallman and shall stay free. Therefore EvoPaint is licensed under the GNU Public License version 3 or higher.<br />EvoPaint uses source files and libraries that are licensed differently, please see the corresponding licenses for more information." +
                 "</p>" +
-                "<h2>Credits</h2>" +
-                "<table><tr><td style='white-space: nowrap;'>Markus Echterhoff <tam@edu.uni-klu.ac.at></td><td style='font-size: small;'>(Vision, Project Management, Engine Design and Implementation, GUI Design and Implemenation, Rule Set Manager Design and Implementation, User-Guide Texts)</td></tr>" +
-                "<tr><td>Daniel Hölbling</td><td style='font-size: small;'>(Tool-Engine Design and Implementation, Selection Handling, miscellaneous code contributions)</td></tr>" +
-                "<tr><td>Augustin Malle</td><td style='font-size: small;'>(Logo Design, Software Requirements Specifications, User-Guide Design)</td></tr></table>" +
-                "<h2>Thanks</h2>" +
+                "<h2 style='margin: 0; margin-top: 8px;'>Credits</h2>" +
+                "<table><tr><td style='white-space: nowrap;'>Markus Echterhoff <tam@edu.uni-klu.ac.at></td><td>(vision, project management, core engine, user interface, rule set manager, user-guide texts)</td></tr>" +
+                "<tr><td>Daniel Hölbling</td><td>(tool handling, selection management, miscellaneous code contributions)</td></tr>" +
+                "<tr><td>Augustin Malle</td><td>(logo design, software requirements specifications, user-guide design)</td></tr></table>" +
+                "<h2 style='margin: 0; margin-top: 8px;'>Thanks</h2>" +
                 "<ul>" +
                 "<li>To Ao.Univ.-Prof. Mag. Dr. Günther Fliedl for supervising this software lab and giving us the freedom this project needed to be developed.</li>" +
-                "<li>To Werner Randelshofer for sharing his image to mpng-avi converter, we use it to record videos.</li>" +
-                "<li>To the XStream developers for sharing their library. We use XStream for import and export of data.</li>" +
+                "<li>To Severin Kacianka for fresh views on complex problems during numerous lunches and coffee breaks as well as some joyful playtesting." +
+                "<li>To Markus Feuerstack for all the feedback and comments in countless testing sessions. A feature is polished once you don't notice it at all." +
+                "<li>To Werner Randelshofer for sharing his image to avi converter, we use it to record videos.</li>" +
+                "<li>To the XStream developers for sharing their library. We use XStream for the import and export of data.</li>" +
                 "<li>To Daniel W. Dyer for sharing the uncommons-maths library we use for random number generation.</li>" +
                 "<li>To the developers of the prefuse visualization toolkit for sharing their code. We made good use of their range slider class.</li>" +
                 "<li>To the developers of The Gimp and the Oxygen icon set. Your icons look great in EvoPaint.</li>" +
