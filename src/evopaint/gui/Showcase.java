@@ -167,7 +167,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
             	copySelectionCommand.execute();
             }
         } else if (e.getButton() == MouseEvent.BUTTON3) {
-        	if (configuration.mainFrame.getActiveTool() == ZoomCommand.class){
+        	if (configuration.mainFrame.getActiveTool() == ZoomCommand.class) {
             	ZoomOutCommand zoomOutCommand = new ZoomOutCommand(this);
             	zoomOutCommand.execute();
             	this.setCursor(new Cursor(Cursor.N_RESIZE_CURSOR));
@@ -176,8 +176,10 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         		configuration.paint.showHistory(this, e.getPoint());
         	}
         } else if (e.getButton() == MouseEvent.BUTTON2) {
-            if (configuration.mainFrame.getActiveTool() == ZoomCommand.class){
-                scaleReset();
+            if (configuration.mainFrame.getActiveTool() == ZoomCommand.class) {
+                resetScale();
+            } else if (configuration.mainFrame.getActiveTool() == MoveCommand.class) {
+                resetTranslation();
             } else {
                 toggleMouseButton2Drag = true;
                 moveCommand.setSource(e.getPoint());
