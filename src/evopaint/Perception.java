@@ -25,12 +25,12 @@ import evopaint.util.avi.AVIOutputStream;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -94,12 +94,16 @@ public class Perception {
             videoOut.finish();
             finishedOK = true;
         } catch (IOException ex) {
-            Logger.getLogger(Perception.class.getName()).log(Level.SEVERE, null, ex);
+            ExceptionHandler.handle(ex, false);
         } finally {
             videoOut = null;
         }
         if (finishedOK) {
-            showSaveDialog();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    showSaveDialog();
+                }
+            });
         }
     }
 
@@ -108,46 +112,48 @@ public class Perception {
         fileChooser.setFileFilter(new FileNameExtensionFilter("*.avi", "avi"));
         int option = fileChooser.showSaveDialog(configuration.mainFrame);
 
-        boolean copySuccessful = true;
+        boolean deleteUncompressed = true;
         if (option == JFileChooser.APPROVE_OPTION) {
-            
-            File saveLocation = fileChooser.getSelectedFile();
-            FileInputStream in = null;
-            FileOutputStream out = null;
-            try {
-                in = new FileInputStream(videoFile);
-                out = new FileOutputStream(saveLocation);
-                byte [] buffer = new byte[1024];
-                int readBytes;
-                while ((readBytes = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, readBytes);
-                }
 
+            File saveLocation = fileChooser.getSelectedFile();
+            File tmpLocation = new File(saveLocation.getAbsolutePath() + ".part");
+            if (false == saveLocation.getName().endsWith(".avi")) {
+                saveLocation = new File(saveLocation.getAbsolutePath() + ".avi");
+            }
+            try {
+                Process proc = Runtime.getRuntime().exec("mencoder " + Configuration.MENCODER_OPTIONS +
+                        " " + videoFile.getAbsolutePath() + " -o " + tmpLocation.getAbsolutePath());
+                try {
+                    proc.waitFor();
+                } catch (InterruptedException ex) {
+                    ExceptionHandler.handle(ex, true);
+                }
             } catch (IOException ex) {
-                copySuccessful = false;
-                ExceptionHandler.handle(ex, false, "An error occured copying your video file to the designated location. But don't worry, it is save. Checkout your .evopaint folder and move it yourself. The file is called EvoPaint-recording.avi");
-            } finally {
-                if (in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException ex) {
-                        ExceptionHandler.handle(ex, false, "Unable to close file.");
-                    }
-                }
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException ex) {
-                        ExceptionHandler.handle(ex, false, "Unable to close file.");
-                    }
-                }
+                ExceptionHandler.handle(ex, false, "<p>Failed to encode the video due to an IO Exception. Your video is saved in MPNG format in your .evopaint folder, go and convert it yourself!</p>");
+                deleteUncompressed = false;
+            }
+
+            if (false == tmpLocation.exists()) {
+                deleteUncompressed = false;
+                ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video, if you are on a unix style OS: do you have mencoder installed? You can find the recorded video in MPNG format in your .evopaint folder in case you want to compress it manually.</p>");
+            }
+
+            if (false == tmpLocation.renameTo(saveLocation)) {
+                deleteUncompressed = false;
+                ExceptionHandler.handle(new Exception(), false, "<p>Hello there, I have good news and bad news. The good news is, I successfully recorded and encoded your video. The bad news is I could not rename it from \"" + tmpLocation.getName() + "\" to \"" + saveLocation.getName() + "\" for some reason.</p>");
+            }
+
+            if (deleteUncompressed == true) { // success
+                JOptionPane.showMessageDialog(configuration.mainFrame, "I finished encoding your video, are you proud of me? I know I am!");
             }
         }
 
-        if (copySuccessful) {
-            videoFile.delete();
+        if (deleteUncompressed) {
+            //videoFile.delete();
         }
         videoFile = null;
+
+        
     }
 
     public Perception(Configuration configuration) {
