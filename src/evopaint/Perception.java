@@ -149,11 +149,9 @@ public class Perception {
         }
 
         if (deleteUncompressed) {
-            //videoFile.delete();
+            videoFile.delete();
         }
         videoFile = null;
-
-        
     }
 
     public Perception(Configuration configuration) {
