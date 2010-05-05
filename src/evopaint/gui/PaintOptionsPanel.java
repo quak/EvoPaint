@@ -126,7 +126,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
             }
         });
         colorRadio.setSelected(true);
-        colorRadio.setToolTipText("Paint with the selected color.");
+        colorRadio.setToolTipText("Paint with the selected color");
         radioColorPanel.add(colorRadio);
 
         radioColorPanel.add(Box.createHorizontalStrut(5));
@@ -134,7 +134,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         editColorBtn = new JButton(new ImageIcon(getClass().getResource("icons/button-edit.png")));
         editColorBtn.setPreferredSize(new Dimension(24, 24));
         editColorBtn.addActionListener(new EditColorListener());
-        editColorBtn.setToolTipText("Pick a different color.");
+        editColorBtn.setToolTipText("Pick a different color");
         radioColorPanel.add(editColorBtn);
 
         radioColorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -203,7 +203,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
                 configuration.paint.changeCurrentRuleSetMode(Paint.RULE_SET);
             }
         });
-        ruleSetRadio.setToolTipText("Paint pixels using the selected rule set.");
+        ruleSetRadio.setToolTipText("Paint pixels using the selected rule set");
         radioRuleSetPanel.add(ruleSetRadio);
 
         radioRuleSetPanel.add(Box.createHorizontalStrut(5));
@@ -212,7 +212,7 @@ public class PaintOptionsPanel extends JPanel implements IChangeListener {
         editRuleSetBtn = new JButton(new ImageIcon(getClass().getResource("icons/button-edit.png")));
         editRuleSetBtn.setPreferredSize(new Dimension(24, 24));
         editRuleSetBtn.addActionListener(openRuleSetManagerListener);
-        editRuleSetBtn.setToolTipText("Opens the rule set manager.");
+        editRuleSetBtn.setToolTipText("Opens the rule set manager");
         radioRuleSetPanel.add(editRuleSetBtn);
 
         radioRuleSetPanel.setAlignmentX(Component.LEFT_ALIGNMENT);

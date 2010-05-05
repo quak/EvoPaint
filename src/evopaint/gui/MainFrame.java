@@ -104,6 +104,7 @@ public class MainFrame extends JFrame {
 
         ToolTipManager.sharedInstance().setInitialDelay(600);
         ToolTipManager.sharedInstance().setReshowDelay(300);
+        ToolTipManager.sharedInstance().setDismissDelay(5*60*1000);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setLayout(new CardLayout());

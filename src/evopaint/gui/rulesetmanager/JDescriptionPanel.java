@@ -32,10 +32,7 @@ import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -70,10 +67,23 @@ public class JDescriptionPanel extends JPanel implements TreeSelectionListener {
     private JButton btnEdit;
 
     private String defaultTitle = "DON'T PANIC";
-    private String defaultDescription = "Things to remember:<ul>" +
-            "<li>Every pixel follows a set of rules. <b>Only the first rule</b> whose conditions are met is ever executed (beginning from the top of the list). If none of the rules matches, your pixel will idle.</li><br>" +
-            "<li>You can <b>reorder</b> the list of rules of any rule set using drag and drop.</li><br>" +
-            "<li>To <b>rename</b> or <b>describe</b> a rule set, click the 'Edit' button of the description panel.</li></ul>";
+    private String defaultDescription = "<p style='margin-bottom: 15px;'>This is the rule set manager. It is here that you can create the rule set component of your paint. You can also browse existing rule sets, edit, import or export them.</p>" +
+            "<h2>Things you should know:</h2>" +
+            "<ul>" +
+            "<li style='margin-bottom: 10px;'>Pixels start out with a fixed amout of <span style='color: #0000E6; font-weight: bold;'>energy</span> (default: 100, configure via world-&gt;options). If a pixel reaches 0 energy it will be removed from the world. You can define energy reward (positive values) or cost (negative values) of each action individually in the rule editor.</li>" +
+            "<li style='margin-bottom: 10px;'>Whenever a pixel acts (which happens once per time slot), it selects an action using its <span style='color: #0000E6; font-weight: bold;'>rule set</span> which is a list of if-then clauses. <span style='color: #0000E6; font-weight: bold;'>Only the first rule</span> whose conditions are met is ever executed (beginning from the top of the list). If none of the rules matches, your pixel will idle.</li>" +
+            "<li style='margin-bottom: 10px;'>Rule sets are grouped into <span style='color: #0000E6; font-weight: bold;'>rule set collections</span>, also called <span style='color: #0000E6; font-weight: bold;'>collections</span>. They simply serve as a container for semantically coherent rule sets and are of no further consequence.</li>" +
+            "<li style='margin-bottom: 10px;'><span style='color: #0000E6; font-weight: bold;'>Mutation</span> can occur during copy-, assimilation- and procreation-actions with a certain chance (default: 0.01, configurable via world-&gt;options). Mutation affects color and rule sets alike. It can change rules, remove a rule or add a random rule with <span style='color: #0000E6; font-weight: bold;'>one exception</span>: actions will be used only if they where painted by the user before and exactly the way the user defined them. This is because evolution would choose a 100% assimilation action that rewards energy over any other action and totally ignore your plans.</li>" +
+            "<li style='margin-bottom: 10px;'>When painting a <span style='color: #0000E6; font-weight: bold;'>Cellular Automaton</span>, you should not forget to a) <span style='color: #0000E6; font-weight: bold;'>set the operation mode</span> to \"Cellular Automaton\" (upper right corner of the main frame) and b) <span style='color: #0000E6; font-weight: bold;'>fill the area</span> this particular CA shall use, because in a CA a pixel should only modify itself so a CA cannot grow. Note that changes to neighboring pixels are not detected for performance reasons, so you better check that you only modify the acting pixel. Not doing so will create north-west to south-east aligned patterns due to missing randomization in internal computations in this mode.</li>" +
+            "</ul>" +
+            "<h2>Things you might want to know:</h2>" +
+            "<ul>" +
+            "<li style='margin-bottom: 10px;'>You can <span style='color: #0000E6; font-weight: bold;'>reorder rules</span> in a rule set using drag and drop.</li>" +
+            "<li style='margin-bottom: 10px;'>You can <span style='color: #0000E6; font-weight: bold;'>move a rule set</span> from collection A to collection B using drag and drop.</li>" +
+            "<li style='margin-bottom: 10px;'><span style='color: #0000E6; font-weight: bold;'>Double-clicking on a rule set</span> in the rule set browser (upper left frame) will select it and close the rule set manager while <span style='color: #0000E6; font-weight: bold;'>double-clicking on a rule</span> in the rule list (which you will see once you click on a rule set) will bring up the rule editor.</li>" +
+            "<li style='margin-bottom: 10px;'>The descriptions of collections and rule sets respectively can display <span style='color: #0000E6; font-weight: bold;'>HTML</span> including hyperlinks which will invoke your default browser.</li>" +
+            "<li style='margin-bottom: 10px;'>Rule sets (and collections) are saved in the directory \"<span style='color: #0000E6; font-weight: bold;'>.evopaint/collections</span>\" which resides in your home directory on UNIX-like systems and in \"My Documents\" or something on MS Windows. These files consist of a protocol version number and an XML representation of the rule set. They are text files so you can easily edit them externally, as long as you don't mess with folder names that is.</li>" +
+            "</ul>";
 
     public String getDescription() {
         return description;
@@ -114,8 +124,8 @@ public class JDescriptionPanel extends JPanel implements TreeSelectionListener {
     }
 
     private void render() {
-        String heading = "<h1 style='text-align: center;'>" + title + "</h1>";
-        String html = "<html><body>" + heading + "<p>" + newLineToBreak(description) + "</p></body></html>";
+        String heading = "<h1 style='text-align: center; margin-bottom: 15px;'>" + title + "</h1>";
+        String html = "<html><body>" + heading + newLineToBreak(description) + "</body></html>";
         viewerTextPane.setText(html);
     }
 

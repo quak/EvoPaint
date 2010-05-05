@@ -232,8 +232,11 @@ public class ColorLikenessMyColorQualifier extends Qualifier {
 
         JPanel dimensionsPanel = new JPanel();
         JToggleButton btnH = new JToggleButton("H");
+        btnH.setToolTipText("Select to include the hue in color-comparison");
         JToggleButton btnS = new JToggleButton("S");
+        btnS.setToolTipText("Select to include the saturation in color-comparison");
         JToggleButton btnB = new JToggleButton("B");
+        btnB.setToolTipText("Select to include the brightness in color-comparison");
         DimensionsListener dimensionsListener = new DimensionsListener(dimensions, btnH, btnS, btnB);
         btnH.addActionListener(dimensionsListener);
         btnS.addActionListener(dimensionsListener);

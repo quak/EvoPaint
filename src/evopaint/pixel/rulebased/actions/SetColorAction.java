@@ -137,6 +137,7 @@ public class SetColorAction extends Action {
         parametersMap = super.addParametersGUI(parametersMap);
 
         ColorChooserLabel colorLabel = new ColorChooserLabel(color);
+        colorLabel.setToolTipText("Click to select a color");
         JPanel wrapLabelToAvoidUncoloredStretchedBackground = new JPanel();
         wrapLabelToAvoidUncoloredStretchedBackground.add(colorLabel);
         parametersMap.put("Color", wrapLabelToAvoidUncoloredStretchedBackground);

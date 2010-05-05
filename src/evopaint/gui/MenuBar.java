@@ -57,7 +57,6 @@ public class MenuBar extends JMenuBar implements Observer {
     private Showcase showcase;
     private JMenu selectionMenu;
     private JMenu activeSelections;
-    private Wizard nw;
     private MenuBar mb;
 
     public MenuBar(final Configuration configuration, SelectionListenerFactory listenerFactory, Showcase showcase) {
@@ -78,15 +77,6 @@ public class MenuBar extends JMenuBar implements Observer {
         // File Menu Items        
         JMenuItem newItem = new JMenuItem();
         newItem.setText("New");
-        newItem.addActionListener(new ActionListener() {
-		
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				nw = new Wizard(mb);
-			}
-		});
-        
-        
         worldMenu.add(newItem);
         
         worldMenu.add(new JMenuItem("Open..."));
@@ -220,6 +210,11 @@ public class MenuBar extends JMenuBar implements Observer {
                 });
             }
         });
+        menuRadioAgentSimulation.setToolTipText("<html>During each time frame each pixel will act once.<br />" +
+                "Pixels act in a different, random order each time frame.<br />" +
+                "The effects of an action will be seen by all pixels immediately.<br />" +
+                "So during a single time frame the pixel who acts first can influence the<br />" +
+                "descision of a neighbor acting after him or even remove the neighbor alltogether.</html>");
         modeMenu.add(menuRadioAgentSimulation);
 
         JRadioButtonMenuItem menuRadioCellularAutomaton = new JRadioButtonMenuItem("Cellular Automaton", false);
@@ -236,6 +231,12 @@ public class MenuBar extends JMenuBar implements Observer {
                 });
             }
         });
+        menuRadioCellularAutomaton.setToolTipText("<html>Each time frame consists of a snapshot of the world.<br />" +
+                "Each pixel can then change itself once according to its environment.<br />" +
+                "The changed pixels are used to construct the subsequent snapshot.<br />" +
+                "Please note that for increased performance there are no restrictions in place that would<br />" +
+                "prevent you from modifying neighbors but doing so will not yield the desired results.<br />" +
+                "(Unintentional SE-directed patterns would be created due to the lack of randomization)</html>");
         modeMenu.add(menuRadioCellularAutomaton);
 
         ButtonGroup modeGroup = new ButtonGroup();
@@ -286,8 +287,8 @@ public class MenuBar extends JMenuBar implements Observer {
         }
 
         public void update(Observable o, Object arg) {
-            Selection selection = (Selection) o;
-            UpdateName(selection);
+            Selection sel = (Selection) o;
+            UpdateName(sel);
         }
 
         private void UpdateName(Selection selection) {
@@ -314,36 +315,4 @@ public class MenuBar extends JMenuBar implements Observer {
         }
     }
 
-	public void newEvolution(int x, int y) {
-		//evopaint.getConfiguration().running = false;
-		//todo wizard code & implementation of a new evolution
-		
-		//Configuration newConf = new Configuration();
-            //    newConf.dimension = new Dimension(x,y);
-		//evopaint.setConfiguration(newConf);
-		
-		
-		//evopaint.setWorld(new World(new Pixel[newConf.dimension.width * newConf.dimension.height],0, newConf));
-		//evopaint.setPerception(new Perception(new BufferedImage
-               // (newConf.dimension.width, newConf.dimension.height,
-              //  BufferedImage.TYPE_INT_RGB)));
-
-      //  evopaint.getPerception().createImage(configuration.world);
-       
-        //check evopaint
-		//check config
-		//check work
-		// implement
-		// new config 
-		// evopaint= config
-		// evopaint work
-        
-		//evopaint.getFrame().setConfiguration(newConf);
-		//evopaint.getFrame().initializeCommands(evopaint);
-		//evopaint.getFrame().initSecond(evopaint);
-		
-
-		//evopaint.getConfiguration().running = true;
-		
-	}
 }

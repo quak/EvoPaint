@@ -204,8 +204,11 @@ public class ColorLikenessMyColorCondition extends Condition {
 
         JPanel dimensionsPanel = new JPanel();
         JToggleButton btnH = new JToggleButton("H");
+        btnH.setToolTipText("Select to include the hue in color-comparison");
         JToggleButton btnS = new JToggleButton("S");
+        btnS.setToolTipText("Select to include the saturation in color-comparison");
         JToggleButton btnB = new JToggleButton("B");
+        btnB.setToolTipText("Select to include the brightness in color-comparison");
         DimensionsListener dimensionsListener = new DimensionsListener(dimensions, btnH, btnS, btnB);
         btnH.addActionListener(dimensionsListener);
         btnS.addActionListener(dimensionsListener);
@@ -233,6 +236,11 @@ public class ColorLikenessMyColorCondition extends Condition {
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel(Math.round(compareToLikeness * 100), 0, 100, 1);
         JSpinner likenessPercentageSpinner = new AutoSelectOnFocusSpinner(spinnerModel);
         likenessPercentageSpinner.addChangeListener(new PercentageListener());
+        likenessPercentageSpinner.setToolTipText("<html>A likeness of 100% means \"exactly this color\".<br />" +
+                "Note that 50% color-likeness will match a lot more colors than you might think.<br />" +
+                "To test color matching, create a rule set like:<br />" +
+                "<span style='font-style: italic;'>\"if my color is not 90% like blue, then change my energy by -100 (the starting energy)\"</span><br />" +
+                "and see which pixels survive the test.");
         parametersMap.put("Likeness in %", likenessPercentageSpinner);
 
         return parametersMap;

@@ -171,6 +171,7 @@ public class EnergyCondition extends Condition {
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel(energyValue, 0, Integer.MAX_VALUE, 1);
         JSpinner energyValueSpinner = new AutoSelectOnFocusSpinner(spinnerModel);
         energyValueSpinner.addChangeListener(new ValueListener());
+        energyValueSpinner.setToolTipText("Enter the amount of energy to compare to the target's energy");
         parametersMap.put("Value", energyValueSpinner);
 
         return parametersMap;

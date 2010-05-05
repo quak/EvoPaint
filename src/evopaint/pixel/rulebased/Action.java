@@ -210,6 +210,7 @@ public abstract class Action implements IHaveTarget {
                 energyChange = (Integer)((JSpinner)e.getSource()).getValue();
             }
         });
+        energyChangeSpinner.setToolTipText("Positive values make the acting pixel gain energy, negative ones make it lose energy.");
         parametersMap.put("My Energy Change", energyChangeSpinner);
 
         return parametersMap;

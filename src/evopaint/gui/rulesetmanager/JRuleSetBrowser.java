@@ -189,7 +189,7 @@ public class JRuleSetBrowser extends JPanel implements TreeSelectionListener {
             }
             radioPanel.add(ruleSetRadio);
 
-            collectionRadio = new JRadioButton("Rule Set Collection");
+            collectionRadio = new JRadioButton("Collection");
             radioPanel.add(collectionRadio);
             
             ButtonGroup group = new ButtonGroup();

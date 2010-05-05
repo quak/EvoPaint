@@ -192,8 +192,11 @@ public class AssimilationAction extends Action {
 
         JPanel dimensionsPanel = new JPanel();
         JToggleButton btnH = new JToggleButton("H");
+        btnH.setToolTipText("Select to include the hue in color-mixing");
         JToggleButton btnS = new JToggleButton("S");
+        btnS.setToolTipText("Select to include the saturation in color-mixing");
         JToggleButton btnB = new JToggleButton("B");
+        btnB.setToolTipText("Select to include the brightness in color-mixing");
         DimensionsListener dimensionsListener = new DimensionsListener(dimensions, btnH, btnS, btnB);
         btnH.addActionListener(dimensionsListener);
         btnS.addActionListener(dimensionsListener);
@@ -222,6 +225,7 @@ public class AssimilationAction extends Action {
                         ((Integer)((JSpinner)e.getSource()).getValue()).floatValue() / 100;
             }
         });
+        ourSharePercentSpinner.setToolTipText("<html>Defines how many percent of the acting pixel's genes shall be injected into the target.<br />(eg. setting this to 80 will make the target 80% like this pixel and leave 20% as they are)</html>");
         parametersMap.put("Our share in %", ourSharePercentSpinner);
 
 
@@ -233,6 +237,7 @@ public class AssimilationAction extends Action {
                 mixRules = mixRuleSetCheckBox.isSelected();
             }
         });
+        mixRuleSetCheckBox.setToolTipText("If checked, the target's color and rule set will be assimilated. If unchecked, only color will be assimilated.");
         parametersMap.put("Mix rules", mixRuleSetCheckBox);
 
         return parametersMap;

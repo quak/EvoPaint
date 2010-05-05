@@ -144,6 +144,7 @@ public class ChangeEnergyAction extends Action {
                 amount = (Integer)((JSpinner)e.getSource()).getValue();
             }
         });
+        amountSpinner.setToolTipText("Positive values make the target gain energy, negative ones make it lose energy.");
         parametersMap.put("Target's Energy Change", amountSpinner);
 
         return parametersMap;

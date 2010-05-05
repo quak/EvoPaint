@@ -21,6 +21,7 @@ package evopaint.commands;
 
 import evopaint.Configuration;
 import evopaint.interfaces.IChangeListener;
+import evopaint.pixel.rulebased.Rule;
 import javax.swing.SwingUtilities;
 
 /**
@@ -44,6 +45,10 @@ public class ResetWorldCommand extends AbstractCommand {
                     public void changed() {
                         configuration.world.reset();
                         configuration.usedActions.clear();
+                        // re-add actions used in currently selected paint
+                        for (Rule rule : configuration.paint.getCurrentRuleSet().getRules()) {
+                            configuration.usedActions.add(rule.getAction());
+                        }
                     }
                 });
             }

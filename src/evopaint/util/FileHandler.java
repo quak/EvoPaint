@@ -81,7 +81,7 @@ public class FileHandler implements TreeModelListener {
                 collectionDir.delete();
             }
             
-            File metadataFile = new File(collectionDir, "metadata.xml");
+            File metadataFile = new File(collectionDir, "metadata.epc");
             RuleSetCollection ruleSetCollection = (RuleSetCollection)importFromFile(metadataFile);
             
             if (ruleSetCollection == null) {
@@ -90,7 +90,7 @@ public class FileHandler implements TreeModelListener {
 
             CollectionNode collectionNode = new CollectionNode(ruleSetCollection);
             for (File file : collectionDir.listFiles()) {
-                if (file.getName().equals("metadata.xml")) {
+                if (file.getName().equals("metadata.epc")) {
                     continue;
                 }
                 
@@ -187,7 +187,7 @@ public class FileHandler implements TreeModelListener {
                     } else {
                         File metaDataFile = new File(collectionsDir,
                                 makeDirectoryName(collectionNode.getName()) +
-                                "/metadata.xml");
+                                "/metadata.epc");
 
                         writeToFile(collectionNode.getUserObject(), metaDataFile);
                     }
@@ -213,7 +213,7 @@ public class FileHandler implements TreeModelListener {
                 collectionDir.mkdir();
             }
 
-            File metaDataFile = new File(collectionDir, "metadata.xml");
+            File metaDataFile = new File(collectionDir, "metadata.epc");
             writeToFile(addedNode.getUserObject(), metaDataFile);
             return;
         }
