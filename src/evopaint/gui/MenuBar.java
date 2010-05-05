@@ -126,11 +126,7 @@ public class MenuBar extends JMenuBar implements Observer {
 //        selectionMenu.add(fillHalfSelection);
         selectionMenu.add(new JMenuItem("Open as new"));
         JMenuItem copySelection = new JMenuItem("Copy");
-        copySelection.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		configuration.mainFrame.setActiveTool(CopySelectionCommand.class);
-        	}
-        });
+        copySelection.addActionListener(showcase.getCopySelectionCommand());
         selectionMenu.add(copySelection);
         selectionMenu.add(new JMenuItem("Options..."));
         activeSelections = new JMenu("Selections");
