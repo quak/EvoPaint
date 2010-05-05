@@ -1,0 +1,12 @@
+1
+<evopaint.pixel.rulebased.RuleSetCollection>
+  <name>Cellular Automatons</name>
+  <description>This is a collection of &lt;a href=&quot;http://en.wikipedia.org/wiki/Cellular_automaton&quot;&gt;cellular automaton&lt;/a&gt; examples.
+
+&lt;h2&gt;Two Important steps for painting with cellular automatons&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;span style=&apos;color: #0000E6; font-weight: bold;&apos;&gt;set the operation mode&lt;/span&gt; to &quot;Cellular Automaton&quot; (upper right corner of the main frame)&lt;/li&gt;
+&lt;li&gt;&lt;span style=&apos;color: #0000E6; font-weight: bold;&apos;&gt;fill the area&lt;/span&gt; this particular CA shall use, because in a CA a pixel should only modify itself so a CA cannot grow. Note that changes to neighboring pixels are not detected for performance reasons, so you better check that you only modify the acting pixel. Not doing so will create north-west to south-east aligned patterns due to missing randomization in internal computations in this mode.&lt;/li&gt;
+&lt;/ol&gt;
+            </description>
+</evopaint.pixel.rulebased.RuleSetCollection>

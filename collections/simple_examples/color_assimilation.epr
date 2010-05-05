@@ -1,0 +1,89 @@
+1
+<evopaint.pixel.rulebased.RuleSet>
+  <name>Color Assimilation</name>
+  <description>This one-line rule set will initiate a nice to watch and very colorful spectacle if you apply it to randomly colored pixels. For the full effect, apply this rule set to a large sized fairy dust brush. Since the action requires no cost per default  you can sit back, relax and enjoy the show until you get bored.&lt;br&gt;&lt;br&gt;Don&apos;t miss to use a medium density brush or fill action once the development nears an end for some extra fun!</description>
+  <rules>
+    <evopaint.pixel.rulebased.Rule>
+      <conditions>
+        <evopaint.pixel.rulebased.conditions.ExistenceCondition>
+          <target class="evopaint.pixel.rulebased.targeting.ConditionMetaTarget">
+            <directions>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>0</x>
+                <y>-1</y>
+                <type>1</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>1</x>
+                <y>-1</y>
+                <type>2</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>1</x>
+                <y>0</y>
+                <type>3</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>1</x>
+                <y>1</y>
+                <type>4</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>0</x>
+                <y>1</y>
+                <type>5</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>-1</x>
+                <y>1</y>
+                <type>6</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>-1</x>
+                <y>0</y>
+                <type>7</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>-1</x>
+                <y>-1</y>
+                <type>8</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+            </directions>
+            <min>1</min>
+            <max>8</max>
+          </target>
+          <objectComparisonOperator>
+            <type>0</type>
+          </objectComparisonOperator>
+        </evopaint.pixel.rulebased.conditions.ExistenceCondition>
+      </conditions>
+      <action class="evopaint.pixel.rulebased.actions.AssimilationAction">
+        <energyChange>0</energyChange>
+        <target class="evopaint.pixel.rulebased.targeting.ActionMetaTarget">
+          <directions>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate"/>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate[2]"/>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate[3]"/>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate[4]"/>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate[5]"/>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate[6]"/>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate[7]"/>
+            <evopaint.util.mapping.RelativeCoordinate reference="../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/target/directions/evopaint.util.mapping.RelativeCoordinate[8]"/>
+          </directions>
+          <qualifiers>
+            <evopaint.pixel.rulebased.targeting.qualifiers.ExistenceQualifier>
+              <objectComparisonOperator reference="../../../../../conditions/evopaint.pixel.rulebased.conditions.ExistenceCondition/objectComparisonOperator"/>
+            </evopaint.pixel.rulebased.targeting.qualifiers.ExistenceQualifier>
+          </qualifiers>
+        </target>
+        <dimensions>
+          <hue>true</hue>
+          <saturation>true</saturation>
+          <brightness>true</brightness>
+        </dimensions>
+        <ourShare>0.2</ourShare>
+        <mixRules>true</mixRules>
+      </action>
+    </evopaint.pixel.rulebased.Rule>
+  </rules>
+</evopaint.pixel.rulebased.RuleSet>

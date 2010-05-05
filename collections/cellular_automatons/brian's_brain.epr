@@ -1,0 +1,176 @@
+1
+<evopaint.pixel.rulebased.RuleSet>
+  <name>Brian&apos;s Brain</name>
+  <description>An implementation of &lt;a href=&quot;http://en.wikipedia.org/wiki/Brian%27s_Brain&quot;&gt;Brian&apos;s Brain&lt;/a&gt;.
+
+&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;State&lt;/th&gt;&lt;th&gt;Color&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;On&lt;/td&gt;&lt;td&gt;&lt;span style=&quot;background-color: #FFFFFF;&quot;&gt;#FFFFFF&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Off&lt;/td&gt;&lt;td&gt;&lt;span style=&quot;background-color: #000000; color: white;&quot;&gt;#000000&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Dying&lt;/td&gt;&lt;td&gt;&lt;span style=&quot;background-color: #0000FF;&quot;&gt;#0000FF&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</description>
+  <rules>
+    <evopaint.pixel.rulebased.Rule>
+      <conditions>
+        <evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+          <target class="evopaint.pixel.rulebased.targeting.ConditionSingleTarget">
+            <direction>
+              <x>0</x>
+              <y>0</y>
+              <type>0</type>
+            </direction>
+          </target>
+          <comparedColor>
+            <hue>0.0</hue>
+            <saturation>0.0</saturation>
+            <brightness>0.0</brightness>
+          </comparedColor>
+          <dimensions>
+            <hue>true</hue>
+            <saturation>true</saturation>
+            <brightness>true</brightness>
+          </dimensions>
+          <compareToLikeness>1.0</compareToLikeness>
+          <comparisonOperator>
+            <type>0</type>
+          </comparisonOperator>
+        </evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+        <evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+          <target class="evopaint.pixel.rulebased.targeting.ConditionMetaTarget">
+            <directions>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>0</x>
+                <y>-1</y>
+                <type>1</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>1</x>
+                <y>-1</y>
+                <type>2</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>1</x>
+                <y>0</y>
+                <type>3</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>1</x>
+                <y>1</y>
+                <type>4</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>0</x>
+                <y>1</y>
+                <type>5</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>-1</x>
+                <y>1</y>
+                <type>6</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>-1</x>
+                <y>0</y>
+                <type>7</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+              <evopaint.util.mapping.RelativeCoordinate>
+                <x>-1</x>
+                <y>-1</y>
+                <type>8</type>
+              </evopaint.util.mapping.RelativeCoordinate>
+            </directions>
+            <min>2</min>
+            <max>2</max>
+          </target>
+          <comparedColor>
+            <hue>0.0</hue>
+            <saturation>0.0</saturation>
+            <brightness>1.0</brightness>
+          </comparedColor>
+          <dimensions>
+            <hue>true</hue>
+            <saturation>true</saturation>
+            <brightness>true</brightness>
+          </dimensions>
+          <compareToLikeness>1.0</compareToLikeness>
+          <comparisonOperator reference="../../evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/comparisonOperator"/>
+        </evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+      </conditions>
+      <action class="evopaint.pixel.rulebased.actions.SetColorAction">
+        <energyChange>0</energyChange>
+        <target class="evopaint.pixel.rulebased.targeting.ActionSingleTarget">
+          <direction reference="../../../conditions/evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/target/direction"/>
+        </target>
+        <color>
+          <hue>0.0</hue>
+          <saturation>0.0</saturation>
+          <brightness>1.0</brightness>
+        </color>
+      </action>
+    </evopaint.pixel.rulebased.Rule>
+    <evopaint.pixel.rulebased.Rule>
+      <conditions>
+        <evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+          <target class="evopaint.pixel.rulebased.targeting.ConditionSingleTarget">
+            <direction reference="../../../../../evopaint.pixel.rulebased.Rule/conditions/evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/target/direction"/>
+          </target>
+          <comparedColor>
+            <hue>0.0</hue>
+            <saturation>0.0</saturation>
+            <brightness>1.0</brightness>
+          </comparedColor>
+          <dimensions>
+            <hue>true</hue>
+            <saturation>true</saturation>
+            <brightness>true</brightness>
+          </dimensions>
+          <compareToLikeness>1.0</compareToLikeness>
+          <comparisonOperator reference="../../../../evopaint.pixel.rulebased.Rule/conditions/evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/comparisonOperator"/>
+        </evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+      </conditions>
+      <action class="evopaint.pixel.rulebased.actions.SetColorAction">
+        <energyChange>0</energyChange>
+        <target class="evopaint.pixel.rulebased.targeting.ActionSingleTarget">
+          <direction reference="../../../../evopaint.pixel.rulebased.Rule/conditions/evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/target/direction"/>
+        </target>
+        <color>
+          <hue>0.6666667</hue>
+          <saturation>1.0</saturation>
+          <brightness>1.0</brightness>
+        </color>
+      </action>
+    </evopaint.pixel.rulebased.Rule>
+    <evopaint.pixel.rulebased.Rule>
+      <conditions>
+        <evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+          <target class="evopaint.pixel.rulebased.targeting.ConditionSingleTarget">
+            <direction reference="../../../../../evopaint.pixel.rulebased.Rule/conditions/evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/target/direction"/>
+          </target>
+          <comparedColor>
+            <hue>0.6666667</hue>
+            <saturation>1.0</saturation>
+            <brightness>1.0</brightness>
+          </comparedColor>
+          <dimensions>
+            <hue>true</hue>
+            <saturation>true</saturation>
+            <brightness>true</brightness>
+          </dimensions>
+          <compareToLikeness>1.0</compareToLikeness>
+          <comparisonOperator reference="../../../../evopaint.pixel.rulebased.Rule/conditions/evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/comparisonOperator"/>
+        </evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition>
+      </conditions>
+      <action class="evopaint.pixel.rulebased.actions.SetColorAction">
+        <energyChange>0</energyChange>
+        <target class="evopaint.pixel.rulebased.targeting.ActionSingleTarget">
+          <direction reference="../../../../evopaint.pixel.rulebased.Rule/conditions/evopaint.pixel.rulebased.conditions.ColorLikenessColorCondition/target/direction"/>
+        </target>
+        <color>
+          <hue>0.0</hue>
+          <saturation>0.0</saturation>
+          <brightness>0.0</brightness>
+        </color>
+      </action>
+    </evopaint.pixel.rulebased.Rule>
+  </rules>
+</evopaint.pixel.rulebased.RuleSet>
