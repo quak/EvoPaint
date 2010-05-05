@@ -130,7 +130,7 @@ public class JDescriptionPanel extends JPanel implements TreeSelectionListener {
     }
 
     private String newLineToBreak(String s) {
-        return s.replaceAll("\n", "<br>");
+        return s.replaceAll("[^>]?\n", "<br>");
     }
 
     public void valueChanged(TreeSelectionEvent e) {
