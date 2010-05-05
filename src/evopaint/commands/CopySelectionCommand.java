@@ -1,15 +1,18 @@
 package evopaint.commands;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import evopaint.Configuration;
 import evopaint.Selection;
 import evopaint.gui.util.IOverlay;
 import evopaint.pixel.Pixel;
+import evopaint.pixel.PixelColor;
+import evopaint.pixel.rulebased.Rule;
 import evopaint.pixel.rulebased.RuleBasedPixel;
+import evopaint.util.mapping.AbsoluteCoordinate;
 
 public class CopySelectionCommand extends AbstractCommand {
 
@@ -53,6 +56,11 @@ public class CopySelectionCommand extends AbstractCommand {
 					RuleBasedPixel pixel = config.world.get(location.x + x, location.y + y);
 					if (pixel != null)
 						pixel.getPixelColor().setInteger(overlay.getRGB(x, y));
+                    else{
+                        PixelColor color = new PixelColor(overlay.getRGB(x, y));
+                        RuleBasedPixel pix = new RuleBasedPixel(color, new AbsoluteCoordinate(location.x +x , location.y + y, config.world), config.startingEnergy, new ArrayList<Rule>());
+                        config.world.set(pix);
+                    }
 				}
 			}
 			dragging = false;
