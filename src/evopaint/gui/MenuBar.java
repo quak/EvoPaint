@@ -125,7 +125,13 @@ public class MenuBar extends JMenuBar implements Observer {
 //        fillHalfSelection.addActionListener(new FillSelectionCommandScattered(showcase));
 //        selectionMenu.add(fillHalfSelection);
         selectionMenu.add(new JMenuItem("Open as new"));
-        selectionMenu.add(new JMenuItem("Copy"));
+        JMenuItem copySelection = new JMenuItem("Copy");
+        copySelection.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		configuration.mainFrame.setActiveTool(CopySelectionCommand.class);
+        	}
+        });
+        selectionMenu.add(copySelection);
         selectionMenu.add(new JMenuItem("Options..."));
         activeSelections = new JMenu("Selections");
         JMenuItem deleteCurrentSelection = new JMenuItem("Delete current");
@@ -135,13 +141,6 @@ public class MenuBar extends JMenuBar implements Observer {
         JMenuItem clearSelections = new JMenuItem("Clear Selections");
         clearSelections.addActionListener(listenerFactory.CreateClearSelectionsListener());
         selectionMenu.add(clearSelections);
-        JMenuItem copySelection = new JMenuItem("Copy Selection");
-        copySelection.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		configuration.mainFrame.setActiveTool(CopySelectionCommand.class);
-        	}
-        });
-        selectionMenu.add(copySelection);
 
         // info menu
         JMenu infoMenu = new JMenu();
