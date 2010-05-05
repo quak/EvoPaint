@@ -161,13 +161,11 @@ public class FileHandler implements TreeModelListener {
                 while (enumeration.hasMoreElements()) {
                     String name = makeFileName(((RuleSetNode)enumeration.nextElement()).getName());
                     if (ruleSetFiles[i].getName().equals(name)) {
-                        System.out.println(name);
                         found = true;
                         break;
                     }
                 }
                 if (found == false) {
-                    System.out.println("deleting " + ruleSetFiles[i].getName());
                     if (false == ruleSetFiles[i].delete()) {
                         ExceptionHandler.handle(new Exception(), false, "I failed to delete the old rule set file at \"" + ruleSetFiles[i].getAbsolutePath() + "\"");
                     }
