@@ -19,6 +19,7 @@
 
 package evopaint;
 
+import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.Pixel;
 import evopaint.util.ExceptionHandler;
 import evopaint.util.avi.AVIOutputStream;
@@ -26,6 +27,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.Semaphore;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -87,40 +90,77 @@ public class Perception {
     }
 
     public synchronized void stopRecording() {
-        boolean finishedOK = false; // if we call showSaveDialog() after videoOut.finish(), the video consists of one long same frame only
-        try {
-            videoOut.finish();
-            finishedOK = true;
-        } catch (IOException ex) {
-            ExceptionHandler.handle(ex, false);
-        } finally {
-            videoOut = null;
-        }
-        if (finishedOK) {
-            SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    showSaveDialog();
+                    configuration.world.addChangeListener(new IChangeListener() {
+
+                            public void changed() {
+                                boolean finishedOK = false; // if we call showSaveDialog() after videoOut.finish(), the video consists of one long same frame only
+                                try {
+                                    videoOut.finish();
+                                    finishedOK = true;
+                                } catch (IOException ex) {
+                                    ExceptionHandler.handle(ex, false);
+                                } finally {
+                                    videoOut = null;
+                                }
+                                if (finishedOK) {
+                                    JFileChooser fileChooser = new JFileChooser();
+                                    fileChooser.setFileFilter(new FileNameExtensionFilter("*.avi", "avi"));
+                                    int option = fileChooser.showSaveDialog(configuration.mainFrame);
+                                    
+                                    String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+                                    if (option == JFileChooser.APPROVE_OPTION) {
+                                        EncoderThread t = new EncoderThread(selectedFilePath);
+                                        t.start();
+                                    }
+                                }
+                            }
+                    });
                 }
-            });
-        }
+        });
     }
 
-    public void showSaveDialog() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("*.avi", "avi"));
-        int option = fileChooser.showSaveDialog(configuration.mainFrame);
+    private class EncoderThread extends Thread {
 
-        boolean deleteUncompressed = true;
-        if (option == JFileChooser.APPROVE_OPTION) {
+        private String saveLocationPath;
+        private Semaphore semaphore;
 
-            File saveLocation = fileChooser.getSelectedFile();
+        public EncoderThread(String saveLocationPath) {
+            this.saveLocationPath = saveLocationPath;
+        }
+
+        @Override
+        public void run() {
+            encodeVideo();
+        }
+
+        private void encodeVideo() {
+
+            boolean deleteUncompressed = true;
+
+            File saveLocation = new File(saveLocationPath);
             File tmpLocation = new File(saveLocation.getAbsolutePath() + ".part");
             if (false == saveLocation.getName().endsWith(".avi")) {
                 saveLocation = new File(saveLocation.getAbsolutePath() + ".avi");
             }
             try {
-                Process proc = Runtime.getRuntime().exec("mencoder " + Configuration.MENCODER_OPTIONS +
-                        " " + videoFile.getAbsolutePath() + " -o " + tmpLocation.getAbsolutePath());
+                // this might look more complicated than you might think it should be
+                // but under windows the backslash in file.getAbsolutePath() causes
+                // problems when used as replacement argument in string.replaceAll()
+                String [] inputSplitted = Configuration.ENCODER_COMMAND.split("INPUT_FILE", 2);
+                String inputInserted = inputSplitted[0] + videoFile.getAbsolutePath() + inputSplitted[1];
+                String [] outputSplitted = inputInserted.split("OUTPUT_FILE", 2);
+                String outputInserted = outputSplitted[0] + tmpLocation.getAbsolutePath() + outputSplitted[1];
+                Process proc = Runtime.getRuntime().exec(outputInserted);
+                // NOTE mencoder produces a lot of output, which will fill java's buffers and cause
+                // mencoder to hang indefinitely. to prevent this, I added the "-quiet" option
+                // to the options string, but apparently that is not enough for Java on Windows
+                // so here we go:
+                OutputDestroyer destroyerOfOutputs1 = new OutputDestroyer(proc.getErrorStream());
+                destroyerOfOutputs1.start();
+                OutputDestroyer destroyerOfOutputs2 = new OutputDestroyer(proc.getInputStream());
+                destroyerOfOutputs2.start();
                 try {
                     proc.waitFor();
                 } catch (InterruptedException ex) {
@@ -135,8 +175,7 @@ public class Perception {
                 deleteUncompressed = false;
                 ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video, if you are on a unix style OS: do you have mencoder installed? You can find the recorded video in MPNG format in the same folder EvoPaint resides in if you want to compress it manually.</p>");
             }
-
-            if (false == tmpLocation.renameTo(saveLocation)) {
+            else if (false == tmpLocation.renameTo(saveLocation)) {
                 deleteUncompressed = false;
                 ExceptionHandler.handle(new Exception(), false, "<p>Hello there, I have good news and bad news. The good news is, I successfully recorded and encoded your video. The bad news is I could not rename it from \"" + tmpLocation.getName() + "\" to \"" + saveLocation.getName() + "\" for some reason.</p>");
             }
@@ -144,12 +183,36 @@ public class Perception {
             if (deleteUncompressed == true) { // success
                 JOptionPane.showMessageDialog(configuration.mainFrame, "I finished encoding your video, are you proud of me? I know I am!");
             }
+
+            if (deleteUncompressed) {
+                videoFile.delete();
+            }
+            videoFile = null;
         }
 
-        if (deleteUncompressed) {
-            videoFile.delete();
+        private class OutputDestroyer extends Thread {
+            private InputStream in;
+
+            public OutputDestroyer(InputStream in) {
+                this.in = in;
+            }
+
+            @Override
+            public void run() {
+                try {
+                    while (in.read() != -1) {
+                    }
+                } catch (IOException ex) {
+                    ExceptionHandler.handle(ex, false);
+                } finally {
+                    try {
+                        in.close();
+                    } catch (IOException ex) {
+                        ExceptionHandler.handle(ex, false);
+                    }
+                }
+            }
         }
-        videoFile = null;
     }
 
     public Perception(Configuration configuration) {
