@@ -63,7 +63,6 @@ public class Configuration {
 
     public static final int OPERATIONMODE_AGENT_SIMULATION = 0;
     public static final int OPERATIONMODE_CELLULAR_AUTOMATON = 1;
-    public static final int OPERATIONMODE_MIXED = 2;
 
     public static final int RUNLEVEL_RUNNING = 2;
     public static final int RUNLEVEL_PAINTING_ONLY = 1;

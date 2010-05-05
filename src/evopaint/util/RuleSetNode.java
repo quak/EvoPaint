@@ -19,6 +19,7 @@
 
 package evopaint.util;
 
+import evopaint.pixel.rulebased.RuleSet;
 import evopaint.pixel.rulebased.interfaces.INamed;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -28,7 +29,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class RuleSetNode extends DefaultMutableTreeNode {
 
-        public RuleSetNode(Object userObject) {
+        public RuleSetNode(RuleSet userObject) {
             super(userObject, false);
         }
 

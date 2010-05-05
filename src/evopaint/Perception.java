@@ -127,13 +127,13 @@ public class Perception {
                     ExceptionHandler.handle(ex, true);
                 }
             } catch (IOException ex) {
-                ExceptionHandler.handle(ex, false, "<p>Failed to encode the video due to an IO Exception. Your video is saved in MPNG format in your .evopaint folder, go and convert it yourself!</p>");
+                ExceptionHandler.handle(ex, false, "<p>Failed to encode the video due to an IO Exception. Your video is saved in MPNG format in the same folder EvoPaint resides in, go and convert it yourself!</p>");
                 deleteUncompressed = false;
             }
 
             if (false == tmpLocation.exists()) {
                 deleteUncompressed = false;
-                ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video, if you are on a unix style OS: do you have mencoder installed? You can find the recorded video in MPNG format in your .evopaint folder in case you want to compress it manually.</p>");
+                ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video, if you are on a unix style OS: do you have mencoder installed? You can find the recorded video in MPNG format in the same folder EvoPaint resides in if you want to compress it manually.</p>");
             }
 
             if (false == tmpLocation.renameTo(saveLocation)) {

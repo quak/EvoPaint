@@ -32,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
@@ -53,10 +54,25 @@ public class ExceptionHandler {
     private JTextArea exceptionTextArea;
 
     public ExceptionHandler() {
+        this(null);
     }
 
-    private ExceptionHandler(JFrame mainFrame) {
-        dialog = new JDialog(mainFrame, "Sorry...", true);
+    public ExceptionHandler(JFrame owner) {
+        
+        // pretty to the death
+        if (false == UIManager.getLookAndFeel().getID().equals("Nimbus")) {
+            try {
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            } catch (Exception e) {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception ee) {
+                    // mu!
+                }
+            }
+        }
+
+        dialog = new JDialog((JFrame)owner, "Sorry...", true);
         dialog.setLayout(new BorderLayout(10, 10));
         dialog.setPreferredSize(new Dimension(800, 600));
 
@@ -101,10 +117,6 @@ public class ExceptionHandler {
         dialog.add(controlPanel, BorderLayout.SOUTH);
     }
 
-    public static void init(JFrame mainFrame) {
-        instance = new ExceptionHandler(mainFrame);
-    }
-
     // do not change the signature of this method. needed by awt
     public void handle(Throwable t) {
 
@@ -123,17 +135,14 @@ public class ExceptionHandler {
 
     public static void handle(Throwable t, boolean fatal, String msg) {
         if (instance == null) {
-            t.printStackTrace();
+            instance = new ExceptionHandler();
         }
 
         instance.handleInternal(t, fatal, msg);
     }
 
     private void handleInternal(Throwable t, boolean fatal, String msg) {
-        if (instance == null) {
-            t.printStackTrace();
-            System.exit(1);
-        }
+        t.printStackTrace();
 
         this.fatal = fatal;
 

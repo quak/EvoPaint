@@ -35,7 +35,6 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URL;
 import java.util.Enumeration;
-import javax.swing.JFileChooser;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -56,19 +55,6 @@ public class FileHandler implements TreeModelListener {
 
     public File getCollectionsDir() {
         return collectionsDir;
-    }
-    
-    public synchronized void checkFiles() {
-        File userDir = new JFileChooser().getFileSystemView().getDefaultDirectory();
-        homeDir = new File(userDir, ".evopaint");
-        if (homeDir.exists() == false) {
-            homeDir.mkdir();
-        }
-        collectionsDir = new File(homeDir, "collections");
-        if (collectionsDir.exists() == false) {
-            collectionsDir.mkdir();
-            createExampleCollections(collectionsDir);
-        }
     }
 
     public synchronized DefaultTreeModel readCollections() {
@@ -161,6 +147,33 @@ public class FileHandler implements TreeModelListener {
                     makeDirectoryName(collectionNode.getName()) + File.separator +
                     makeFileName(ruleSetNode.getName()));
             writeToFile((RuleSet)ruleSetNode.getUserObject(), ruleSetFile);
+
+            // delete old rule set file if the name was changed
+            File collectionDir = new File(collectionsDir,
+                    makeDirectoryName(collectionNode.getName()));
+            File [] ruleSetFiles = collectionDir.listFiles();
+            for (int i = 0; i < ruleSetFiles.length; i++) {
+                boolean found = false;
+                if (ruleSetFiles[i].getName().equals("metadata.epc")) {
+                    continue;
+                }
+                Enumeration enumeration = collectionNode.children();
+                while (enumeration.hasMoreElements()) {
+                    String name = makeFileName(((RuleSetNode)enumeration.nextElement()).getName());
+                    if (ruleSetFiles[i].getName().equals(name)) {
+                        System.out.println(name);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found == false) {
+                    System.out.println("deleting " + ruleSetFiles[i].getName());
+                    if (false == ruleSetFiles[i].delete()) {
+                        ExceptionHandler.handle(new Exception(), false, "I failed to delete the old rule set file at \"" + ruleSetFiles[i].getAbsolutePath() + "\"");
+                    }
+                    break;
+                }
+            }
             return;
         }
 
@@ -183,7 +196,7 @@ public class FileHandler implements TreeModelListener {
                 if (found == false) {
                     if (false == collectionDirs[i].renameTo(new File(collectionsDir,
                             makeDirectoryName(collectionNode.getName())))) {
-                        System.out.println("Failed to rename collection directory: " + collectionDirs[i].getAbsolutePath());
+                        ExceptionHandler.handle(new Exception(), false, "Failed to rename collection directory: " + collectionDirs[i].getAbsolutePath());
                     } else {
                         File metaDataFile = new File(collectionsDir,
                                 makeDirectoryName(collectionNode.getName()) +
@@ -253,7 +266,7 @@ public class FileHandler implements TreeModelListener {
                     File.separator +
                     makeFileName(((RuleSetNode)removedNode).getName())));
             if (false == ruleSetFile.delete()) {
-                System.out.println("Failed to delete rule set file: " + ruleSetFile.getAbsolutePath());
+                ExceptionHandler.handle(new Exception(), false, "I failed to delete rule set file: " + ruleSetFile.getAbsolutePath());
             }
             return;
         }
@@ -262,8 +275,7 @@ public class FileHandler implements TreeModelListener {
     }
 
     public void treeStructureChanged(TreeModelEvent e) {
-        System.out.println("file handler: detected node structure change this was not expected, exiting.");
-        System.exit(1);
+        ExceptionHandler.handle(new Exception(), true, "file handler: detected node structure change this was not expected, exiting.");
     }
 
     private Object importFromFile(File file) {
@@ -318,6 +330,10 @@ public class FileHandler implements TreeModelListener {
     }
 
     public FileHandler() {
-        checkFiles();
+        homeDir = new File(System.getProperty("user.dir"));
+        collectionsDir = new File(homeDir, "/collections");
+        if (false == collectionsDir.exists()) {
+            ExceptionHandler.handle(new Exception(), true, "I cannot find the collections folder in the current working directory \"" + homeDir + "\"! If you created a short cut for me on your Desktop *blushes* make sure you set the working directory poperty correctly and click that sexy short cut again!");
+        }
     }
 }
