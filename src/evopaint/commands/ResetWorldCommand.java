@@ -37,6 +37,8 @@ public class ResetWorldCommand extends AbstractCommand {
     }
 
     public void execute() {
+        ClearSelectionCommand command = new ClearSelectionCommand(configuration.mainFrame.getShowcase());
+        command.execute();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
