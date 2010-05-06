@@ -173,7 +173,11 @@ public class Perception {
 
             if (false == tmpLocation.exists()) {
                 deleteUncompressed = false;
-                ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video, if you are on a unix style OS: do you have mencoder installed? You can find the recorded video in MPNG format in the same folder EvoPaint resides in if you want to compress it manually.</p>");
+                ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video using the encoding command" +
+                        "\"" + Configuration.ENCODER_COMMAND + "\"" +
+                        " called from working directory " +
+                        "\"" + System.getProperty("user.dir") + "\"" +
+                        ", if you are on Windows, this is most likely a bug, if you are on a unix style OS: do you have mencoder (mplayer) installed? You can find the recorded video in MPNG format in the same folder EvoPaint resides in if you want to compress it manually.</p>");
             }
             else if (false == tmpLocation.renameTo(saveLocation)) {
                 deleteUncompressed = false;
