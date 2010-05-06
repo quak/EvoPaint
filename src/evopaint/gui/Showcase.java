@@ -268,6 +268,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
     }
 
     public void clearSelections() {
+        unsubscribe(activeSelection);
         this.activeSelection = null;
         this.currentSelections.clear();
     }
