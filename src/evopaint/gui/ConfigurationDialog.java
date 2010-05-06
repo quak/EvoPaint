@@ -94,9 +94,9 @@ public class ConfigurationDialog extends JDialog {
 
                 //config.world.setSize(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
                 config.dimension = new Dimension(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
-                config.mutationRate = Integer.parseInt(txtMutationRate.getText());
+                config.mutationRate = Double.parseDouble(txtMutationRate.getText());
                 config.fps = Integer.parseInt(txtFps.getText());
-                config.backgroundColor = Integer.parseInt(txtBackgroundColor.getText());
+                config.backgroundColor = txtBackgroundColor.getBackground().getRGB();
                 config.startingEnergy = Integer.parseInt(txtStartingEnergy.getText());
                 closeDialog();
             }
@@ -114,7 +114,7 @@ public class ConfigurationDialog extends JDialog {
 	}
 
     private boolean validateInput() {
-        return false;  //To change body of created methods use File | Settings | File Templates.
+        return true;  //To change body of created methods use File | Settings | File Templates.
     }
 
     private void closeDialog() {
@@ -178,6 +178,7 @@ public class ConfigurationDialog extends JDialog {
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = colorChooser.getColor();
                 setBackgroundValue(txtBackgroundColor, color.getRGB());
+                pack();
             }
         }
 
