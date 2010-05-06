@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -115,6 +116,8 @@ public class ExceptionHandler {
         controlPanel.add(okButton2);
         
         dialog.add(controlPanel, BorderLayout.SOUTH);
+
+
     }
 
     // do not change the signature of this method. needed by awt
@@ -146,8 +149,9 @@ public class ExceptionHandler {
 
         this.fatal = fatal;
 
-        messagePane.setText("<html><body style='padding:10; background: ffb1ba;'><h1 style='text-align: center;'>" + (fatal ? fatalHeading : defaultHeading) + "</h1>" + msg + "</body></html>");
-
+        String imagesrc = getClass().getResource("/evopaint/gui/icons/exception.png").toString();
+        messagePane.setText("<html><body style='padding:10; background: ffb1ba;'><table style='width: 100%;'><tr><td><img src='"+imagesrc+"' /></td><td style='width: 100%;'><h1 style='text-align: center;'>" + (fatal ? fatalHeading : defaultHeading) + "</h1>" + msg + "</td></tr></table></body></html>");
+        System.out.println(messagePane.getText());
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter, true);
         t.printStackTrace(printWriter);
