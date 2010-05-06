@@ -27,21 +27,21 @@ import evopaint.commands.*;
 import evopaint.gui.listeners.SelectionListenerFactory;
 import evopaint.gui.rulesetmanager.JRuleSetManager;
 import evopaint.pixel.rulebased.RuleSet;
-import evopaint.util.ExceptionHandler;
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -99,6 +99,14 @@ public class MainFrame extends JFrame {
                 // mu!
             }
         }
+
+        List<Image> iconList = new ArrayList<Image>();
+        iconList.add(getToolkit().getImage(getClass().getResource("icons/application-16.png")));
+        iconList.add(getToolkit().getImage(getClass().getResource("icons/application-22.png")));
+        iconList.add(getToolkit().getImage(getClass().getResource("icons/application-32.png")));
+        iconList.add(getToolkit().getImage(getClass().getResource("icons/application-48.png")));
+        iconList.add(getToolkit().getImage(getClass().getResource("icons/application-64.png")));
+        setIconImages(iconList);
 
         ToolTipManager.sharedInstance().setInitialDelay(600);
         ToolTipManager.sharedInstance().setReshowDelay(300);
