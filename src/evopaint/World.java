@@ -116,4 +116,8 @@ public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
     public void removeChangeListener(IChangeListener subscriber) {
         assert (false); // should not be called since pending operations are cleared automatically
     }
+
+    //public void setSize(int width, int height) {
+        //FIXME: @TAM: Implement world size change
+    //}
 }

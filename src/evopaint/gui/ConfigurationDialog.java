@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.swing.*;
 
@@ -21,22 +23,24 @@ public class ConfigurationDialog extends JDialog {
 
 	private void initializeComponents() {
 		this.setTitle("evoPaint Configuration");
-		Dimension d = new Dimension(400, 400);
+		Dimension d = new Dimension(200, 270);
 		this.setPreferredSize(d);
 		this.setSize(d);
+        this.setResizable(false);
 
 		Container cp = this.getContentPane();
-		cp.setLayout(new FlowLayout());
+		cp.setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
 
 		JPanel worldSize = new JPanel();
 		cp.add(worldSize);
         //Worldsize
 		worldSize.add(new JLabel("World Size"));
-		JTextField txtWidth = new JTextField();
+		final JFormattedTextField txtWidth = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		txtWidth.setText(Integer.toString(config.world.getWidth()));
-		JTextField txtHeight = new JTextField();
+		final JTextField txtHeight = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		txtHeight.setText(Integer.toString(config.world.getHeight()));
 		worldSize.add(txtWidth);
+        worldSize.add(new JLabel("x"));
 		worldSize.add(txtHeight);
 
         JPanel mutationRate = new JPanel();
@@ -44,7 +48,7 @@ public class ConfigurationDialog extends JDialog {
 
         //Mutationrate
         mutationRate.add(new JLabel("Mutation Rate"));
-        JTextField txtMutationRate = new JTextField();
+        final JTextField txtMutationRate = new JFormattedTextField(NumberFormat.getNumberInstance(Locale.ENGLISH));
         txtMutationRate.setText(Double.toString(config.mutationRate));
         mutationRate.add(txtMutationRate);
 
@@ -53,7 +57,7 @@ public class ConfigurationDialog extends JDialog {
 
         //FPS
         fps.add(new JLabel("FPS"));
-        JTextField txtFps = new JTextField();
+        final JTextField txtFps = new JFormattedTextField();
         txtFps.setText(Integer.toString(config.fps));
         fps.add(txtFps);
 
@@ -62,12 +66,60 @@ public class ConfigurationDialog extends JDialog {
 
         //BackgroundColor
         backgroundColor.add(new JLabel("Background Color"));
-        JTextField txtBackgroundColor = new JTextField();
+        final JTextField txtBackgroundColor = new JTextField();
         txtBackgroundColor.addMouseListener(new BackgroundMouseListener(txtBackgroundColor));
         setBackgroundValue(txtBackgroundColor, config.backgroundColor);
         backgroundColor.add(txtBackgroundColor);
+
+        //StartingEnergy
+        JPanel startingEnergy = new JPanel();
+        cp.add(startingEnergy);
+
+        startingEnergy.add(new JLabel("Starting Energy"));
+        final JTextField txtStartingEnergy = new JTextField();
+        txtStartingEnergy.setText(Integer.toString(config.startingEnergy));
+        startingEnergy.add(txtStartingEnergy);
+
+
+        JPanel submit = new JPanel();
+        submit.setBackground(new Color(0xF2F2F5));
+        cp.add(submit);
+
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!validateInput()) return;
+
+                //config.world.setSize(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
+                config.dimension = new Dimension(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
+                config.mutationRate = Integer.parseInt(txtMutationRate.getText());
+                config.fps = Integer.parseInt(txtFps.getText());
+                config.backgroundColor = Integer.parseInt(txtBackgroundColor.getText());
+                config.startingEnergy = Integer.parseInt(txtStartingEnergy.getText());
+                closeDialog();
+            }
+        });
+        submit.add(saveButton);
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeDialog();
+            }
+        });
+        submit.add(cancelButton);
 	}
 
+    private boolean validateInput() {
+        return false;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    private void closeDialog() {
+        this.setVisible(false);
+    }
     private void setBackgroundValue(JTextField textField, int color){
         textField.setText("#" + Integer.toHexString(color));
         setForegroundColor(color, textField);
