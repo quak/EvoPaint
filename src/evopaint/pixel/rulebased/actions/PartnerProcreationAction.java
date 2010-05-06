@@ -24,6 +24,7 @@ import evopaint.gui.rulesetmanager.util.DimensionsListener;
 import evopaint.gui.util.AutoSelectOnFocusSpinner;
 import evopaint.interfaces.IRandomNumberGenerator;
 import evopaint.pixel.ColorDimensions;
+import evopaint.pixel.PixelColor;
 import evopaint.pixel.rulebased.Action;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 import evopaint.pixel.rulebased.targeting.ActionMetaTarget;
@@ -174,6 +175,7 @@ public class PartnerProcreationAction extends Action {
         }
         else {
             newPixel = new RuleBasedPixel(actor, actor.getRules());
+            newPixel.setPixelColor(new PixelColor(actor.getPixelColor()));
             newPixel.getPixelColor().mixWith(partner.getPixelColor(), 1 - ourShare, dimensions);
             if (configuration.rng.nextDouble() <= configuration.mutationRate) {
                 newPixel.getPixelColor().mutate(configuration.rng);
