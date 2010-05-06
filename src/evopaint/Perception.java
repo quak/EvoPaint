@@ -150,9 +150,9 @@ public class Perception {
                 // but under windows the backslash in file.getAbsolutePath() causes
                 // problems when used as replacement argument in string.replaceAll()
                 String [] inputSplitted = Configuration.ENCODER_COMMAND.split("INPUT_FILE", 2);
-                String inputInserted = inputSplitted[0] + videoFile.getAbsolutePath() + inputSplitted[1];
+                String inputInserted = inputSplitted[0] + "\"" +videoFile.getAbsolutePath() + "\"" + inputSplitted[1];
                 String [] outputSplitted = inputInserted.split("OUTPUT_FILE", 2);
-                encoderCommand = outputSplitted[0] + tmpLocation.getAbsolutePath() + outputSplitted[1];
+                encoderCommand = outputSplitted[0] + "\"" + tmpLocation.getAbsolutePath() + "\"" + outputSplitted[1];
                 Process proc = Runtime.getRuntime().exec(encoderCommand);
                 // NOTE mencoder produces a lot of output, which will fill java's buffers and cause
                 // mencoder to hang indefinitely. to prevent this, I added the "-quiet" option
@@ -174,7 +174,7 @@ public class Perception {
 
             if (false == tmpLocation.exists()) {
                 deleteUncompressed = false;
-                ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video using the encoding command" +
+                ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video using the encoding command " +
                         "\"" + encoderCommand + "\"" +
                         " called from working directory " +
                         "\"" + System.getProperty("user.dir") + "\"" +
