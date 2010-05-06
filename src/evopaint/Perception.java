@@ -144,6 +144,7 @@ public class Perception {
             if (false == saveLocation.getName().endsWith(".avi")) {
                 saveLocation = new File(saveLocation.getAbsolutePath() + ".avi");
             }
+            String encoderCommand = null;
             try {
                 // this might look more complicated than you might think it should be
                 // but under windows the backslash in file.getAbsolutePath() causes
@@ -151,8 +152,8 @@ public class Perception {
                 String [] inputSplitted = Configuration.ENCODER_COMMAND.split("INPUT_FILE", 2);
                 String inputInserted = inputSplitted[0] + videoFile.getAbsolutePath() + inputSplitted[1];
                 String [] outputSplitted = inputInserted.split("OUTPUT_FILE", 2);
-                String outputInserted = outputSplitted[0] + tmpLocation.getAbsolutePath() + outputSplitted[1];
-                Process proc = Runtime.getRuntime().exec(outputInserted);
+                encoderCommand = outputSplitted[0] + tmpLocation.getAbsolutePath() + outputSplitted[1];
+                Process proc = Runtime.getRuntime().exec(encoderCommand);
                 // NOTE mencoder produces a lot of output, which will fill java's buffers and cause
                 // mencoder to hang indefinitely. to prevent this, I added the "-quiet" option
                 // to the options string, but apparently that is not enough for Java on Windows
@@ -174,7 +175,7 @@ public class Perception {
             if (false == tmpLocation.exists()) {
                 deleteUncompressed = false;
                 ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video using the encoding command" +
-                        "\"" + Configuration.ENCODER_COMMAND + "\"" +
+                        "\"" + encoderCommand + "\"" +
                         " called from working directory " +
                         "\"" + System.getProperty("user.dir") + "\"" +
                         ", if you are on Windows, this is most likely a bug, if you are on a unix style OS: do you have mencoder (mplayer) installed? You can find the recorded video in MPNG format in the same folder EvoPaint resides in if you want to compress it manually.</p>");
