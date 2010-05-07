@@ -20,6 +20,7 @@
 package evopaint.pixel;
 
 /**
+ * Unused for the moment
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  *//*

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 
 /**
+ * This class represents a number comparison
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

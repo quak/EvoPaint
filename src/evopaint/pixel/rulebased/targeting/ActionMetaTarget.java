@@ -27,6 +27,7 @@ import evopaint.util.mapping.RelativeCoordinate;
 import java.util.List;
 
 /**
+ * A target of an action that consists of multiple targets
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

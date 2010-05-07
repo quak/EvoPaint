@@ -24,6 +24,7 @@ import evopaint.util.mapping.RelativeCoordinate;
 import java.util.ArrayList;
 
 /**
+ * A specific target in the moore-neighborhood of a pixel
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

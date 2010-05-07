@@ -1,3 +1,24 @@
+/*
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
+ *                      
+ *
+ *  This file is part of EvoPaint.
+ *
+ *  EvoPaint is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package evopaint;
 
 import java.awt.*;
@@ -8,8 +29,10 @@ import evopaint.gui.util.IOverlay;
 import evopaint.gui.util.WrappingScalableCanvas;
 
 /**
- * Created by IntelliJ IDEA. User: daniel Date: 07.03.2010 Time: 12:41:14 To
- * change this template use File | Settings | File Templates.
+ * Represents a selection of pixels on the canvas
+ *
+ * @author Daniel Hoelbling (http://www.tigraine.at)
+ * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class Selection extends Observable implements IOverlay {
 	private Point startPoint;
@@ -20,7 +43,14 @@ public class Selection extends Observable implements IOverlay {
 	private HighlightedSelectionOverlay overlay;
 	private Rectangle rect;
 	
-	public Selection(Point startPoint, Point endPoint,
+        /**
+         * Constructor
+         *
+         * @param startPoint The origin of the selection-box drag in user space
+         * @param endPoint The destination of the selection-box drag in user space
+         * @param canvas The canvas that is painted on
+         */
+        public Selection(Point startPoint, Point endPoint,
 			WrappingScalableCanvas canvas) {
 		this.startPoint = startPoint;
 		this.endPoint = endPoint;
@@ -29,7 +59,14 @@ public class Selection extends Observable implements IOverlay {
 		overlay = new HighlightedSelectionOverlay(this, canvas);
 	}
 
-	public void setHighlighted(boolean highlighted) {
+        /**
+         * (Un-)subscribes this selection to be called back whenever the canvas
+         * is painted
+         *
+         * @param highlighted true if selection is to be highlighted, false
+         *      otherwise
+         */
+        public void setHighlighted(boolean highlighted) {
 		if (highlighted) {
 			canvas.subscribe(overlay);
 		} else {
@@ -38,34 +75,32 @@ public class Selection extends Observable implements IOverlay {
 		this.highlighted = highlighted;
 	}	
 
-	public String getSelectionName() {
+        public String getSelectionName() {
 		return selectionName;
 	}
 
-	public void setSelectionName(String selectionName) {
+        public void setSelectionName(String selectionName) {
 		this.selectionName = selectionName;
 		setChanged();
 		notifyObservers();
 	}
 
-
-	public Point getStartPoint() {
+        public Point getStartPoint() {
 		return startPoint;
 	}
 
-	public Point getEndPoint() {
+        public Point getEndPoint() {
 		return endPoint;
 	}
 
-	public boolean isHighlighted() {
+        public boolean isHighlighted() {
 		return highlighted;
 	}
 	
-	public Rectangle getRectangle() {
+        public Rectangle getRectangle() {
 		return rect;
 	}
 
-	@Override
 	public void paint(Graphics2D g2) {
 		g2.setXORMode(new Color(0x505050));
 

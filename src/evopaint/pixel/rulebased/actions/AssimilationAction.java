@@ -43,6 +43,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Assimilates another pixel in color and/or rule set
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

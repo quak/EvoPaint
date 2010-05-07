@@ -20,6 +20,7 @@
 package evopaint.pixel.rulebased.interfaces;
 
 /**
+ * Classes that implement this interface can be renamed
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

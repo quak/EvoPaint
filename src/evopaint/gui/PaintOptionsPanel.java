@@ -44,7 +44,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 /**
- *
+ * Options for the paint tool
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class PaintOptionsPanel extends JPanel implements IChangeListener {

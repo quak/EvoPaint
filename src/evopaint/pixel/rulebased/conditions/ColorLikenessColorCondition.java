@@ -44,6 +44,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Compares the color of a target to a given color
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

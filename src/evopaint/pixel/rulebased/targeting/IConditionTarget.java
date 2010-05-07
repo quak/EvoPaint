@@ -24,6 +24,7 @@ import evopaint.pixel.rulebased.Condition;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 
 /**
+ * Classes that implement this interface are condition targets
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

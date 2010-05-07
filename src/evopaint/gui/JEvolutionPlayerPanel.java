@@ -22,7 +22,6 @@ package evopaint.gui;
 import evopaint.Configuration;
 import evopaint.commands.ResetWorldCommand;
 import evopaint.util.ExceptionHandler;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -36,7 +35,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
 /**
- *
+ * Class of the "player"-style panel to control the evolution
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JEvolutionPlayerPanel extends JPanel {
@@ -46,8 +46,6 @@ public class JEvolutionPlayerPanel extends JPanel {
         this.configuration = configuration;
         
         setLayout(new FlowLayout(FlowLayout.LEFT, 3, 0));
-        //setBorder(new LineBorder(Color.GRAY));
-        //setBackground(new Color(0xF2F2F5));
 
         JToggleButton recordButton = new JToggleButton();
         recordButton.setRolloverEnabled(true);

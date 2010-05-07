@@ -88,8 +88,7 @@ public class WrappingScalableCanvas extends JComponent implements IOverlayable {
         this.imageWidth = image.getWidth();
         this.imageHeight = image.getHeight();
         this.imageG2 = (Graphics2D)image.getGraphics();
-        updateComponentSize();
-        revalidate();
+        updateScale();
         repaint();
     }
     

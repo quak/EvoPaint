@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A meta-target that targets not specific targets, but those which qualify
+ * according to a specific qualifier
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

@@ -20,10 +20,10 @@
 package evopaint.pixel.rulebased.interfaces;
 
 /**
- *
+ * Classes that implement this interface have a description
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public interface IDescribed {
     public String getDescription();
-    public void setDescription(String description);
 }

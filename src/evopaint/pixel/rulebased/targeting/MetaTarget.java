@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * A target that consists of multiple targets
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

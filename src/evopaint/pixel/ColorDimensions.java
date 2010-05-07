@@ -24,6 +24,7 @@ import evopaint.pixel.rulebased.interfaces.IHTML;
 import java.io.Serializable;
 
 /**
+ * Container for the HSB dimensions of a color. Are part of PixelColor.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

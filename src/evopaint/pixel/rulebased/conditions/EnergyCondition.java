@@ -38,6 +38,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Compares the energy of a given pixel to a value
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

@@ -37,7 +37,8 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 /**
- *
+ * The JTree used by the rule set browser (the frame in the upper left corner)
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JRuleSetTree extends RuleSetDragDropTree { // implements TreeModelListener {

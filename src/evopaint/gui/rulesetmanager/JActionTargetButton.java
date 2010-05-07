@@ -35,7 +35,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
 /**
- *
+ * The button which contains a textual description of targets of an action
+ * and opens an edit dialog when pressed.
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JActionTargetButton extends JButton {

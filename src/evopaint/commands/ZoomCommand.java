@@ -23,8 +23,9 @@ package evopaint.commands;
 
 import evopaint.gui.util.WrappingScalableCanvas;
 
-/*
- *
+/**
+ * command to zoom either in or out
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */

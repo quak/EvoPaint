@@ -34,6 +34,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 /**
+ * Checks if a target is a pixel or an empty spot
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

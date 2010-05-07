@@ -24,7 +24,9 @@ import evopaint.pixel.rulebased.interfaces.INamed;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
- *
+ * Used by the JTree that holds the data of the rule set browser, this class
+ * represents a collection node.
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class RuleSetNode extends DefaultMutableTreeNode {

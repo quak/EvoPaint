@@ -27,12 +27,12 @@ import evopaint.commands.PaintCommand;
 import evopaint.commands.PickCommand;
 import evopaint.commands.SelectCommand;
 import evopaint.commands.ZoomCommand;
-import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
 
 /**
- *
+ * Panel holding any tool option panels
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JOptionsPanel extends JPanel {

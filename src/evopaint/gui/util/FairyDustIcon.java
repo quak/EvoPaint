@@ -20,6 +20,7 @@
 package evopaint.gui.util;
 
 /**
+ * Creates a square icon which has each pixel colored randomly.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

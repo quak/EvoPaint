@@ -34,6 +34,7 @@ import evopaint.pixel.rulebased.targeting.Target;
 import java.util.Map;
 
 /**
+ * Base class for conditions of rule based pixels
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

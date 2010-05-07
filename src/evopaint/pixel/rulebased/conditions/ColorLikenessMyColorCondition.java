@@ -42,6 +42,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Compares the color of a given pixel to that of the acting pixel
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

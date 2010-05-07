@@ -42,7 +42,10 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 /**
- * based on http://www.coderanch.com/t/346509/Swing-AWT-SWT-JFace/java/JTree-drag-drop-inside-one
+ * A drag and drop implementation of a JTree, designed for EvoPaint, not fit
+ * for general use, based on
+ * http://www.coderanch.com/t/346509/Swing-AWT-SWT-JFace/java/JTree-drag-drop-inside-one
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class RuleSetDragDropTree extends JTree {

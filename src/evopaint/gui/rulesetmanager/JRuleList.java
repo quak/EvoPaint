@@ -59,7 +59,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
- *
+ * The list of rules in the rule set manager
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JRuleList extends JPanel implements TreeSelectionListener, ListDataListener, ListSelectionListener {

@@ -20,6 +20,8 @@
 package evopaint.interfaces;
 
 /**
+ * Interface for classes that wish to listen for arbitrary changes posted by
+ * a class that implements IChanging
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

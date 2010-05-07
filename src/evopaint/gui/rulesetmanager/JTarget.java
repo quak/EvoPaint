@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 /**
+ * A Panel which holds buttons for the acting pixel and its moore-neighborhood
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

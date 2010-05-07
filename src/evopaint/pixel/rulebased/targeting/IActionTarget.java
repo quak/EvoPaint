@@ -24,6 +24,7 @@ import evopaint.pixel.rulebased.Action;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 
 /**
+ * Classes that implement this interface are action targets
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

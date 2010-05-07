@@ -22,6 +22,7 @@ package evopaint;
 import evopaint.util.ExceptionHandler;
 
 /**
+ * Main class of EvoPaint, 'nuff said.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

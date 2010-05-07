@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at),
- *                      Markus Echterhoff <tam@edu.uni-klu.ac.at>
- *                      
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
+ *
  *  This file is part of EvoPaint.
  *
  *  EvoPaint is free software: you can redistribute it and/or modify
@@ -17,8 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
 package evopaint.gui;
 
 import java.awt.*;
@@ -34,36 +32,42 @@ import javax.swing.*;
 import evopaint.Configuration;
 import evopaint.interfaces.IChangeListener;
 
+/**
+ * World -> Options dialog
+ *
+ * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ * @author Daniel Hoelbling (http://www.tigraine.at)
+ */
 public class ConfigurationDialog extends JDialog {
-	private static final long serialVersionUID = 8398753169918348171L;
-	private final Configuration config;
-	
-	public ConfigurationDialog(Configuration config) {
-		this.config = config;
-		initializeComponents();
-	}
 
-	private void initializeComponents() {
-		this.setTitle("evoPaint Configuration");
-		Dimension d = new Dimension(200, 270);
-		this.setPreferredSize(d);
-		this.setSize(d);
+    private final Configuration config;
+
+    public ConfigurationDialog(Configuration config) {
+        this.config = config;
+        initializeComponents();
+    }
+
+    private void initializeComponents() {
+        this.setTitle("evoPaint Configuration");
+        Dimension d = new Dimension(200, 270);
+        this.setPreferredSize(d);
+        this.setSize(d);
         this.setResizable(false);
 
-		Container cp = this.getContentPane();
-		cp.setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
+        Container cp = this.getContentPane();
+        cp.setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
 
-		JPanel worldSize = new JPanel();
-		cp.add(worldSize);
+        JPanel worldSize = new JPanel();
+        cp.add(worldSize);
         //Worldsize
-		worldSize.add(new JLabel("World Size"));
-		final JFormattedTextField txtWidth = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		txtWidth.setText(Integer.toString(config.world.getWidth()));
-		final JTextField txtHeight = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		txtHeight.setText(Integer.toString(config.world.getHeight()));
-		worldSize.add(txtWidth);
+        worldSize.add(new JLabel("World Size"));
+        final JFormattedTextField txtWidth = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        txtWidth.setText(Integer.toString(config.world.getWidth()));
+        final JTextField txtHeight = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        txtHeight.setText(Integer.toString(config.world.getHeight()));
+        worldSize.add(txtWidth);
         worldSize.add(new JLabel("x"));
-		worldSize.add(txtHeight);
+        worldSize.add(txtHeight);
 
         JPanel mutationRate = new JPanel();
         cp.add(mutationRate);
@@ -112,7 +116,9 @@ public class ConfigurationDialog extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!validateInput()) return;
+                if (!validateInput()) {
+                    return;
+                }
                 SwingUtilities.invokeLater(new Runnable() {
 
                     public void run() {
@@ -141,7 +147,7 @@ public class ConfigurationDialog extends JDialog {
             }
         });
         submit.add(cancelButton);
-	}
+    }
 
     private boolean validateInput() {
         return true;  //To change body of created methods use File | Settings | File Templates.
@@ -150,22 +156,25 @@ public class ConfigurationDialog extends JDialog {
     private void closeDialog() {
         this.setVisible(false);
     }
-    private void setBackgroundValue(JTextField textField, int color){
+
+    private void setBackgroundValue(JTextField textField, int color) {
         textField.setText("#" + Integer.toHexString(color));
         setForegroundColor(color, textField);
         textField.setBackground(new Color(color));
     }
 
-    private void setForegroundColor(int color, JTextField field){
-        float [] hsb = null;
+    private void setForegroundColor(int color, JTextField field) {
+        float[] hsb = null;
         hsb = Color.RGBtoHSB((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, hsb);
-        if (hsb[2] < 0.5)
+        if (hsb[2] < 0.5) {
             field.setForeground(Color.white);
-        else
+        } else {
             field.setForeground(Color.black);
+        }
     }
 
     private class BackgroundMouseListener implements MouseListener {
+
         private final JTextField txtBackgroundColor;
         private JColorChooser colorChooser = new JColorChooser();
 
@@ -204,6 +213,7 @@ public class ConfigurationDialog extends JDialog {
         }
 
         private class ColorChooserOkListener implements ActionListener {
+
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Color color = colorChooser.getColor();
@@ -213,6 +223,7 @@ public class ConfigurationDialog extends JDialog {
         }
 
         private class ColorChooserCancelListener implements ActionListener {
+
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 //NOOP

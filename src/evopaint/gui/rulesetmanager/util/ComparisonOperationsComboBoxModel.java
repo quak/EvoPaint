@@ -23,7 +23,9 @@ import evopaint.pixel.rulebased.util.NumberComparisonOperator;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- *
+ * Convenience class so we would not have to create the same model time and time
+ * again
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class ComparisonOperationsComboBoxModel extends DefaultComboBoxModel {

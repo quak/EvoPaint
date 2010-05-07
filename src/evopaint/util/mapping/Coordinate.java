@@ -22,6 +22,7 @@ package evopaint.util.mapping;
 import java.io.Serializable;
 
 /**
+ * Coordinate base class for coordinates on a <code>ParallaxMap</code>
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

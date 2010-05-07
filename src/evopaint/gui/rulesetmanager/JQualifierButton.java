@@ -34,6 +34,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
 /**
+ * The button which holds a textual description of a qualifier and opens an
+ * edit dialog when pressed
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

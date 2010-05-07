@@ -35,6 +35,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Copies the acting pixel to a free spot
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

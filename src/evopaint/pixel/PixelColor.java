@@ -28,6 +28,8 @@ import java.io.Serializable;
 // radius = saturation, angle = hue and height = brightness
 
 /**
+ * Color of a pixel, contains all the weird color mixing magic you see in
+ * EvoPaint
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

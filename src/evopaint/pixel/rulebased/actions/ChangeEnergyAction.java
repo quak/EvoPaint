@@ -34,6 +34,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Changes the energy of another pixel
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

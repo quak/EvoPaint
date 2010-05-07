@@ -41,6 +41,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
+ * Handles any files EvoPaint stores on the disk. The file handler is also
+ * informed about tree changes in the rule set browser, so that any
+ * modifications made by the user are saved automatically
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

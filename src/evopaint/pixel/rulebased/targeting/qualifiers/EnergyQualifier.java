@@ -35,6 +35,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 /**
+ * A qualifier that qualifies an action target based on its energy
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

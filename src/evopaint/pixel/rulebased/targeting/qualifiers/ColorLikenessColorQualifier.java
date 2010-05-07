@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 /**
+ * A qualifier that qualifies an action target based on its color
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

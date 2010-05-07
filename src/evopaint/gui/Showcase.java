@@ -61,7 +61,6 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
     private SelectionList currentSelections = new SelectionList();
     private Selection activeSelection;
 
-    private boolean isDrawingSelection = false;
     private Point selectionStartPoint;
     private Point currentMouseDragPosition;
 
@@ -69,7 +68,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
     private Timer paintingTimer;
     private Painter painter;
     
-    private SelectionIndicatorOverlay draggingSelectionOverlay;
+    private SelectionDrawingIndicatorOverlay draggingSelectionOverlay;
 
 	private CopySelectionCommand copySelectionCommand;
 
@@ -77,12 +76,12 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         return copySelectionCommand;
     }
 
-    public Showcase(Configuration configuration, CommandFactory commandFactory) {
+    public Showcase(Configuration configuration) {
         super(configuration.perception.getImage());
 
         this.configuration = configuration;
         this.paintCommand = new PaintCommand(configuration, this);
-        this.moveCommand = new MoveCommand(configuration);
+        this.moveCommand = new MoveCommand();
         this.moveCommand.setCanvas(this);
         this.selectCommand = new SelectCommand(currentSelections, this);
         this.fillCommand = new FillSelectionCommand(this);
@@ -147,7 +146,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
                 //moveCommand.setScale(this.scale);
             } else if (configuration.mainFrame.getActiveTool() == SelectCommand.class) {
                 this.selectionStartPoint = transformToImageSpace(e.getPoint());
-                draggingSelectionOverlay = new SelectionIndicatorOverlay(this, new Rectangle());
+                draggingSelectionOverlay = new SelectionDrawingIndicatorOverlay(this, new Rectangle());
                 subscribe(draggingSelectionOverlay);
                 selectCommand.setLocation(this.selectionStartPoint);
                 selectCommand.execute();
@@ -196,7 +195,6 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
             paintingTimer.stop();
             Class activeTool = configuration.mainFrame.getActiveTool();
 			if (activeTool == SelectCommand.class) {
-                this.isDrawingSelection = false;
                 selectCommand.setLocation(transformToImageSpace(e.getPoint()));
                 selectCommand.execute();
                 unsubscribe(draggingSelectionOverlay);

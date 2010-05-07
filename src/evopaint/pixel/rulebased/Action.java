@@ -46,6 +46,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Base class for actions of rule based pixels
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

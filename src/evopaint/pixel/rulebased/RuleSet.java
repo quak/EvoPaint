@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A named and described list of rules, used by the rule set manager. The rules
+ * of this classes are used to create rule based pixels.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

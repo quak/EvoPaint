@@ -18,30 +18,41 @@
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package evopaint.commands;
+package evopaint.gui;
 
-import evopaint.Configuration;
-import evopaint.gui.SelectionList;
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
-/*
+import evopaint.gui.util.IOverlay;
+import evopaint.gui.util.WrappingScalableCanvas;
+
+/**
+ * Command used by the Fill Tool to fill the active selection
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
-public class CommandFactory {
-    private Configuration configuration;
-    
-    private SelectCommand selectionCommand;
-    private MoveCommand moveCommand;
+public class SelectionDrawingIndicatorOverlay extends Rectangle implements IOverlay {
 
-    public MoveCommand getMoveCommand() {
-        if (moveCommand == null) {
-            moveCommand = new MoveCommand(configuration);
-        }
-        return moveCommand;
+    private WrappingScalableCanvas canvas;
+
+    @Override
+    public void setBounds(Rectangle bounds) {
+        super.setBounds(bounds);
+        this.x = bounds.x;
+        this.y = bounds.y;
+        this.width = bounds.width;
+        this.height = bounds.height;
     }
 
-    public CommandFactory(Configuration configuration) {
-        this.configuration = configuration;
+    public SelectionDrawingIndicatorOverlay(WrappingScalableCanvas canvas, Rectangle bounds) {
+        super(bounds);
+        this.canvas = canvas;
+    }
+
+    public void paint(Graphics2D g2) {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
+        canvas.fill(this);
     }
 }

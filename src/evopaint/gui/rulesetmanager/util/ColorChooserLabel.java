@@ -32,7 +32,10 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 /**
- *
+ * A Label to click on, which then opens a JColorChooser dialog and lets the
+ * user pick a color. The label will change its color according to the selected
+ * color.
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class ColorChooserLabel extends JLabel {

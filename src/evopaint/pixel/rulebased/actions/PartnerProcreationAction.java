@@ -44,6 +44,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Creates a new pixel from the acting pixel and the target of this action
+ * and places it into a free neighboring spot
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
@@ -246,7 +248,7 @@ public class PartnerProcreationAction extends Action {
                 offspringEnergy = (Integer) ((JSpinner) e.getSource()).getValue();
             }
         });
-        parametersMap.put("Offspring's Starting-Energy", partnerEnergyChangeSpinner);
+        parametersMap.put("Offspring's Starting-Energy", offspringEnergySpinner);
 
         JPanel dimensionsPanel = new JPanel();
         JToggleButton btnH = new JToggleButton("H");

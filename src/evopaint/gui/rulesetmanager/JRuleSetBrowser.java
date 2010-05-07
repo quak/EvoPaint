@@ -68,7 +68,9 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 /**
- *
+ * The rule set / collection browser located in the upper left corner of the
+ * rule set manager
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JRuleSetBrowser extends JPanel implements TreeSelectionListener {

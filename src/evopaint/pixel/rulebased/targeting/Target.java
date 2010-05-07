@@ -22,6 +22,7 @@ package evopaint.pixel.rulebased.targeting;
 import evopaint.interfaces.IRandomNumberGenerator;
 
 /**
+ * Base class for targets
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

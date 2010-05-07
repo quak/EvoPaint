@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A Pixel that in addition to having color and location can act based on rules
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

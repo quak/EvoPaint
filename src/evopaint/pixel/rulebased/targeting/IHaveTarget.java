@@ -25,6 +25,7 @@ import evopaint.pixel.rulebased.interfaces.IParameterized;
 import java.io.Serializable;
 
 /**
+ * Classes that have a target should implement this interface
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

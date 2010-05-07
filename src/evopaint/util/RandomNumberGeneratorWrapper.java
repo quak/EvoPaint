@@ -63,11 +63,6 @@ public class RandomNumberGeneratorWrapper implements IRandomNumberGenerator {
         return this.rng.nextBoolean();
     }
 
-    public Point nextLocation(Dimension dimension) {
-        return new Point(this.rng.nextInt(dimension.width),
-                    this.rng.nextInt(dimension.height));
-    }
-
     public Random getRandom() {
         return rng;
     }

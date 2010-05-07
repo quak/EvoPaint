@@ -50,7 +50,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
- *
+ * The upper right frame of the rule set manager, where descriptions are
+ * displayed and edited
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JDescriptionPanel extends JPanel implements TreeSelectionListener {

@@ -31,15 +31,16 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import javax.swing.SwingUtilities;
 
-/*
- *
+/**
+ * Command used by the Paint Tool to paint onto the canvas
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class PaintCommand extends AbstractCommand {
     private Configuration configuration;
     private Point location;
-	private final SelectionManager selectionManager;
+    private final SelectionManager selectionManager;
 
     public Point getLocation() {
         return location;

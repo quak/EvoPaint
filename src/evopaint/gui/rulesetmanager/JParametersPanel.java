@@ -30,7 +30,9 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 /**
- *
+ * This is a general panel to hold arbitrary parameters. Used by editing dialogs
+ * for actions and conditions
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JParametersPanel extends JPanel {

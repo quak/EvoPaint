@@ -49,7 +49,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 /**
- *
+ * Main class of the rule set manager
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JRuleSetManager extends JPanel implements TreeSelectionListener {

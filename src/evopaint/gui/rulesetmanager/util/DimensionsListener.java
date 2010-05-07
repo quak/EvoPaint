@@ -25,7 +25,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JToggleButton;
 
 /**
- *
+ * ActionListener to listen for the group of three dimension buttons located
+ * on diverse panels of color checking/modifying conditions/actions
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class DimensionsListener implements ActionListener {

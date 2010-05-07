@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at)
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
  *
  *  This file is part of EvoPaint.
  *
@@ -23,8 +24,10 @@ import evopaint.interfaces.ICommand;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/*
- *
+/**
+ * Convenience class: merges ICommand and ActionListener interfaces
+ * 
+ * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public abstract class AbstractCommand implements ICommand, ActionListener {

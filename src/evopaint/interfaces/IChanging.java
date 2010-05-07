@@ -20,7 +20,10 @@
 package evopaint.interfaces;
 
 /**
- *
+ * Interface for classes that need to inform others that something has changed.
+ * Note that the "something" is not specified. So this is some kind of observer
+ * pattern.
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public interface IChanging {

@@ -26,6 +26,7 @@ import java.io.Serializable;
 import javax.swing.DefaultComboBoxModel;
 
 /**
+ * This class represents an object comparison
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

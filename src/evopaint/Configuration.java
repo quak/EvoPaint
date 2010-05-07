@@ -21,13 +21,10 @@ package evopaint;
 
 
 import evopaint.gui.MainFrame;
-import evopaint.gui.Showcase;
 import evopaint.interfaces.IRandomNumberGenerator;
-import evopaint.interfaces.ITool;
 import evopaint.pixel.Pixel;
 import evopaint.pixel.rulebased.Action;
 import evopaint.pixel.rulebased.Condition;
-import evopaint.pixel.rulebased.RuleBasedPixel;
 import evopaint.pixel.rulebased.actions.AssimilationAction;
 import evopaint.pixel.rulebased.actions.CopyAction;
 import evopaint.pixel.rulebased.actions.ChangeEnergyAction;
@@ -56,6 +53,11 @@ import org.uncommons.maths.random.SeedException;
 import org.uncommons.maths.random.SeedGenerator;
 
 /**
+ * Holds every configuration variables and state of the program. Almost all
+ * parts of EvoPaint are tied to this class. It also serves as a bridge between
+ * GUI and core engine. There are a lot of public variables in this class. If
+ * you need to ensure integrity, you might have to restrict access to getters
+ * and setters. See dimension for an example.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
@@ -71,6 +73,9 @@ public class Configuration {
     public static final int RUNLEVEL_STOP = 0;
 
     public final int pixelType = Pixel.RULESET;
+
+    public static final String USER_GUIDE_URL = "http://github.com/unixtam/EvoPaint";
+    public static final String CODE_DOWNLOAD_URL = "http://github.com/unixtam/EvoPaint";
 
     public static final List<Condition> AVAILABLE_CONDITIONS = new ArrayList<Condition>() {{
         add(new ExistenceCondition());
@@ -103,7 +108,6 @@ public class Configuration {
     public MainFrame mainFrame;
     public Brush brush;
     public Paint paint;
-    public ITool activeTool; // TODO make use of me
     public List<Action> usedActions; // because we do not want actions to be randomly created (energy consumption issue), we carry around a list of used actions that we can use during mutation
 
     public static String DEFAULT_ENCODER_COMMAND_UNIX = "mencoder -quiet -nosound -ovc x264 -x264encopts qp=30:pass=1 INPUT_FILE -o OUTPUT_FILE";
@@ -170,7 +174,7 @@ public class Configuration {
             ENCODER_COMMAND = DEFAULT_ENCODER_COMMAND_UNIX;
         }
         rng = createRNG();
-        world = new World(this, new RuleBasedPixel[dimension.width * dimension.height]);
+        world = new World(this);
         perception = new Perception(this);
         brush = new Brush(this);
         paint = new Paint(this);

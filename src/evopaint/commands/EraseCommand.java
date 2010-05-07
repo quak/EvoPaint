@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at),
- *                      Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
  *
  *  This file is part of EvoPaint.
  *
@@ -17,6 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package evopaint.commands;
 
 import java.awt.Dimension;
@@ -30,10 +31,11 @@ import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 import javax.swing.SwingUtilities;
 
-/*
+/**
+ * Command used by the Eraser tool to delete pixels
  *
- * @author Daniel Hoelbling (http://www.tigraine.at)
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class EraseCommand extends AbstractCommand {
 

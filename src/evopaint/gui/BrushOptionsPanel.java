@@ -36,6 +36,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * The panel right beneath the tool box, which appears when the paint brush
+ * is selected.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

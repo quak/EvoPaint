@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.regex.Pattern;
 
 /**
+ * Utilizes XStream to import or export rule sets into or out of EvoPaint
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

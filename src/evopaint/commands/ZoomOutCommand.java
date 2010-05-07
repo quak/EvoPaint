@@ -22,8 +22,9 @@ package evopaint.commands;
 
 import evopaint.gui.Showcase;
 
-/*
- *
+/**
+ * Command to zoom out
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */

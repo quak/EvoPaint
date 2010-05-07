@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at)
- *                      Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
  *
  *  This file is part of EvoPaint.
  *
@@ -26,12 +26,14 @@ import evopaint.gui.Showcase;
 
 import java.awt.*;
 
-/*
+/**
+ * Command to select the whole canvas
  *
- * @author Daniel Hoelbling (http://www.tigraine.at)
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class SelectAllCommand extends AbstractCommand {
+
     private final Showcase showcase;
     private final Configuration config;
 

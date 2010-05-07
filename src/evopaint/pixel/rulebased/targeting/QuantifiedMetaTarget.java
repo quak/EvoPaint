@@ -24,6 +24,8 @@ import evopaint.util.mapping.RelativeCoordinate;
 import java.util.List;
 
 /**
+ * A quantified meta target is a target of a range of targets. Typically used
+ * for conditions, where you ask for eg. "4 of my neighbors"
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

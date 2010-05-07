@@ -38,15 +38,15 @@ import java.awt.Insets;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 /**
- *
+ * The MainFrame class is the highest instance in the Swing hierarchy and
+ * probably holds a lot more stuff than neccessary
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  * @author Augustin Malle
@@ -88,8 +88,6 @@ public class MainFrame extends JFrame {
         zoomInCommand = new ZoomInCommand(showcase);
         zoomOutCommand = new ZoomOutCommand(showcase);
 
-        CommandFactory commandFactory = new CommandFactory(configuration);
-
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception e) {
@@ -124,11 +122,9 @@ public class MainFrame extends JFrame {
         add(jRuleSetManager, "rule manager");
 
         this.jOptionsPanel = new JOptionsPanel(configuration);
-        this.showcase = new Showcase(configuration, commandFactory);
+        this.showcase = new Showcase(configuration);
         this.menuBar = new MenuBar(configuration, new SelectionListenerFactory(showcase), showcase);
         setJMenuBar(menuBar);
-
-        addKeyListener(new MainFrameKeyListener());
 
         GridBagConstraints cMainPanel = new GridBagConstraints();
         cMainPanel.anchor = GridBagConstraints.NORTH;
@@ -262,10 +258,6 @@ public class MainFrame extends JFrame {
         toolBox.setInitialFocus();
     }
 
-    public ToolBox getToolBox() {
-        return toolBox;
-    }
-
     public Class getActiveTool() {
         return activeTool;
     }
@@ -289,33 +281,6 @@ public class MainFrame extends JFrame {
 
     public void setConfiguration(Configuration conf) {
         this.configuration = conf;
-    }
-
-    private class MainFrameKeyListener implements KeyListener {
-
-        public void keyTyped(KeyEvent e) {
-            // System.out.println(""+e.getK)
-            //System.out.println("adsf");
-            //throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_PLUS) {
-                zoomInCommand.execute();
-            } else if (e.getKeyCode() == KeyEvent.VK_MINUS) {
-                zoomOutCommand.execute();
-            } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                if (configuration.runLevel < Configuration.RUNLEVEL_RUNNING) {
-                    pauseCommand.execute();
-                } else {
-                    resumeCommand.execute();
-                }
-            }
-        }
-
-        public void keyReleased(KeyEvent e) {
-            //throw new UnsupportedOperationException("Not supported yet.");
-        }
     }
 
     private class RuleSetManagerOKListener implements ActionListener {

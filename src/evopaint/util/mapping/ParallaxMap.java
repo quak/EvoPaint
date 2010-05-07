@@ -24,6 +24,11 @@ import java.util.AbstractCollection;
 import java.util.Iterator;
 
 /**
+ * A fast generic collection to store data on a two dimensional map that has its
+ * top and bottom edges connected as well as its left and right edges. The
+ * moore-neighborhood of a pixel at the left edge will contain three pixels
+ * at the right-edge of the map. Internally the map stores data inside a
+ * one-dimensional array.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

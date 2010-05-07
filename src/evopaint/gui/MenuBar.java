@@ -18,13 +18,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package evopaint.gui;
 
 import evopaint.Configuration;
-import evopaint.Manifest;
 import evopaint.Selection;
-import evopaint.commands.CopySelectionCommand;
 import evopaint.commands.DeleteCurrentSelectionCommand;
 import evopaint.commands.ImportCommand;
 import evopaint.commands.SelectAllCommand;
@@ -48,12 +45,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
+ * The MenuBar of EvoPaint
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  * @author Augustin Malle
  */
 public class MenuBar extends JMenuBar implements Observer {
+
     private Configuration configuration;
     private Showcase showcase;
     private JMenu selectionMenu;
@@ -63,7 +62,7 @@ public class MenuBar extends JMenuBar implements Observer {
     public MenuBar(final Configuration configuration, SelectionListenerFactory listenerFactory, Showcase showcase) {
         this.configuration = configuration;
         this.showcase = showcase;
-        this.mb=this;
+        this.mb = this;
 
         setLayout(new GridBagLayout());
 
@@ -79,24 +78,24 @@ public class MenuBar extends JMenuBar implements Observer {
         JMenuItem newItem = new JMenuItem();
         newItem.setText("New");
         worldMenu.add(newItem);
-        
+
         worldMenu.add(new JMenuItem("Open..."));
         worldMenu.add(new JMenuItem("Save"));
         worldMenu.add(new JMenuItem("Save as..."));
         JMenuItem importMenu = new JMenuItem("Import...");
         importMenu.addActionListener(new ImportCommand(configuration));
-		worldMenu.add(importMenu);
-             
+        worldMenu.add(importMenu);
+
         JMenuItem exportItem = new JMenuItem();
         exportItem.setText("Export");
         exportItem.addActionListener(new ExportDialog(configuration));
-        
+
         worldMenu.add(exportItem);
-        
+
         JMenuItem opt = new JMenuItem("Options");
         opt.addActionListener(new ShowConfigurationDialogCommand(configuration));
-		worldMenu.add(opt);
-		
+        worldMenu.add(opt);
+
         JMenuItem endItem = new JMenuItem();
         endItem.setText("End");
         endItem.addActionListener(new ActionListener() {
@@ -154,7 +153,7 @@ public class MenuBar extends JMenuBar implements Observer {
             public void actionPerformed(ActionEvent e) {
                 //.getDesktop().browse(new URI("http://www.your.url"));
                 try {
-                    java.awt.Desktop.getDesktop().browse(new URI(Manifest.USER_GUIDE_URL));
+                    java.awt.Desktop.getDesktop().browse(new URI(Configuration.USER_GUIDE_URL));
                 } catch (IOException e1) {
                     ExceptionHandler.handle(e1, false);
                 } catch (URISyntaxException e1) {
@@ -167,9 +166,10 @@ public class MenuBar extends JMenuBar implements Observer {
         JMenuItem getCode = new JMenuItem();
         getCode.setText("Get the source code");
         getCode.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 try {
-                    java.awt.Desktop.getDesktop().browse(new URI(Manifest.CODE_DOWNLOAD_URL));
+                    java.awt.Desktop.getDesktop().browse(new URI(Configuration.CODE_DOWNLOAD_URL));
                 } catch (URISyntaxException e1) {
                     ExceptionHandler.handle(e1, false);
                 } catch (IOException e1) {
@@ -182,6 +182,7 @@ public class MenuBar extends JMenuBar implements Observer {
         JMenuItem about = new JMenuItem();
         about.setText("About");
         about.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 JAboutDialog aboutDialog = new JAboutDialog(configuration.mainFrame);
                 aboutDialog.pack();
@@ -208,11 +209,11 @@ public class MenuBar extends JMenuBar implements Observer {
                 });
             }
         });
-        menuRadioAgentSimulation.setToolTipText("<html>During each time frame each pixel will act once.<br />" +
-                "Pixels act in a different, random order each time frame.<br />" +
-                "The effects of an action will be seen by all pixels immediately.<br />" +
-                "So during a single time frame the pixel who acts first can influence the<br />" +
-                "descision of a neighbor acting after him or even remove the neighbor alltogether.</html>");
+        menuRadioAgentSimulation.setToolTipText("<html>During each time frame each pixel will act once.<br />"
+                + "Pixels act in a different, random order each time frame.<br />"
+                + "The effects of an action will be seen by all pixels immediately.<br />"
+                + "So during a single time frame the pixel who acts first can influence the<br />"
+                + "descision of a neighbor acting after him or even remove the neighbor alltogether.</html>");
         modeMenu.add(menuRadioAgentSimulation);
 
         JRadioButtonMenuItem menuRadioCellularAutomaton = new JRadioButtonMenuItem("Cellular Automaton", false);
@@ -229,12 +230,12 @@ public class MenuBar extends JMenuBar implements Observer {
                 });
             }
         });
-        menuRadioCellularAutomaton.setToolTipText("<html>Each time frame consists of a snapshot of the world.<br />" +
-                "Each pixel can then change itself once according to its environment.<br />" +
-                "The changed pixels are used to construct the subsequent snapshot.<br />" +
-                "Please note that for increased performance there are no restrictions in place that would<br />" +
-                "prevent you from modifying neighbors but doing so will not yield the desired results.<br />" +
-                "(Unintentional SE-directed patterns would be created due to the lack of randomization)</html>");
+        menuRadioCellularAutomaton.setToolTipText("<html>Each time frame consists of a snapshot of the world.<br />"
+                + "Each pixel can then change itself once according to its environment.<br />"
+                + "The changed pixels are used to construct the subsequent snapshot.<br />"
+                + "Please note that for increased performance there are no restrictions in place that would<br />"
+                + "prevent you from modifying neighbors but doing so will not yield the desired results.<br />"
+                + "(Unintentional SE-directed patterns would be created due to the lack of randomization)</html>");
         modeMenu.add(menuRadioCellularAutomaton);
 
         ButtonGroup modeGroup = new ButtonGroup();
@@ -247,9 +248,9 @@ public class MenuBar extends JMenuBar implements Observer {
         add(modeMenu, c);
 
     }
-/*
+    /*
     public void addSelection(Selection selection) {
-        activeSelections.add(new SelectionWrapper(selection, showcase));
+    activeSelections.add(new SelectionWrapper(selection, showcase));
     }*/
 
     public void update(Observable o, Object arg) {
@@ -261,8 +262,8 @@ public class MenuBar extends JMenuBar implements Observer {
             activeSelections.add(new SelectionWrapper(eventEvent.getSelection(), showcase));
         }
         if (eventEvent.getChangeType() == SelectionList.ChangeType.ITEM_DELETED) {
-            for(int i = 0; i < activeSelections.getItemCount(); i++) {
-                SelectionWrapper wrapper = (SelectionWrapper)activeSelections.getItem(i);
+            for (int i = 0; i < activeSelections.getItemCount(); i++) {
+                SelectionWrapper wrapper = (SelectionWrapper) activeSelections.getItem(i);
                 if (wrapper.selection == eventEvent.getSelection()) {
                     activeSelections.remove(i);
                     break;
@@ -271,8 +272,8 @@ public class MenuBar extends JMenuBar implements Observer {
         }
     }
 
-    private class SelectionWrapper extends JMenuItem implements Observer
-    {
+    private class SelectionWrapper extends JMenuItem implements Observer {
+
         private Selection selection;
         private SelectionManager selectionManager;
 
@@ -293,11 +294,13 @@ public class MenuBar extends JMenuBar implements Observer {
             this.setText(selection.getSelectionName());
         }
 
-        private class SelectionMouseListener implements MouseListener
-        {
-            public void mouseClicked(MouseEvent e) {}
+        private class SelectionMouseListener implements MouseListener {
 
-            public void mousePressed(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            public void mousePressed(MouseEvent e) {
+            }
 
             public void mouseReleased(MouseEvent e) {
                 selectionManager.setActiveSelection(selection);
@@ -312,5 +315,4 @@ public class MenuBar extends JMenuBar implements Observer {
             }
         }
     }
-
 }

@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
- *                      Daniel Hoelbling (http://www.tigraine.at)
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>
  *
  *  This file is part of EvoPaint.
  *
@@ -20,14 +19,12 @@
 
 package evopaint.interfaces;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.Random;
 
 /**
+ * Defines a random number generator as needed by EvoPaint
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
- * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public interface IRandomNumberGenerator {
     int nextPositiveInt();
@@ -35,6 +32,5 @@ public interface IRandomNumberGenerator {
     double nextDouble();
     float nextFloat();
     boolean nextBoolean();
-    Point nextLocation(Dimension dimension);
     Random getRandom();
 }

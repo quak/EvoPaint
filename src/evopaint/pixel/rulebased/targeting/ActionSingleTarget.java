@@ -26,6 +26,7 @@ import evopaint.pixel.rulebased.RuleBasedPixel;
 import evopaint.util.mapping.RelativeCoordinate;
 
 /**
+ * Target of an action
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

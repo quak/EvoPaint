@@ -26,6 +26,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
+ * The brush indicator overlay is the rectangle drawn around the position
+ * of the cursor when hovering the canvas. Note that the origin of this
+ * rectangle is the origin of the curser minus half the width and height
+ * respectively. All calculations rounded down.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

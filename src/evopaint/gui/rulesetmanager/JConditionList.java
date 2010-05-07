@@ -37,7 +37,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
- *
+ * The panel which holds condition buttons and their corresponding delete
+ * buttons
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JConditionList extends JPanel {

@@ -24,6 +24,7 @@ import evopaint.pixel.rulebased.interfaces.IHTML;
 import java.io.Serializable;
 
 /**
+ * All targets should implement this interface
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

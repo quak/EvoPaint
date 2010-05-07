@@ -36,6 +36,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 /**
+ * A qualifier that qualifies a target based on whether it is a pixel or a free
+ * spot
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

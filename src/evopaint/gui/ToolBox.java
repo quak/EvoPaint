@@ -29,7 +29,6 @@ import evopaint.commands.PaintCommand;
 import evopaint.commands.PickCommand;
 import evopaint.commands.SelectCommand;
 import evopaint.commands.ZoomCommand;
-import evopaint.commands.ZoomInCommand;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -46,7 +45,8 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 /**
- *
+ * Panel containing the tools
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Augustin Malle
  */

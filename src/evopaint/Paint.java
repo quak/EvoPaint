@@ -24,7 +24,6 @@ import evopaint.gui.util.FairyDustIcon;
 import evopaint.interfaces.IChanging;
 import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.PixelColor;
-import evopaint.pixel.rulebased.Action;
 import evopaint.pixel.rulebased.Rule;
 import evopaint.pixel.rulebased.RuleSet;
 import java.awt.Color;

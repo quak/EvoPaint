@@ -23,7 +23,8 @@ import evopaint.interfaces.IRandomNumberGenerator;
 import java.io.Serializable;
 
 /**
- *
+ * An absolute coordinate on a <code>ParallaxMap</code>
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class RelativeCoordinate extends Coordinate implements Serializable {

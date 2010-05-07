@@ -24,6 +24,9 @@ import evopaint.pixel.rulebased.interfaces.INameable;
 import java.io.Serializable;
 
 /**
+ * Collections are named and described containers for rule sets. Note that the
+ * contained rule sets are not reflected in this class as they are part of the
+ * tree structure, both on disk and in the rule set browser.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

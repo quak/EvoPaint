@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at)
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
  *
  *  This file is part of EvoPaint.
  *
@@ -21,8 +22,10 @@ package evopaint.commands;
 
 import evopaint.gui.SelectionManager;
 
-/*
- *
+/**
+ * Command to remove all currently active selections
+ * 
+ * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class ClearSelectionCommand extends AbstractCommand {
@@ -35,4 +38,5 @@ public class ClearSelectionCommand extends AbstractCommand {
     public void execute() {
         manager.clearSelections();
     }
+
 }

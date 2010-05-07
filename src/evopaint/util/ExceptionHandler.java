@@ -37,6 +37,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
 /**
+ * EvoPaint's very own exception handler. Outputs exceptions via console and
+ * nicely formatted error window at the same time
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

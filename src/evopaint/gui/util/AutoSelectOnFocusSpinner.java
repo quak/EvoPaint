@@ -28,6 +28,8 @@ import javax.swing.SpinnerModel;
 import javax.swing.SwingUtilities;
 
 /**
+ * A JSpinner which selects its content on click, so you don't have to select
+ * it manually
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

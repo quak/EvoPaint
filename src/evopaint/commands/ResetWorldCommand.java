@@ -25,7 +25,8 @@ import evopaint.pixel.rulebased.Rule;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * Command to reset the world to its original state
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class ResetWorldCommand extends AbstractCommand {

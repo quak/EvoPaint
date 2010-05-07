@@ -44,6 +44,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * This class puts the "rule" in "rule based pixel"
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

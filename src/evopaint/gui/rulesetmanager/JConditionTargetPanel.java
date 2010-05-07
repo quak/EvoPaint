@@ -24,7 +24,6 @@ import evopaint.pixel.rulebased.targeting.IConditionTarget;
 import evopaint.pixel.rulebased.targeting.ConditionMetaTarget;
 import evopaint.pixel.rulebased.targeting.ConditionSingleTarget;
 import evopaint.pixel.rulebased.targeting.ITarget;
-import evopaint.pixel.rulebased.targeting.ITarget;
 import evopaint.pixel.rulebased.targeting.MetaTarget;
 import evopaint.pixel.rulebased.targeting.SingleTarget;
 import java.awt.BorderLayout;
@@ -40,7 +39,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- *
+ * The panel which is displayed in any target editing dialog
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JConditionTargetPanel extends JPanel {

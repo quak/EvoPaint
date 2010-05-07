@@ -28,6 +28,7 @@ import java.util.LinkedHashMap;
 import javax.swing.JComponent;
 
 /**
+ * Moves the acting pixel to a free spot
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

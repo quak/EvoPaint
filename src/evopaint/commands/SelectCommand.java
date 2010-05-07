@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at)
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
  *
  *  This file is part of EvoPaint.
  *
@@ -16,7 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package evopaint.commands;
 
 import evopaint.Selection;
@@ -25,35 +25,37 @@ import evopaint.gui.util.WrappingScalableCanvas;
 
 import java.awt.*;
 
-/*
+/**
+ * Command to select a rectangular area on the canvas
  *
+ * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class SelectCommand extends AbstractCommand {
+
+    public enum State {
+
+        IDLE, STARTED
+    }
+    private State CurrentState = State.IDLE;
+    private Point mouseLocation;
+    private final WrappingScalableCanvas canvas;
+    private Point startPoint;
+    private Point endPoint;
+    private int nextSelectionId = 0;
     private SelectionList observableSelectionList;
 
-    public enum State { IDLE, STARTED }
-    private State CurrentState = State.IDLE;
-
-    private Point mouseLocation;
-
-	private final WrappingScalableCanvas canvas;
-
-    public SelectCommand(SelectionList list, WrappingScalableCanvas canvas){
+    public SelectCommand(SelectionList list, WrappingScalableCanvas canvas) {
         observableSelectionList = list;
-		this.canvas = canvas;
+        this.canvas = canvas;
     }
 
-    public void setLocation(Point location){
+    public void setLocation(Point location) {
         mouseLocation = location;
     }
 
-    private Point startPoint;
-    private Point endPoint;
-
-    private int nextSelectionId = 0;
     public void execute() {
-        if (CurrentState == State.IDLE){
+        if (CurrentState == State.IDLE) {
             startPoint = mouseLocation;
             CurrentState = State.STARTED;
         } else if (CurrentState == State.STARTED) {
@@ -68,7 +70,7 @@ public class SelectCommand extends AbstractCommand {
     }
 
     private void SwapPoints() {
-        if (startPoint.x > endPoint.x || startPoint.y > endPoint.y ) {
+        if (startPoint.x > endPoint.x || startPoint.y > endPoint.y) {
             Point temp = endPoint;
             endPoint = startPoint;
             startPoint = temp;

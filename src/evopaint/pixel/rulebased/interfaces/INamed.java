@@ -20,7 +20,8 @@
 package evopaint.pixel.rulebased.interfaces;
 
 /**
- *
+ * Classes that implement this interface have a name
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public interface INamed {

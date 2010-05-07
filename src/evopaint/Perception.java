@@ -36,6 +36,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
+ * This class is used to bridge the internals of the world to any outut. It
+ * currently creates a <code>BufferedImage</code> of the world for display and
+ * creates videos.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
@@ -46,10 +49,18 @@ public class Perception {
     File videoFile;
     AVIOutputStream videoOut;
 
+    /**
+     * get the current image representation of the world that was created
+     *
+     * @return the most recent snapshot of the world
+     */
     public BufferedImage getImage() {
         return image;
     }
 
+    /**
+     * updates the image representation of the world
+     */
     public void createImage() {
         for (int i = 0; i < internalImage.length; i++) {
             Pixel pixie = configuration.world.getUnclamped(i);
@@ -67,6 +78,11 @@ public class Perception {
         }
     }
 
+    /**
+     * starts video recording if possible
+     *
+     * @return true if video-recording was successfully started, false otherwise
+     */
     public synchronized boolean startRecording() {
         if (videoOut != null) {
             return false;
@@ -90,6 +106,9 @@ public class Perception {
         return true;
     }
 
+    /**
+     * stops video recording, called from GUI
+     */
     public synchronized void stopRecording() {
         SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -221,6 +240,14 @@ public class Perception {
         }
     }
 
+    /**
+     * Sets the dimension of the produced image. Since resizing operations will
+     * disturb the video creation, this method will fail if a video is
+     * currently being recorded
+     *
+     * @param dimension
+     * @return true if setting a new dimension was possible, false otherwise
+     */
     public boolean setDimension(Dimension dimension) {
         if (videoFile != null) {
             ExceptionHandler.handle(new Exception(), false, "I cannot resize while I record a video");
@@ -232,6 +259,11 @@ public class Perception {
         return true;
     }
 
+    /**
+     * Constructor
+     *
+     * @param configuration
+     */
     public Perception(Configuration configuration) {
         this.configuration = configuration;
         this.image = new BufferedImage(configuration.getDimension().width, configuration.getDimension().height,

@@ -31,7 +31,8 @@ import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 
 /**
- *
+ * Class of the about dialog
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JAboutDialog extends JDialog {

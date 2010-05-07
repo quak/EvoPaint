@@ -27,6 +27,7 @@ import evopaint.pixel.rulebased.targeting.SingleTarget;
 import javax.swing.JPanel;
 
 /**
+ * The panel which is displayed in any target editing dialog
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

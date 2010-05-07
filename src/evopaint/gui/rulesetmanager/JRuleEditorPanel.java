@@ -45,7 +45,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 /**
- *
+ * The Panel which holds the rule editor
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JRuleEditorPanel extends JPanel {

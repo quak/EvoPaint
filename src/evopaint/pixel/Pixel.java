@@ -24,6 +24,9 @@ import evopaint.interfaces.IRandomNumberGenerator;
 import evopaint.util.mapping.AbsoluteCoordinate;
 
 /**
+ * This class is the bread and butter of EvoPaint (along with the other core
+ * classes, of course). A Pixel is basically defined by a PixelColor and a
+ * location on the world. That is actually it....
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

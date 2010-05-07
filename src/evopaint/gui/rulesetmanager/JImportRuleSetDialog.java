@@ -19,13 +19,11 @@
 
 package evopaint.gui.rulesetmanager;
 
-import com.thoughtworks.xstream.XStreamException;
 import evopaint.Configuration;
 import evopaint.gui.rulesetmanager.util.NamedObjectListCellRenderer;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.util.CollectionNode;
 import evopaint.util.ExceptionHandler;
-import evopaint.util.ImportExportHandler;
 import evopaint.util.RuleSetNode;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -51,6 +49,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
+ * import rule set dialog
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
@@ -59,7 +58,6 @@ public class JImportRuleSetDialog extends JDialog {
     private Configuration configuration;
     private JRuleSetTree jRuleSetTree;
     private JComboBox collectionComboBox;
-    private JTextArea messageTextArea;
     private JTextArea editorTextArea;
 
     public JImportRuleSetDialog(Configuration configurationArg, Component owner, JRuleSetTree jRuleSetTree, String xml) {

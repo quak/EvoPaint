@@ -24,6 +24,8 @@ import java.util.Map;
 import javax.swing.JComponent;
 
 /**
+ * Classes that implement this interfaces have parameters that have to be added
+ * to string/html or GUI representations
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

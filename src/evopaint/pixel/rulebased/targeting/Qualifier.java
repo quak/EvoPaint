@@ -37,6 +37,7 @@ import java.util.Map;
 import javax.swing.JComponent;
 
 /**
+ * A Qualifier qualifiers action targets for acting on them
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

@@ -39,6 +39,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
+ * Like the condition list panel only for qualifiers. Holds the list of
+ * qualifiers of an action as well as their corresponding delete buttons.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

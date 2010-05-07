@@ -28,7 +28,9 @@ import javax.swing.ListCellRenderer;
 import javax.swing.plaf.UIResource;
 
 /**
- *
+ * Combo box Renderer eg. for JList that renders any objects whose classes
+ * implement the INamed interface. Used for a lot of stuff.
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class NamedObjectListCellRenderer extends DefaultListCellRenderer implements ListCellRenderer, UIResource {

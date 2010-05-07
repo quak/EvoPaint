@@ -23,8 +23,9 @@ package evopaint.commands;
 import evopaint.Configuration;
 import evopaint.interfaces.ICommand;
 
-/*
- *
+/**
+ * Command to resume a paused evolution
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */

@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at),
- *                      Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
+ *                      Daniel Hoelbling (http://www.tigraine.at)
  *
  *  This file is part of EvoPaint.
  *
@@ -17,9 +17,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package evopaint.commands;
 
-import evopaint.Brush;
 import evopaint.Configuration;
 import evopaint.Paint;
 import evopaint.Selection;
@@ -33,27 +33,21 @@ import evopaint.util.mapping.AbsoluteCoordinate;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-/*
+/**
+ * Command used by the Fill Tool to fill the active selection
  *
- * @author Daniel Hoelbling (http://www.tigraine.at)
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class FillSelectionCommand extends AbstractCommand {
 
     private Configuration configuration;
-    private double scale;
-    private AffineTransform affineTransform;
     private Selection selection;
-    private PixelColor color;
-    private Brush brush;
-    private int energy;
-    private RuleSet ruleSet;
     private Showcase showcase;
     protected int density = 1;
     private Point location;
@@ -61,8 +55,6 @@ public class FillSelectionCommand extends AbstractCommand {
     public FillSelectionCommand(Showcase showcase) {
         this.showcase = showcase;
         this.configuration = showcase.getConfiguration();
-
-        this.energy = configuration.startingEnergy;
     }
 
     public void setLocation(Point location) {
@@ -76,7 +68,6 @@ public class FillSelectionCommand extends AbstractCommand {
                 configuration.world.addChangeListener(new IChangeListener() {
 
                     public void changed() {
-                        color = configuration.paint.getCurrentColor();
                         selection = showcase.getActiveSelection();
                         Rectangle rectangle;
                         if (selection == null) {

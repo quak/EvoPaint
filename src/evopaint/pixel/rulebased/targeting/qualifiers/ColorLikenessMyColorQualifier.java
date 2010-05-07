@@ -39,7 +39,9 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 /**
- *
+ * A qualifier that qualifies an action target based on its color compared
+ * to the color of the acting pixels
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class ColorLikenessMyColorQualifier extends Qualifier {

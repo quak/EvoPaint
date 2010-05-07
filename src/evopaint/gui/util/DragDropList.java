@@ -19,10 +19,6 @@
 
 package evopaint.gui.util;
 
-/**
- *
- * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
- */
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -42,6 +38,12 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 import javax.swing.TransferHandler;
 
+/**
+ * A generic JList implementation that supports drag and drop. Put together
+ * using various sources from the web.
+ *
+ * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ */
 public class DragDropList extends JList {
 
     DefaultListModel model;

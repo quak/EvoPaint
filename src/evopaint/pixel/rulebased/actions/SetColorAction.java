@@ -28,13 +28,13 @@ import evopaint.pixel.PixelColor;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 import evopaint.pixel.rulebased.targeting.ActionMetaTarget;
 import evopaint.util.mapping.RelativeCoordinate;
-import java.awt.Dimension;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
+ * Sets the color of the acting pixel
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

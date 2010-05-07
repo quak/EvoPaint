@@ -26,6 +26,7 @@ import evopaint.util.mapping.AbsoluteCoordinate;
 import java.util.ArrayList;
 
 /**
+ * The Brush is used to paint on the canvas using the paint tool.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
@@ -33,24 +34,24 @@ public class Brush {
     private Configuration configuration;
     public int size;
 
+    public Brush(Configuration configuration) {
+        this.configuration = configuration;
+        this.size = 10;
+    }
+
+    /**
+     * Paints a square ranging from loc-loc/2 (rounded down) to loc+loc/2
+     * (rounded up), "loc" meaning both xLoc and yLoc. Paint and canvas are
+     * queried from the configuration.
+     *
+     * @param xLoc x coordinate in image space
+     * @param yLoc y coordinate in image space
+     */
     public void paint(int xLoc, int yLoc) {
         int yBegin = yLoc - size / 2;
-        if (yBegin < 0) {
-        //    yBegin = 0;
-        }
         int yEnd = yLoc + (int)Math.ceil((double)size / 2);
-        if (yEnd > configuration.getDimension().height) {
-       //     yEnd = configuration.dimension.height;
-        }
-
         int xBegin = xLoc - size / 2;
-        if (xBegin < 0) {
-       //     xBegin = 0;
-        }
         int xEnd = xLoc + (int)Math.ceil((double)size / 2);
-        if (xEnd > configuration.getDimension().width) {
-       //     xEnd = configuration.dimension.width;
-        }
 
         for (int y = yBegin; y < yEnd; y++) {
             for (int x = xBegin; x < xEnd; x++) {
@@ -102,10 +103,5 @@ public class Brush {
                 configuration.world.set(newPixel);
             }
         }
-    }
-
-    public Brush(Configuration configuration) {
-        this.configuration = configuration;
-        this.size = 10;
     }
 }

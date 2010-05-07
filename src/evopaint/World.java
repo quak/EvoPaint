@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The world of EvoPaint. Represents the universe the system development of
+ * EvoPaint takes place in. It is derived from ParallaxMap, so its surface is
+ * endless. Other than space it also manages the time. You can think of a call
+ * to step() as the speed of light.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
@@ -37,11 +41,27 @@ public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
     private Configuration configuration;
     private final List<IChangeListener> pendingOperations = new ArrayList();
 
-    public World(Configuration configuration, RuleBasedPixel [] pixels) {
-        super(pixels, configuration.getDimension().width, configuration.getDimension().height);
+    /**
+     * Creates a new World
+     *
+     * @param configuration the configuration to use for this world
+     */
+    public World(Configuration configuration) {
+        super(new RuleBasedPixel [
+                configuration.getDimension().width * configuration.getDimension().height],
+                configuration.getDimension().width, configuration.getDimension().height);
         this.configuration = configuration;
     }
 
+    /**
+     * Updates the dimension of the world. If the new dimensions are smaller
+     * than the current ones, the world will be cut off by the neccessary amount
+     * on the right and bottom hand respectively. If the new dimensions are
+     * bigger, the world will be padded by empty space at the right and bottom
+     * edges.
+     *
+     * @param dimension The new dimensions
+     */
     public void setDimension(Dimension dimension) {
         RuleBasedPixel [] data = getData();
         RuleBasedPixel [] newData = new RuleBasedPixel[
@@ -62,6 +82,10 @@ public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
         recount();
     }
 
+    /**
+     * Let every pixel do stuff. This is the smallest possible time slice in
+     * the universe of EvoPaint.
+     */
     public void step() {
 
         if (pendingOperations.size() > 0) {
@@ -128,17 +152,24 @@ public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
         setData(newData);
     }
 
+    /**
+     * Implements IChanging
+     *
+     * @param subscriber
+     */
     public void addChangeListener(IChangeListener subscriber) {
         synchronized(pendingOperations) {
             pendingOperations.add(subscriber);
         }
     }
 
+    /**
+     * Implements IChanging
+     *
+     * @param subscriber
+     */
     public void removeChangeListener(IChangeListener subscriber) {
         assert (false); // should not be called since pending operations are cleared automatically
     }
 
-    //public void setSize(int width, int height) {
-        //FIXME: @TAM: Implement world size change
-    //}
 }

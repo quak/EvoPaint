@@ -20,6 +20,7 @@
 package evopaint.pixel;
 
 /**
+ * State of a RuleBasedPixel. Currently not used.
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

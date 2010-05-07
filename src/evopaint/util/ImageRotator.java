@@ -28,6 +28,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
+ * Rotates an image a certain amount of degrees
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

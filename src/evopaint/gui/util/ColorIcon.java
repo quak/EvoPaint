@@ -20,6 +20,7 @@
 package evopaint.gui.util;
 
 /**
+ * Creates an arbitrary colored Icon. Used in paint history (right-click menu).
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */

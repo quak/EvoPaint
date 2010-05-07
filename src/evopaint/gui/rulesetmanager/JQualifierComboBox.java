@@ -26,7 +26,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 /**
- *
+ * Combo Box that holds qualifiers to select from
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class JQualifierComboBox extends JComboBox {

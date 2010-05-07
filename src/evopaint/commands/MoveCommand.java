@@ -20,18 +20,17 @@
 
 package evopaint.commands;
 
-import evopaint.Configuration;
 import evopaint.gui.util.WrappingScalableCanvas;
 import java.awt.Point;
 
-/*
- *
+/**
+ * Command to translate the canvas
+ * 
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class MoveCommand extends AbstractCommand {
 
-    private Configuration configuration;
     private WrappingScalableCanvas canvas;
     private Point source;
     private Point destination;
@@ -60,8 +59,7 @@ public class MoveCommand extends AbstractCommand {
         this.destination = destionation;
     }
 
-    public MoveCommand(Configuration configuration) {
-        this.configuration = configuration;
+    public MoveCommand() {
     }
 
     public void execute() {

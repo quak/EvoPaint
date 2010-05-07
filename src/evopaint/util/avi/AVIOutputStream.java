@@ -12,7 +12,6 @@
  */
 package evopaint.util.avi;
 
-import evopaint.util.avi.FilterImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.*;
