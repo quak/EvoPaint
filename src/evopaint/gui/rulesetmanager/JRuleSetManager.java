@@ -83,11 +83,11 @@ public class JRuleSetManager extends JPanel implements TreeSelectionListener {
 
         setLayout(new CardLayout());
 
-        DefaultTreeModel treeModel = configuration.FILE_HANDLER.readCollections();
+        DefaultTreeModel treeModel = Configuration.FILE_HANDLER.readCollections();
         jRuleSetTree = new JRuleSetTree(treeModel, new TreeDoubleClickListener());
         jRuleSetTree.addTreeSelectionListener(this);
 
-        jRuleList = new JRuleList(configuration, jRuleSetTree, new EditRuleBtnListener(), new DoubleClickOnRuleListener());
+        jRuleList = new JRuleList(configuration, jRuleSetTree, new AddRuleBtnListener(), new EditRuleBtnListener(), new DoubleClickOnRuleListener());
 
         // FIRST CARD
         jRuleSetBrowser = new JRuleSetBrowser(configuration, jRuleSetTree, jRuleList);
@@ -182,7 +182,11 @@ public class JRuleSetManager extends JPanel implements TreeSelectionListener {
             Rule rule = jRuleEditor.createRule();
             String errorMsg = rule.validate();
             if (errorMsg == null) {
-                jRuleList.replaceSelectedRule(rule);
+                if (jRuleList.getSelectedRule() == null) {
+                    jRuleList.addRule(rule);
+                } else {
+                    jRuleList.replaceSelectedRule(rule);
+                }
                 ((CardLayout)contentPane.getLayout()).show(contentPane, "manager");
             }
             else {
@@ -198,6 +202,19 @@ public class JRuleSetManager extends JPanel implements TreeSelectionListener {
             ((CardLayout)contentPane.getLayout()).show(contentPane, "manager");
         }
     }
+
+    private class AddRuleBtnListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Rule newRule = new Rule();
+
+            if (jRuleEditor != null) {
+                remove(jRuleEditor);
+            }
+            jRuleEditor = new JRuleEditorPanel(configuration, newRule, new RuleEditorOKListener(), new RuleEditorCancelListener());
+            add(jRuleEditor, "editor");
+            ((CardLayout)contentPane.getLayout()).show(contentPane, "editor");
+        }
+    };
     
     private class EditRuleBtnListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {

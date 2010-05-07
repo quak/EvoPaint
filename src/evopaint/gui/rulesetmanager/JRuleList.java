@@ -73,6 +73,11 @@ public class JRuleList extends JPanel implements TreeSelectionListener, ListData
     private JButton btnCopy;
     private JButton btnDelete;
 
+    public void addRule(Rule rule) {
+        model.addElement(rule);
+        dirty = true;
+    }
+
     public boolean isDirty() {
         return dirty;
     }
@@ -181,7 +186,7 @@ public class JRuleList extends JPanel implements TreeSelectionListener, ListData
         dirty = true;
     }
 
-    public JRuleList(Configuration configuration, JRuleSetTree tree, ActionListener btnEditListener, MouseListener doubleClickListener) {
+    public JRuleList(Configuration configuration, JRuleSetTree tree, ActionListener btnAddListener, ActionListener btnEditListener, MouseListener doubleClickListener) {
         this.configuration = configuration;
         this.dirty = false;
         this.tree = tree;
@@ -212,23 +217,15 @@ public class JRuleList extends JPanel implements TreeSelectionListener, ListData
         final JPanel controlPanel = new JPanel();
         controlPanel.setBackground(new Color(0xF2F2F5));
 
+        JButton btnAdd = new JButton(new ImageIcon(getClass().getResource("icons/button-add.png")));
+        btnAdd.setToolTipText("Adds a new rule and opens it in the Rule Editor");
+        btnAdd.addActionListener(btnAddListener);
+        controlPanel.add(btnAdd);
+
         btnEdit = new JButton(new ImageIcon(getClass().getResource("icons/button-edit.png")));
         btnEdit.setToolTipText("Opens the selected rule in the Rule Editor");
         btnEdit.setEnabled(false);
         btnEdit.addActionListener(btnEditListener);
-
-        JButton btnAdd = new JButton(new ImageIcon(getClass().getResource("icons/button-add.png")));
-        btnAdd.setToolTipText("Adds a new rule and opens it in the Rule Editor");
-        btnAdd.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Rule newRule = new Rule();
-                model.addElement(newRule);
-                list.setSelectedValue(newRule, true);
-                btnEdit.doClick();
-            }
-        });
-        controlPanel.add(btnAdd);
-
         controlPanel.add(btnEdit);
 
         btnCopy = new JButton(new ImageIcon(getClass().getResource("icons/button-copy.png")));
