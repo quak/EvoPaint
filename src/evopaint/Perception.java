@@ -23,6 +23,7 @@ import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.Pixel;
 import evopaint.util.ExceptionHandler;
 import evopaint.util.avi.AVIOutputStream;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
@@ -220,11 +221,22 @@ public class Perception {
         }
     }
 
-    public Perception(Configuration configuration) {
-        this.configuration = configuration;
-        this.image = new BufferedImage(configuration.dimension.width, configuration.dimension.height,
+    public boolean setDimension(Dimension dimension) {
+        if (videoFile != null) {
+            ExceptionHandler.handle(new Exception(), false, "I cannot resize while I record a video");
+            return false;
+        }
+        this.image = new BufferedImage(dimension.width, dimension.height,
                 BufferedImage.TYPE_INT_RGB);
         this.internalImage = ((DataBufferInt)this.image.getRaster().getDataBuffer()).getData();
-
+        return true;
     }
+
+    public Perception(Configuration configuration) {
+        this.configuration = configuration;
+        this.image = new BufferedImage(configuration.getDimension().width, configuration.getDimension().height,
+                BufferedImage.TYPE_INT_RGB);
+        this.internalImage = ((DataBufferInt)this.image.getRaster().getDataBuffer()).getData();
+    }
+    
 }

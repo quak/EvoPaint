@@ -261,5 +261,6 @@ public class ParallaxMap<T> extends AbstractCollection<T> {
         this.width = width;
         this.height = height;
     }
+
 }
 

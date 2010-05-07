@@ -70,7 +70,7 @@ public class BrushOptionsPanel extends JPanel {
         JLabel labelForSpinner = new JLabel("Size");
         panelBrushSize.add(labelForSpinner);
 
-        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(configuration.brush.size, 1, Math.min(configuration.dimension.width, configuration.dimension.height), 1);
+        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(configuration.brush.size, 1, Math.min(configuration.getDimension().width, configuration.getDimension().height), 1);
         JSpinner spinnerBrushSize = new AutoSelectOnFocusSpinner(spinnerModel);
         spinnerBrushSize.addChangeListener(new SpinnerBrushSizeListener(spinnerBrushSize));
         labelForSpinner.setLabelFor(spinnerBrushSize);

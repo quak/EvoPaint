@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at)
+ *                      Markus Echterhoff <tam@edu.uni-klu.ac.at>
  *
  *  This file is part of EvoPaint.
  *
@@ -28,6 +29,7 @@ import java.awt.*;
 /*
  *
  * @author Daniel Hoelbling (http://www.tigraine.at)
+ * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class SelectAllCommand extends AbstractCommand {
     private final Showcase showcase;
@@ -39,7 +41,7 @@ public class SelectAllCommand extends AbstractCommand {
     }
 
     public void execute() {
-        Selection selection = new Selection(new Point(0, 0), new Point((int) config.dimension.getHeight(), (int) config.dimension.getWidth()), showcase);
+        Selection selection = new Selection(new Point(0, 0), new Point((int) config.getDimension().getHeight(), (int) config.getDimension().getWidth()), showcase);
         selection.setSelectionName("All");
         showcase.getCurrentSelections().add(selection);
     }

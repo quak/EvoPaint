@@ -278,6 +278,11 @@ public class MainFrame extends JFrame {
     public Showcase getShowcase() {
         return showcase;
     }
+
+    public void setShowcase(Showcase showcase) {
+        this.showcase = showcase;
+    }
+
     public void resize() {
         this.pack();
     }

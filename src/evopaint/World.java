@@ -24,6 +24,7 @@ import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 
 import evopaint.util.mapping.ParallaxMap;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,28 @@ public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
     private final List<IChangeListener> pendingOperations = new ArrayList();
 
     public World(Configuration configuration, RuleBasedPixel [] pixels) {
-        super(pixels, configuration.dimension.width, configuration.dimension.height);
+        super(pixels, configuration.getDimension().width, configuration.getDimension().height);
         this.configuration = configuration;
+    }
+
+    public void setDimension(Dimension dimension) {
+        RuleBasedPixel [] data = getData();
+        RuleBasedPixel [] newData = new RuleBasedPixel[
+                dimension.width * dimension.height];
+
+        int minHeight = Math.min(height, dimension.height);
+        int minWidth = Math.min(width, dimension.width);
+
+        for (int y = 0; y < minHeight; y++) {
+            for (int x = 0; x < minWidth; x++) {
+                newData[y * dimension.width + x] = data[y * width + x];
+            }
+        }
+        
+        setData(newData);
+        width = dimension.width;
+        height = dimension.height;
+        recount();
     }
 
     public void step() {

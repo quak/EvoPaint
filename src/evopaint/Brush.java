@@ -39,7 +39,7 @@ public class Brush {
         //    yBegin = 0;
         }
         int yEnd = yLoc + (int)Math.ceil((double)size / 2);
-        if (yEnd > configuration.dimension.height) {
+        if (yEnd > configuration.getDimension().height) {
        //     yEnd = configuration.dimension.height;
         }
 
@@ -48,7 +48,7 @@ public class Brush {
        //     xBegin = 0;
         }
         int xEnd = xLoc + (int)Math.ceil((double)size / 2);
-        if (xEnd > configuration.dimension.width) {
+        if (xEnd > configuration.getDimension().width) {
        //     xEnd = configuration.dimension.width;
         }
 

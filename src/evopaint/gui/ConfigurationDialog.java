@@ -1,3 +1,24 @@
+/*
+ *  Copyright (C) 2010 Daniel Hoelbling (http://www.tigraine.at),
+ *                      Markus Echterhoff <tam@edu.uni-klu.ac.at>
+ *                      
+ *  This file is part of EvoPaint.
+ *
+ *  EvoPaint is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 package evopaint.gui;
 
 import java.awt.*;
@@ -11,6 +32,7 @@ import java.util.Locale;
 import javax.swing.*;
 
 import evopaint.Configuration;
+import evopaint.interfaces.IChangeListener;
 
 public class ConfigurationDialog extends JDialog {
 	private static final long serialVersionUID = 8398753169918348171L;
@@ -91,14 +113,22 @@ public class ConfigurationDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!validateInput()) return;
+                SwingUtilities.invokeLater(new Runnable() {
 
-                //config.world.setSize(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
-                config.dimension = new Dimension(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText()));
-                config.mutationRate = Double.parseDouble(txtMutationRate.getText());
-                config.fps = Integer.parseInt(txtFps.getText());
-                config.backgroundColor = txtBackgroundColor.getBackground().getRGB();
-                config.startingEnergy = Integer.parseInt(txtStartingEnergy.getText());
-                closeDialog();
+                    public void run() {
+                        config.world.addChangeListener(new IChangeListener() {
+
+                            public void changed() {
+                                config.setDimension(new Dimension(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText())));
+                                config.mutationRate = Double.parseDouble(txtMutationRate.getText());
+                                config.fps = Integer.parseInt(txtFps.getText());
+                                config.backgroundColor = txtBackgroundColor.getBackground().getRGB();
+                                config.startingEnergy = Integer.parseInt(txtStartingEnergy.getText());
+                                closeDialog();
+                            }
+                        });
+                    }
+                });
             }
         });
         submit.add(saveButton);
