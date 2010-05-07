@@ -76,9 +76,9 @@ public class JAboutDialog extends JDialog {
                 "EvoPaint is free software as envisioned by Richard Stallman and shall stay free. Therefore EvoPaint is licensed under the GNU Public License version 3 or higher. EvoPaint uses source files and libraries that are licensed differently, please see the corresponding licenses for more information." +
                 "</p>" +
                 "<h2 style='margin: 0; margin-top: 8px;'>Credits</h2>" +
-                "<table><tr><td style='white-space: nowrap;'>Markus Echterhoff <tam@edu.uni-klu.ac.at></td><td>(vision, project management, core engine, user interface, rule set manager, user-guide texts)</td></tr>" +
-                "<tr><td>Daniel Hölbling</td><td>(tool handling, selection management, miscellaneous code contributions)</td></tr>" +
-                "<tr><td>Augustin Malle</td><td>(logo design, software requirements specifications, user-guide design)</td></tr></table>" +
+                "<table><tr><td style='white-space: nowrap;'>Markus Echterhoff <tam@edu.uni-klu.ac.at></td><td>(vision, project management, core engine, user interface, rule set manager)</td></tr>" +
+                "<tr><td>Daniel Hölbling</td><td>(selection management, miscellaneous code contributions)</td></tr>" +
+                "<tr><td>Augustin Malle</td><td>(logo design, software requirements specifications, user-guide)</td></tr></table>" +
                 "<h2 style='margin: 0; margin-top: 8px;'>Thanks</h2>" +
                 "<ul>" +
                 "<li>To Ao.Univ.-Prof. Mag. Dr. Günther Fliedl for supervising this software lab and giving us the freedom this project needed to be developed.</li>" +
