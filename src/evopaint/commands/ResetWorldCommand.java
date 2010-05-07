@@ -48,8 +48,10 @@ public class ResetWorldCommand extends AbstractCommand {
                         configuration.world.reset();
                         configuration.usedActions.clear();
                         // re-add actions used in currently selected paint
-                        for (Rule rule : configuration.paint.getCurrentRuleSet().getRules()) {
-                            configuration.usedActions.add(rule.getAction());
+                        if (configuration.paint.getCurrentRuleSet() != null) {
+                            for (Rule rule : configuration.paint.getCurrentRuleSet().getRules()) {
+                                configuration.usedActions.add(rule.getAction());
+                            }
                         }
                     }
                 });
