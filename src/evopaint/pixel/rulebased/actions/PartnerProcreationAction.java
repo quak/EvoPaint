@@ -49,13 +49,15 @@ import javax.swing.event.ChangeListener;
  */
 public class PartnerProcreationAction extends Action {
     private int partnerEnergyChange;
+    private int offspringEnergy;
     private ColorDimensions dimensions;
     private float ourShare;
     private boolean mixRules;
 
-    public PartnerProcreationAction(int energyChange, int partnerEnergyChange, ActionMetaTarget partner, ColorDimensions dimensions, float ourShare, boolean mixRuleSet) {
+    public PartnerProcreationAction(int energyChange, int partnerEnergyChange, int offspringEnergy, ActionMetaTarget partner, ColorDimensions dimensions, float ourShare, boolean mixRuleSet) {
         super(energyChange, partner);
         this.partnerEnergyChange = partnerEnergyChange;
+        this.offspringEnergy = offspringEnergy;
         this.dimensions = dimensions;
         this.ourShare = ourShare;
         this.mixRules = mixRuleSet;
@@ -69,6 +71,8 @@ public class PartnerProcreationAction extends Action {
 
     public PartnerProcreationAction(PartnerProcreationAction partnerProcreationAction) {
         super(partnerProcreationAction);
+        this.partnerEnergyChange = partnerProcreationAction.partnerEnergyChange;
+        this.offspringEnergy = partnerProcreationAction.offspringEnergy;
         this.dimensions = partnerProcreationAction.dimensions;
         this.ourShare = partnerProcreationAction.ourShare;
         this.mixRules = partnerProcreationAction.mixRules;
@@ -182,6 +186,7 @@ public class PartnerProcreationAction extends Action {
             }
         }
         newPixel.setLocation(randomFreeSpot);
+        newPixel.setEnergy(offspringEnergy);
         configuration.world.set(newPixel);
 
         partner.changeEnergy(partnerEnergyChange);
@@ -198,6 +203,7 @@ public class PartnerProcreationAction extends Action {
         else if (partnerEnergyChange < 0) {
             parametersMap.put("partner's cost", Integer.toString((-1) * partnerEnergyChange));
         }
+        parametersMap.put("offspring's starting-energy", Integer.toString(offspringEnergy));
         parametersMap.put("dimensions", dimensions.toString());
         parametersMap.put("our share in %", Integer.toString(Math.round(ourShare * 100)));
         parametersMap.put("mode", "color " + (mixRules ? "and rules" : "only"));
@@ -213,6 +219,7 @@ public class PartnerProcreationAction extends Action {
         else if (partnerEnergyChange < 0) {
             parametersMap.put("partner's cost", Integer.toString((-1) * partnerEnergyChange));
         }
+        parametersMap.put("offspring's starting-energy", Integer.toString(offspringEnergy));
         parametersMap.put("dimensions", dimensions.toHTML());
         parametersMap.put("our share in %", Integer.toString(Math.round(ourShare * 100)));
         parametersMap.put("mode", "color " + (mixRules ? "and rules" : "only"));
@@ -231,6 +238,15 @@ public class PartnerProcreationAction extends Action {
             }
         });
         parametersMap.put("Partner's Energy Change", partnerEnergyChangeSpinner);
+
+        SpinnerNumberModel offspringEnergyModel = new SpinnerNumberModel(offspringEnergy, 0, Integer.MAX_VALUE, 1);
+        JSpinner offspringEnergySpinner = new AutoSelectOnFocusSpinner(offspringEnergyModel);
+        offspringEnergySpinner.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                offspringEnergy = (Integer) ((JSpinner) e.getSource()).getValue();
+            }
+        });
+        parametersMap.put("Offspring's Starting-Energy", partnerEnergyChangeSpinner);
 
         JPanel dimensionsPanel = new JPanel();
         JToggleButton btnH = new JToggleButton("H");

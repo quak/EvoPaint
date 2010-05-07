@@ -20,19 +20,27 @@
 package evopaint.pixel.rulebased.actions;
 
 import evopaint.Configuration;
+import evopaint.gui.util.AutoSelectOnFocusSpinner;
 import evopaint.pixel.rulebased.Action;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 import evopaint.pixel.rulebased.targeting.ActionMetaTarget;
 import evopaint.util.mapping.AbsoluteCoordinate;
 import evopaint.util.mapping.RelativeCoordinate;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.swing.JComponent;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  */
 public class CopyAction extends Action {
+
+    private int copyEnergy;
 
     public CopyAction(int energyChange, ActionMetaTarget target) {
         super(energyChange, target);
@@ -61,7 +69,7 @@ public class CopyAction extends Action {
 
         RuleBasedPixel newPixel = new RuleBasedPixel(actor);
         newPixel.setLocation(new AbsoluteCoordinate(actor.getLocation(), direction, configuration.world));
-        //newPixel.setEnergy(actor.getEnergy() + energyChange);
+        newPixel.setEnergy(copyEnergy);
         configuration.world.set(newPixel);
 
         if (configuration.rng.nextDouble() <= configuration.mutationRate) {
@@ -72,8 +80,38 @@ public class CopyAction extends Action {
     }
 
     @Override
+    public Map<String, String>addParametersString(Map<String, String> parametersMap) {
+        parametersMap = super.addParametersString(parametersMap);
+
+        parametersMap.put("starting-energy of copy", Integer.toString(copyEnergy));
+
+        return parametersMap;
+    }
+
+    @Override
+    public Map<String, String>addParametersHTML(Map<String, String> parametersMap) {
+        parametersMap = super.addParametersHTML(parametersMap);
+
+        parametersMap.put("starting-energy of copy", Integer.toString(copyEnergy));
+
+        return parametersMap;
+    }
+
+    @Override
     public LinkedHashMap<String,JComponent> addParametersGUI(LinkedHashMap<String, JComponent> parametersMap) {
         parametersMap = super.addParametersGUI(parametersMap);
+
+
+        SpinnerNumberModel copyEnergyModel = new SpinnerNumberModel(copyEnergy, 0, Integer.MAX_VALUE, 1);
+        JSpinner copyEnergySpinner = new AutoSelectOnFocusSpinner(copyEnergyModel);
+        copyEnergySpinner.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                copyEnergy = (Integer) ((JSpinner) e.getSource()).getValue();
+            }
+        });
+        parametersMap.put("Starting-Energy Of Copy", copyEnergySpinner);
+
+
 
         return parametersMap;
     }
