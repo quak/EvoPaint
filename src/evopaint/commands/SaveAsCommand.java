@@ -3,6 +3,7 @@ package evopaint.commands;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import evopaint.Configuration;
+import evopaint.World;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -50,6 +51,7 @@ public class SaveAsCommand extends AbstractCommand {
                     //outputStream = new GZIPOutputStream(outputStream);
 
                     XStream stream = new XStream(new DomDriver());
+                    stream.processAnnotations(World.class);
                     stream.toXML(configuration.world, outputStream);
                     outputStream.close();
                 } catch (FileNotFoundException e) {

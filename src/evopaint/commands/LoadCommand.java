@@ -46,7 +46,11 @@ public class LoadCommand extends AbstractCommand {
                 try {
                     FileInputStream fis = new FileInputStream(absolutePath);
                     XStream xStream = new XStream(new DomDriver());
-                    config.world = (World)xStream.fromXML(fis);
+                    xStream.processAnnotations(World.class);
+                    World world1 = new World(config);
+                    World world = (World) xStream.fromXML(fis, world1);
+                    world.setConfiguration(config);
+                    config.world = world;
                     fis.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

@@ -19,6 +19,7 @@
 
 package evopaint;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import evopaint.interfaces.IChanging;
 import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.rulebased.RuleBasedPixel;
@@ -38,7 +39,17 @@ import java.util.List;
  */
 public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
 
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    @XStreamOmitField
     private Configuration configuration;
+    @XStreamOmitField
     private final List<IChangeListener> pendingOperations = new ArrayList();
 
     /**
