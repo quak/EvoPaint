@@ -22,10 +22,7 @@ package evopaint.gui;
 
 import evopaint.Configuration;
 import evopaint.Selection;
-import evopaint.commands.DeleteCurrentSelectionCommand;
-import evopaint.commands.ImportCommand;
-import evopaint.commands.SelectAllCommand;
-import evopaint.commands.ShowConfigurationDialogCommand;
+import evopaint.commands.*;
 import evopaint.gui.listeners.SelectionListenerFactory;
 import evopaint.interfaces.IChangeListener;
 import evopaint.util.ExceptionHandler;
@@ -80,8 +77,12 @@ public class MenuBar extends JMenuBar implements Observer {
         worldMenu.add(newItem);
 
         worldMenu.add(new JMenuItem("Open..."));
-        worldMenu.add(new JMenuItem("Save"));
-        worldMenu.add(new JMenuItem("Save as..."));
+        JMenuItem save = new JMenuItem("Save");
+        save.addActionListener(new SaveCommand(configuration));
+        worldMenu.add(save);
+        JMenuItem saveAs = new JMenuItem("Save as...");
+        saveAs.addActionListener(new SaveAsCommand(configuration));
+        worldMenu.add(saveAs);
         JMenuItem importMenu = new JMenuItem("Import...");
         importMenu.addActionListener(new ImportCommand(configuration));
         worldMenu.add(importMenu);

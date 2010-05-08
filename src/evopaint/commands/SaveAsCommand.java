@@ -1,0 +1,66 @@
+package evopaint.commands;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import evopaint.Configuration;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: daniel
+ * Date: 08.05.2010
+ * Time: 18:48:12
+ * To change this template use File | Settings | File Templates.
+ */
+public class SaveAsCommand extends AbstractCommand {
+    protected Configuration configuration;
+    public SaveAsCommand(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    @Override
+    public void execute() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("*.evo", "evo"));
+        final int option = fileChooser.showSaveDialog(configuration.mainFrame);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            final String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+            configuration.saveFilePath = selectedFilePath;
+            SaveEvolution();
+        }
+    }
+
+    protected void SaveEvolution()
+    {
+        int runlevel = configuration.runLevel;
+        disableEvolution();
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    FileOutputStream outputStream = new FileOutputStream(configuration.saveFilePath);
+                    XStream stream = new XStream(new DomDriver());
+                    stream.toXML(configuration.world, outputStream);
+                    outputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //Resume evo
+        configuration.runLevel = runlevel;
+    }
+
+    private void disableEvolution() {
+        configuration.runLevel = Configuration.RUNLEVEL_STOP;
+    }
+}

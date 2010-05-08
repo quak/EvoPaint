@@ -127,6 +127,8 @@ public class Configuration {
     // END options dialog
     // END user configurable
 
+    public String saveFilePath = null;
+
 
     public Dimension getDimension() {
         return dimension;
