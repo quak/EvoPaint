@@ -1,8 +1,11 @@
 package evopaint.commands;
 
+import SevenZip.LzmaAlone;
 import com.thoughtworks.xstream.XStream;
 import evopaint.Configuration;
 import evopaint.World;
+import evopaint.util.ExceptionHandler;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -32,7 +35,7 @@ public class SaveAsCommand extends AbstractCommand {
         if (option == JFileChooser.APPROVE_OPTION) {
             String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
             if (!selectedFilePath.endsWith(".evo")) selectedFilePath = selectedFilePath + ".evo";
-            configuration.saveFilePath = selectedFilePath;
+            configuration.saveFilePath = selectedFilePath + ".tmp";
             SaveEvolution();
         }
     }
@@ -47,7 +50,6 @@ public class SaveAsCommand extends AbstractCommand {
             public void run() {
                 try {
                     OutputStream outputStream = new FileOutputStream(configuration.saveFilePath);
-                    //outputStream = new GZIPOutputStream(outputStream);
 
                     XStream stream = new XStream();
                     stream.processAnnotations(World.class);
@@ -58,6 +60,9 @@ public class SaveAsCommand extends AbstractCommand {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                LZMACompressor compressor = new LZMACompressor(configuration.saveFilePath);
+                compressor.start();
             }
         });
 
@@ -67,5 +72,25 @@ public class SaveAsCommand extends AbstractCommand {
 
     private void disableEvolution() {
         configuration.runLevel = Configuration.RUNLEVEL_STOP;
+    }
+
+    private class LZMACompressor extends Thread {
+        private String inputPath;
+
+        public LZMACompressor(String inputPath) {
+            this.inputPath = inputPath;
+        }
+
+        @Override
+        public void run() {
+            try {
+                String[] args = { "e", inputPath, inputPath.substring(0, inputPath.length() - 4) };
+                LzmaAlone.main(args);
+                new File(inputPath).delete();
+                JOptionPane.showMessageDialog(configuration.mainFrame, "I successfully compressed your saved evolution. Life is good!");
+            } catch (Exception ex) {
+                ExceptionHandler.handle(ex, true);
+            }
+        }
     }
 }

@@ -1,8 +1,11 @@
 package evopaint.commands;
 
+import SevenZip.LzmaAlone;
 import com.thoughtworks.xstream.XStream;
 import evopaint.Configuration;
 import evopaint.World;
+import evopaint.util.ExceptionHandler;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -43,7 +46,13 @@ public class LoadCommand extends AbstractCommand {
             @Override
             public void run() {
                 try {
-                    FileInputStream fis = new FileInputStream(absolutePath);
+                    String[] args = { "d", absolutePath, absolutePath.concat(".tmp") };
+                    try {
+                        LzmaAlone.main(args);
+                    } catch (Exception ex) {
+                        ExceptionHandler.handle(ex, true);
+                    }
+                    FileInputStream fis = new FileInputStream(absolutePath.concat(".tmp"));
                     XStream xStream = new XStream();
                     xStream.processAnnotations(World.class);
                     World world1 = new World(config);
@@ -52,6 +61,7 @@ public class LoadCommand extends AbstractCommand {
                     config.world = world;
                     config.saveFilePath = absolutePath;
                     fis.close();
+                    new File(absolutePath.concat(".tmp")).delete();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 } catch (IOException e) {
