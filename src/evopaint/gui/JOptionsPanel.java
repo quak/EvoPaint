@@ -61,7 +61,9 @@ public class JOptionsPanel extends JPanel {
             return;
         }
         else if (toolClass == FillSelectionCommand.class) {
-
+            currentPanel = new FillOptionsPanel(configuration);
+            add(currentPanel);
+            return;
         }
         else if (toolClass == EraseCommand.class) {
 

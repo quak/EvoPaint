@@ -55,6 +55,11 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
     private PaintCommand paintCommand;
     private MoveCommand moveCommand;
     private SelectCommand selectCommand;
+
+    public FillSelectionCommand getFillCommand() {
+        return fillCommand;
+    }
+
     private FillSelectionCommand fillCommand;
     private EraseCommand eraseCommand;
 

@@ -49,6 +49,15 @@ public class FillSelectionCommand extends AbstractCommand {
     private Configuration configuration;
     private Selection selection;
     private Showcase showcase;
+
+    public int getDensity() {
+        return density;
+    }
+
+    public void setDensity(int density) {
+        this.density = density;
+    }
+
     protected int density = 1;
     private Point location;
 
