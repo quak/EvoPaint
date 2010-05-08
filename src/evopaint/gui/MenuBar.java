@@ -86,7 +86,7 @@ public class MenuBar extends JMenuBar implements Observer {
         saveAs.addActionListener(new SaveAsCommand(configuration));
         worldMenu.add(saveAs);
         JMenuItem importMenu = new JMenuItem("Import...");
-        importMenu.addActionListener(new ImportCommand(configuration));
+        importMenu.addActionListener(showcase.getImportCommand());
         worldMenu.add(importMenu);
 
         JMenuItem exportItem = new JMenuItem();

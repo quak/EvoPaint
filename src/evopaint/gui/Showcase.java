@@ -55,6 +55,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
     private PaintCommand paintCommand;
     private MoveCommand moveCommand;
     private SelectCommand selectCommand;
+    private ImportCommand importCommand;
 
     public FillSelectionCommand getFillCommand() {
         return fillCommand;
@@ -92,6 +93,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         this.fillCommand = new FillSelectionCommand(this);
         this.eraseCommand = new EraseCommand(configuration, this);
         this.copySelectionCommand = new CopySelectionCommand(configuration);
+        this.importCommand = new ImportCommand(configuration);
 
         this.currentSelections.addObserver(this);
 
@@ -172,6 +174,8 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
             } else if (configuration.mainFrame.getActiveTool() == CopySelectionCommand.class) {
             	copySelectionCommand.setLocation(transformToImageSpace(e.getPoint()));
             	copySelectionCommand.submitPaste();
+            } else if (configuration.mainFrame.getActiveTool() == ImportCommand.class) {
+                importCommand.pasteImage();
             }
         } else if (e.getButton() == MouseEvent.BUTTON3) {
         	if (configuration.mainFrame.getActiveTool() == ZoomCommand.class) {
@@ -248,11 +252,15 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         else if (configuration.mainFrame.getActiveTool() == CopySelectionCommand.class) {
             copySelectionCommand.startDragging();
         }
+        else if (configuration.mainFrame.getActiveTool() == ImportCommand.class) {
+            importCommand.startDragging();
+        }
     }
 
     public void mouseExited(MouseEvent e) {
         unsubscribe(brushIndicatorOverlay);
         copySelectionCommand.stopDragging();
+        importCommand.stopDragging();
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -263,6 +271,8 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
                     new Dimension(configuration.brush.size, configuration.brush.size)));
         } else if (activeTool == CopySelectionCommand.class) {
             copySelectionCommand.setLocation(transformToImageSpace(e.getPoint()));
+        } else if (activeTool == ImportCommand.class) {
+            importCommand.setLocation(transformToImageSpace(e.getPoint()));
         }
     }
 
@@ -306,6 +316,10 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         	Selection selection = selectionEvent.getSelection();
         	unsubscribe(selection);
         }
+    }
+
+    public ImportCommand getImportCommand() {
+        return importCommand;
     }
 
     private class Painter implements ActionListener {

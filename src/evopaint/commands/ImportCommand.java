@@ -20,6 +20,7 @@
 
 package evopaint.commands;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
 import evopaint.Configuration;
+import evopaint.gui.util.IOverlay;
 import evopaint.pixel.PixelColor;
 import evopaint.pixel.rulebased.Rule;
 import evopaint.pixel.rulebased.RuleBasedPixel;
@@ -43,6 +45,9 @@ import evopaint.util.mapping.AbsoluteCoordinate;
 public class ImportCommand extends AbstractCommand {
 
     private final Configuration configuration;
+    private BufferedImage img;
+    private Point location;
+    private IOverlay overlay;
 
     public ImportCommand(Configuration configuration) {
         this.configuration = configuration;
@@ -54,27 +59,38 @@ public class ImportCommand extends AbstractCommand {
         int result = jFileChooser.showOpenDialog(jFileChooser);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = jFileChooser.getSelectedFile();
-            BufferedImage img = null;
             try {
                 img = ImageIO.read(file);
-                int width = configuration.world.getWidth();
-                if (img.getWidth() < width) {
-                    width = img.getWidth();
-                }
-                int height = configuration.world.getHeight();
-                if (img.getHeight() < height) {
-                    height = img.getHeight();
-                }
-
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        int rgb = img.getRGB(x, y);
-                        createPixel(x, y, rgb);
-                    }
-                }
+                this.overlay = new ImportOverlay(img);
             } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            configuration.mainFrame.setActiveTool(ImportCommand.class);
+        }
+    }
+
+    public void pasteImage()
+    {
+        int width = configuration.world.getWidth() - location.x;
+        if (img.getWidth() < width) {
+            width = img.getWidth();
+        }
+        int height = configuration.world.getHeight() - location.y;
+        if (img.getHeight() < height) {
+            height = img.getHeight();
+        }
+
+        for (int x = 0; x < + width; x++) {
+            for (int y = 0; y < + height; y++) {
+                int rgb = img.getRGB(x, y);
+                createPixel(x + location.x, y + location.y, rgb);
             }
         }
+
+        stopDragging();
+        configuration.mainFrame.setActiveTool(null);
+
+
     }
 
     private void createPixel(int x, int y, int rgb) {
@@ -86,6 +102,32 @@ public class ImportCommand extends AbstractCommand {
                     configuration.startingEnergy, new ArrayList<Rule>()));
         } else {
             pixel.getPixelColor().setInteger(rgb);
+        }
+    }
+
+    public void setLocation(Point point) {
+        this.location = point;
+    }
+
+    public void stopDragging() {
+        configuration.mainFrame.getShowcase().unsubscribe(overlay);
+    }
+
+    public void startDragging() {
+        if (overlay != null)
+            configuration.mainFrame.getShowcase().subscribe(overlay);
+    }
+
+    private class ImportOverlay implements IOverlay {
+        private BufferedImage overlay;
+
+        public ImportOverlay(BufferedImage overlay) {
+            this.overlay = overlay;
+        }
+
+        @Override
+        public void paint(Graphics2D g2) {
+            g2.drawImage(overlay, location.x, location.y, configuration.mainFrame.getShowcase());
         }
     }
 }
