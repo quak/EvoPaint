@@ -1,7 +1,6 @@
 package evopaint.commands;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import evopaint.Configuration;
 import evopaint.World;
 
@@ -45,7 +44,7 @@ public class LoadCommand extends AbstractCommand {
             public void run() {
                 try {
                     FileInputStream fis = new FileInputStream(absolutePath);
-                    XStream xStream = new XStream(new DomDriver());
+                    XStream xStream = new XStream();
                     xStream.processAnnotations(World.class);
                     World world1 = new World(config);
                     World world = (World) xStream.fromXML(fis, world1);

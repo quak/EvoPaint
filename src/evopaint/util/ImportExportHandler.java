@@ -21,7 +21,6 @@ package evopaint.util;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import evopaint.Configuration;
 import java.io.File;
 import java.util.regex.Pattern;
@@ -33,7 +32,7 @@ import java.util.regex.Pattern;
  */
 public class ImportExportHandler {
 
-    private XStream xStream = new XStream(new DomDriver());
+    private XStream xStream = new XStream();
 
     public Object importFromString(String importString) {
         return importFromString(importString, null);

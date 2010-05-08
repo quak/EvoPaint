@@ -1,13 +1,7 @@
 package evopaint.commands;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import evopaint.Configuration;
 
-import javax.swing.*;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.

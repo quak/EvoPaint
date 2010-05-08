@@ -1,7 +1,6 @@
 package evopaint.commands;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import evopaint.Configuration;
 import evopaint.World;
 
@@ -11,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by IntelliJ IDEA.
@@ -50,7 +48,7 @@ public class SaveAsCommand extends AbstractCommand {
                     OutputStream outputStream = new FileOutputStream(configuration.saveFilePath);
                     //outputStream = new GZIPOutputStream(outputStream);
 
-                    XStream stream = new XStream(new DomDriver());
+                    XStream stream = new XStream();
                     stream.processAnnotations(World.class);
                     stream.toXML(configuration.world, outputStream);
                     outputStream.close();
