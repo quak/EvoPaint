@@ -83,13 +83,14 @@ public class FillSelectionCommand extends AbstractCommand {
                             rectangle = new Rectangle(0, 0, configuration.world.getWidth(),
                                     configuration.world.getHeight());
                         } else {
-                            rectangle = selection.getRectangle();
+                            Rectangle r = selection.getRectangle();
+                            rectangle = new Rectangle(r.x +1, r.y +1, r.width-1, r.height -1);
                         }
 
                         if (rectangle.contains(location)) {
                             //System.out.println("Filling inside rect " + rectangle);
 
-                            for (int x = rectangle.x; x < rectangle.x + rectangle.width; x++) {
+                            for (int x = rectangle.x ; x < rectangle.x + rectangle.width; x++) {
                                 for (int y = rectangle.y; y < rectangle.y + rectangle.height; y++) {
                                     if ((x % density) != 0) {
                                         continue;
