@@ -9,6 +9,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,7 +46,9 @@ public class SaveAsCommand extends AbstractCommand {
             @Override
             public void run() {
                 try {
-                    FileOutputStream outputStream = new FileOutputStream(configuration.saveFilePath);
+                    OutputStream outputStream = new FileOutputStream(configuration.saveFilePath);
+                    //outputStream = new GZIPOutputStream(outputStream);
+
                     XStream stream = new XStream(new DomDriver());
                     stream.toXML(configuration.world, outputStream);
                     outputStream.close();
