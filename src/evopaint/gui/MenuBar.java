@@ -121,6 +121,10 @@ public class MenuBar extends JMenuBar implements Observer {
         selectAll.addActionListener(new SelectAllCommand(showcase, configuration));
         selectionMenu.add(selectAll);
 
+        JMenuItem selectNone = new JMenuItem("Select None");
+        selectNone.addActionListener(new SelectNoneCommand(configuration));
+        selectionMenu.add(selectNone);
+
         JMenuItem selectionSetName = new JMenuItem("Set Name...");
         selectionMenu.add(selectionSetName);
         selectionSetName.addActionListener(listenerFactory.CreateSelectionSetNameListener());

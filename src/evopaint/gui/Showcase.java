@@ -276,7 +276,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         for(Selection sel : currentSelections) {
         	unsubscribe(sel);
         }
-        subscribe(selection);
+        if(selection != null) subscribe(selection);
         ClearSelectionHighlight();
     }
 
