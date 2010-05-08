@@ -76,7 +76,9 @@ public class MenuBar extends JMenuBar implements Observer {
         newItem.setText("New");
         worldMenu.add(newItem);
 
-        worldMenu.add(new JMenuItem("Open..."));
+        JMenuItem open = new JMenuItem("Open...");
+        open.addActionListener(new LoadCommand(configuration));
+        worldMenu.add(open);
         JMenuItem save = new JMenuItem("Save");
         save.addActionListener(new SaveCommand(configuration));
         worldMenu.add(save);
