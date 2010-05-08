@@ -30,7 +30,8 @@ public class SaveAsCommand extends AbstractCommand {
         fileChooser.setFileFilter(new FileNameExtensionFilter("*.evo", "evo"));
         final int option = fileChooser.showSaveDialog(configuration.mainFrame);
         if (option == JFileChooser.APPROVE_OPTION) {
-            final String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+            String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!selectedFilePath.endsWith(".evo")) selectedFilePath = selectedFilePath + ".evo";
             configuration.saveFilePath = selectedFilePath;
             SaveEvolution();
         }
