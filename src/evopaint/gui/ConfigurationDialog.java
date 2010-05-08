@@ -30,6 +30,8 @@ import evopaint.gui.rulesetmanager.util.ColorChooserLabel;
 import evopaint.gui.util.AutoSelectOnFocusSpinner;
 import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.PixelColor;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -114,9 +116,25 @@ public class ConfigurationDialog extends JDialog {
         JLabel mutationRateLabel = new JLabel("Mutation Rate");
         mutationRateLabel.setToolTipText("<html>Chance for a mutation to occur during copy or mixing operations.<br />A value of 0.01 means a 1% chance, a value of 0 disables mutation.</html>");
         mutationRatePanel.add(mutationRateLabel, labelConstraints);
-        final AutoSelectOnFocusSpinner mutationRateSpinner = 
-                new AutoSelectOnFocusSpinner(new SpinnerNumberModel(
-                config.mutationRate, 0, Double.MAX_VALUE, 0.001));
+        final JSpinner mutationRateSpinner =
+                new JSpinner(new SpinnerNumberModel(
+                config.mutationRate, 0.0, 1.0, 0.01));
+        mutationRateSpinner.setEditor(new JSpinner.NumberEditor(mutationRateSpinner, "#.##############"));
+        mutationRateSpinner.setPreferredSize(new Dimension(
+                180,
+                mutationRateSpinner.getPreferredSize().height));
+        final JFormattedTextField mutationRateSpinnerText =
+                ((JSpinner.NumberEditor)mutationRateSpinner.getEditor()).getTextField();
+        mutationRateSpinnerText.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            mutationRateSpinnerText.selectAll();
+                        }
+                });
+            }
+            public void focusLost(FocusEvent e) {}
+        });
         mutationRatePanel.add(mutationRateSpinner, inputConstraints);
 
         JPanel guiOptionsPanel = new JPanel();
