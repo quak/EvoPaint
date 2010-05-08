@@ -49,17 +49,16 @@ public class FillSelectionCommand extends AbstractCommand {
     private Configuration configuration;
     private Selection selection;
     private Showcase showcase;
+    protected double density = 1;
+    private Point location;
 
-    public int getDensity() {
+    public double getDensity() {
         return density;
     }
 
-    public void setDensity(int density) {
+    public void setDensity(double density) {
         this.density = density;
     }
-
-    protected int density = 1;
-    private Point location;
 
     public FillSelectionCommand(Showcase showcase) {
         this.showcase = showcase;
@@ -87,15 +86,17 @@ public class FillSelectionCommand extends AbstractCommand {
                             rectangle = new Rectangle(r.x +1, r.y +1, r.width-1, r.height -1);
                         }
 
+                        int reciprocalDensity = (int) (1d / density);
+
                         if (rectangle.contains(location)) {
                             //System.out.println("Filling inside rect " + rectangle);
 
                             for (int x = rectangle.x ; x < rectangle.x + rectangle.width; x++) {
                                 for (int y = rectangle.y; y < rectangle.y + rectangle.height; y++) {
-                                    if ((x % density) != 0) {
+                                    if ((x % reciprocalDensity) != 0) {
                                         continue;
                                     }
-                                    if ((y % density) != 0) {
+                                    if ((y % reciprocalDensity) != 0) {
                                         continue;
                                     }
                                     createPixel(x, y);
@@ -107,10 +108,10 @@ public class FillSelectionCommand extends AbstractCommand {
                             for (int x = 0; x < configuration.world.getWidth(); x++) {
                                 for (int y = 0; y < configuration.world.getHeight(); y++) {
                                     currentLoc.setLocation(x, y);
-                                    if ((x % density != 0)) {
+                                    if ((x % reciprocalDensity != 0)) {
                                         continue;
                                     }
-                                    if ((y % density != 0)) {
+                                    if ((y % reciprocalDensity != 0)) {
                                         continue;
                                     }
                                     if (!rectangle.contains(currentLoc)) {

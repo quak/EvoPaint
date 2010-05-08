@@ -43,12 +43,12 @@ public class FillOptionsPanel extends JPanel {
         panelBrushSize.add(labelForSpinner);
 
         FillSelectionCommand fillCommand = config.mainFrame.getShowcase().getFillCommand();
-        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(fillCommand.getDensity(), 1, 10, 1);
-        JSpinner spinnerBrushSize = new AutoSelectOnFocusSpinner(spinnerModel);
-        spinnerBrushSize.addChangeListener(new SpinnerBrushSizeListener(spinnerBrushSize));
-        labelForSpinner.setLabelFor(spinnerBrushSize);
-        spinnerBrushSize.setToolTipText("Size of your brush in square pixels");
-        panelBrushSize.add(spinnerBrushSize);
+        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(fillCommand.getDensity(), 0.001, 1.0, 0.1);
+        JSpinner spinnerDensity = new AutoSelectOnFocusSpinner(spinnerModel);
+        spinnerDensity.addChangeListener(new SpinnerBrushSizeListener(spinnerDensity));
+        labelForSpinner.setLabelFor(spinnerDensity);
+        spinnerDensity.setToolTipText("Density of the fill tool. (0.5 will paint every second pixel)");
+        panelBrushSize.add(spinnerDensity);
     }
 
     private class SpinnerBrushSizeListener implements ChangeListener {
@@ -59,7 +59,7 @@ public class FillOptionsPanel extends JPanel {
         }
 
         public void stateChanged(ChangeEvent e) {
-            config.mainFrame.getShowcase().getFillCommand().setDensity((Integer)spinnerBrushSize.getValue());
+            config.mainFrame.getShowcase().getFillCommand().setDensity((Double)spinnerBrushSize.getValue());
         }
     }
 }
