@@ -50,6 +50,7 @@ public class LoadCommand extends AbstractCommand {
                     World world = (World) xStream.fromXML(fis, world1);
                     world.setConfiguration(config);
                     config.world = world;
+                    config.saveFilePath = absolutePath;
                     fis.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
