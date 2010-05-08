@@ -92,7 +92,7 @@ public class MenuBar extends JMenuBar implements Observer {
 
         worldMenu.add(exportItem);
 
-        JMenuItem opt = new JMenuItem("Options");
+        JMenuItem opt = new JMenuItem("Options...");
         opt.addActionListener(new ShowConfigurationDialogCommand(configuration));
         worldMenu.add(opt);
 

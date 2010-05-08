@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>,
- *                      Daniel Hoelbling (http://www.tigraine.at)
+ *  Copyright (C) 2010 Markus Echterhoff <tam@edu.uni-klu.ac.at>
  *
  *  This file is part of EvoPaint.
  *
@@ -17,30 +16,31 @@
  *  You should have received a copy of the GNU General Public License
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package evopaint.gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import javax.swing.*;
 
 import evopaint.Configuration;
+import evopaint.gui.rulesetmanager.util.ColorChooserLabel;
+import evopaint.gui.util.AutoSelectOnFocusSpinner;
 import evopaint.interfaces.IChangeListener;
+import evopaint.pixel.PixelColor;
+import javax.swing.border.LineBorder;
 
 /**
  * World -> Options dialog
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
- * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class ConfigurationDialog extends JDialog {
 
     private final Configuration config;
+    private PixelColor backgroundColor;
 
     public ConfigurationDialog(Configuration config) {
         this.config = config;
@@ -48,186 +48,116 @@ public class ConfigurationDialog extends JDialog {
     }
 
     private void initializeComponents() {
-        this.setTitle("evoPaint Configuration");
-        Dimension d = new Dimension(200, 270);
-        this.setPreferredSize(d);
-        this.setSize(d);
+        this.setTitle("Configuration");
         this.setResizable(false);
 
-        Container cp = this.getContentPane();
-        cp.setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
+        setLayout(new BorderLayout(20, 20));
 
-        JPanel worldSize = new JPanel();
-        cp.add(worldSize);
-        //Worldsize
-        worldSize.add(new JLabel("World Size"));
-        final JFormattedTextField txtWidth = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        txtWidth.setText(Integer.toString(config.world.getWidth()));
-        final JTextField txtHeight = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        txtHeight.setText(Integer.toString(config.world.getHeight()));
-        worldSize.add(txtWidth);
-        worldSize.add(new JLabel("x"));
-        worldSize.add(txtHeight);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.setBorder(new LineBorder(mainPanel.getBackground(), 10));
+        add(mainPanel, BorderLayout.CENTER);
 
-        JPanel mutationRate = new JPanel();
-        cp.add(mutationRate);
+        GridBagConstraints labelConstraints = new GridBagConstraints();
+        labelConstraints.gridx = 0;
+        labelConstraints.anchor = GridBagConstraints.WEST;
+        labelConstraints.insets = new Insets(5, 5, 5, 5);
 
-        //Mutationrate
-        mutationRate.add(new JLabel("Mutation Rate"));
-        final JTextField txtMutationRate = new JFormattedTextField(NumberFormat.getNumberInstance(Locale.ENGLISH));
-        txtMutationRate.setText(Double.toString(config.mutationRate));
-        mutationRate.add(txtMutationRate);
+        GridBagConstraints inputConstraints = new GridBagConstraints();
+        inputConstraints.gridx = 1;
+        inputConstraints.anchor = GridBagConstraints.EAST;
+        inputConstraints.weightx = 1;
+        inputConstraints.insets = new Insets(5, 5, 5, 5);
 
-        JPanel fps = new JPanel();
-        cp.add(fps);
+        // world size
+        JPanel worldSizePanel = new JPanel(new GridBagLayout());
+        mainPanel.add(worldSizePanel);
+        worldSizePanel.add(new JLabel("World Size"), labelConstraints);
+        JPanel worldSizeInputPanel = new JPanel();
+        worldSizeInputPanel.setLayout(new GridBagLayout());
+        final AutoSelectOnFocusSpinner widthSpinner = new AutoSelectOnFocusSpinner(new SpinnerNumberModel(config.getDimension().width, 1, Integer.MAX_VALUE, 1));
+        final AutoSelectOnFocusSpinner heightSpinner = new AutoSelectOnFocusSpinner(new SpinnerNumberModel(config.getDimension().height, 1, Integer.MAX_VALUE, 1));
+        worldSizeInputPanel.add(widthSpinner);
+        JLabel separatorLabel = new JLabel("x");
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(0, 5, 0, 5);
+        worldSizeInputPanel.add(separatorLabel, c);
+        worldSizeInputPanel.add(heightSpinner);
+        worldSizePanel.add(worldSizeInputPanel, inputConstraints);
 
-        //FPS
-        fps.add(new JLabel("FPS"));
-        final JTextField txtFps = new JFormattedTextField();
-        txtFps.setText(Integer.toString(config.fps));
-        fps.add(txtFps);
+        // mutation rate
+        JPanel mutationRatePanel = new JPanel(new GridBagLayout());
+        mainPanel.add(mutationRatePanel);
+        mutationRatePanel.add(new JLabel("Mutation Rate"), labelConstraints);
+        final AutoSelectOnFocusSpinner mutationRateSpinner = new AutoSelectOnFocusSpinner(new SpinnerNumberModel(config.mutationRate, 0, Double.MAX_VALUE, 0.001));
+        mutationRatePanel.add(mutationRateSpinner, inputConstraints);
 
-        JPanel backgroundColor = new JPanel();
-        cp.add(backgroundColor);
+        // FPS
+        JPanel fpsPanel = new JPanel(new GridBagLayout());
+        mainPanel.add(fpsPanel);
+        fpsPanel.add(new JLabel("FPS"), labelConstraints);
+        final AutoSelectOnFocusSpinner fpsSpinner = new AutoSelectOnFocusSpinner(new SpinnerNumberModel(config.fps, 1, Integer.MAX_VALUE, 1));
+        fpsPanel.add(fpsSpinner, inputConstraints);
 
-        //BackgroundColor
-        backgroundColor.add(new JLabel("Background Color"));
-        final JTextField txtBackgroundColor = new JTextField();
-        txtBackgroundColor.addMouseListener(new BackgroundMouseListener(txtBackgroundColor));
-        setBackgroundValue(txtBackgroundColor, config.backgroundColor);
-        backgroundColor.add(txtBackgroundColor);
+        // background color
+        JPanel backgroundColorPanel = new JPanel(new GridBagLayout());
+        mainPanel.add(backgroundColorPanel, labelConstraints);
+        backgroundColorPanel.add(new JLabel("Background Color"), labelConstraints);
+        backgroundColor = new PixelColor(config.backgroundColor);
+        JPanel backgroundColorAlignmentPanel = new JPanel();
+        backgroundColorAlignmentPanel.setLayout(new GridBagLayout());
+        backgroundColorAlignmentPanel.setPreferredSize(fpsSpinner.getPreferredSize());
+        final ColorChooserLabel backgroundColorLabel = new ColorChooserLabel(backgroundColor);
+        backgroundColorAlignmentPanel.add(backgroundColorLabel);
+        backgroundColorPanel.add(backgroundColorAlignmentPanel, inputConstraints);
 
-        //StartingEnergy
-        JPanel startingEnergy = new JPanel();
-        cp.add(startingEnergy);
-
-        startingEnergy.add(new JLabel("Starting Energy"));
-        final JTextField txtStartingEnergy = new JTextField();
-        txtStartingEnergy.setText(Integer.toString(config.startingEnergy));
-        startingEnergy.add(txtStartingEnergy);
+        // starting energy
+        JPanel startingEnergyPanel = new JPanel(new GridBagLayout());
+        mainPanel.add(startingEnergyPanel);
+        startingEnergyPanel.add(new JLabel("Starting Energy"), labelConstraints);
+        final AutoSelectOnFocusSpinner startingEnergySpinner = new AutoSelectOnFocusSpinner(new SpinnerNumberModel(config.startingEnergy, 1, Integer.MAX_VALUE, 1));
+        startingEnergyPanel.add(startingEnergySpinner, inputConstraints);
 
 
-        JPanel submit = new JPanel();
-        submit.setBackground(new Color(0xF2F2F5));
-        cp.add(submit);
+        JPanel controlPanel = new JPanel();
+        add(controlPanel, BorderLayout.SOUTH);
 
-        JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(new ActionListener() {
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!validateInput()) {
-                    return;
-                }
+
                 SwingUtilities.invokeLater(new Runnable() {
 
                     public void run() {
                         config.world.addChangeListener(new IChangeListener() {
 
                             public void changed() {
-                                config.setDimension(new Dimension(Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText())));
-                                config.mutationRate = Double.parseDouble(txtMutationRate.getText());
-                                config.fps = Integer.parseInt(txtFps.getText());
-                                config.backgroundColor = txtBackgroundColor.getBackground().getRGB();
-                                config.startingEnergy = Integer.parseInt(txtStartingEnergy.getText());
-                                closeDialog();
+                                config.setDimension(new Dimension((Integer)widthSpinner.getValue(), (Integer)heightSpinner.getValue()));
+                                config.mutationRate = (Double) mutationRateSpinner.getValue();
+                                config.fps = (Integer) fpsSpinner.getValue();
+                                config.backgroundColor = backgroundColor.getInteger();
+                                config.startingEnergy = (Integer) startingEnergySpinner.getValue();
+                                dispose();
                             }
                         });
                     }
                 });
             }
         });
-        submit.add(saveButton);
+        controlPanel.add(okButton);
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                closeDialog();
+                dispose();
             }
         });
-        submit.add(cancelButton);
+        controlPanel.add(cancelButton);
+
+        pack();
     }
 
-    private boolean validateInput() {
-        return true;  //To change body of created methods use File | Settings | File Templates.
-    }
-
-    private void closeDialog() {
-        this.setVisible(false);
-    }
-
-    private void setBackgroundValue(JTextField textField, int color) {
-        textField.setText("#" + Integer.toHexString(color));
-        setForegroundColor(color, textField);
-        textField.setBackground(new Color(color));
-    }
-
-    private void setForegroundColor(int color, JTextField field) {
-        float[] hsb = null;
-        hsb = Color.RGBtoHSB((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, hsb);
-        if (hsb[2] < 0.5) {
-            field.setForeground(Color.white);
-        } else {
-            field.setForeground(Color.black);
-        }
-    }
-
-    private class BackgroundMouseListener implements MouseListener {
-
-        private final JTextField txtBackgroundColor;
-        private JColorChooser colorChooser = new JColorChooser();
-
-        public BackgroundMouseListener(JTextField txtBackgroundColor) {
-            this.txtBackgroundColor = txtBackgroundColor;
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent mouseEvent) {
-            colorChooser.setVisible(true);
-            JDialog dialog = JColorChooser.createDialog(txtBackgroundColor, "Choose Background Color", true, colorChooser, new ColorChooserOkListener(), new ColorChooserCancelListener());
-            dialog.pack();
-            dialog.setVisible(true);
-            //JColorChooser.createDialog(editColorBtn, "Choose Color", true,
-            //        colorChooser, new ColorChooserOKListener(), new ColorChooserCancelListener());
-        }
-
-        @Override
-        public void mousePressed(MouseEvent mouseEvent) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent mouseEvent) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent mouseEvent) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public void mouseExited(MouseEvent mouseEvent) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        private class ColorChooserOkListener implements ActionListener {
-
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                Color color = colorChooser.getColor();
-                setBackgroundValue(txtBackgroundColor, color.getRGB());
-                pack();
-            }
-        }
-
-        private class ColorChooserCancelListener implements ActionListener {
-
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                //NOOP
-            }
-        }
-    }
 }

@@ -42,6 +42,7 @@ public class ShowConfigurationDialogCommand extends AbstractCommand {
     public void execute() {
         ConfigurationDialog configurationDialog = new ConfigurationDialog(config);
         configurationDialog.setModal(true);
+        configurationDialog.pack();
         configurationDialog.setVisible(true);
     }
 }
