@@ -100,9 +100,11 @@ public class Configuration {
         add(new ColorLikenessMyColorQualifier());
     }};
 
-    public IRandomNumberGenerator rng;
+    private static int INSTANCE_COUNTER = 0;
     public static FileHandler FILE_HANDLER = new FileHandler();
     public static ImportExportHandler IMPORT_EXPORT_HANDLER = new ImportExportHandler();
+
+    public IRandomNumberGenerator rng;
     public World world;
     public Perception perception;
     public MainFrame mainFrame;
@@ -130,6 +132,12 @@ public class Configuration {
 
     public String saveFilePath = null;
 
+    public static synchronized void decreaseInstanceCounter() {
+        INSTANCE_COUNTER--;
+        if (INSTANCE_COUNTER == 0) {
+            System.exit(0);
+        }
+    }
 
     public Dimension getDimension() {
         return dimension;
@@ -186,5 +194,6 @@ public class Configuration {
         paint = new Paint(this);
         usedActions = new ArrayList<Action>();
         mainFrame = new MainFrame(this);
+        INSTANCE_COUNTER++;
     }
 }
