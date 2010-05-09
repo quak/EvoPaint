@@ -127,7 +127,8 @@ public class ImportCommand extends AbstractCommand {
 
         @Override
         public void paint(Graphics2D g2) {
-            g2.drawImage(overlay, location.x, location.y, configuration.mainFrame.getShowcase());
+            if (location != null)
+                g2.drawImage(overlay, location.x, location.y, configuration.mainFrame.getShowcase());
         }
     }
 }
