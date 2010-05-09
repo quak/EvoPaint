@@ -1,1 +1,0 @@
-java -jar ./EvoPaint.jar

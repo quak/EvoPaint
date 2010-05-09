@@ -4,12 +4,14 @@
     </description>
 
     <!-- set global properties -->
+    <property name="version" value="1.0.swpr"/>
     <property name="project.dir" location="."/>
     <property name="src.dir" location="src"/>
     <property name="build.dir" location="build"/>
     <property name="dist.dir" location="dist"/>
     <property name="misc.dir" location="misc"/>
     <property name="javadoc.dir" location="javadoc"/>
+    <property name="launch4j.dir" location="misc/launch4j" />
 
     <path id="class.path">
         <fileset dir="lib">
@@ -17,14 +19,50 @@
         </fileset>
     </path>
 
-    <target name="init">
-        <mkdir dir="${build.dir}"/>
-        <mkdir dir="${dist.dir}"/>
-        <mkdir dir="${dist.dir}/windows"/>
-        <mkdir dir="${dist.dir}/source"/>
+    <target name="dist-source-with-third-party-sources" description="Create source distribution with third party sources">
+        <mkdir dir="${dist.dir}/source-with-third-party-sources"/>
+        <copy todir="${dist.dir}/source-with-third-party-sources">
+            <fileset dir="${project.dir}">
+                <include name="src/" />
+                <include name="lib/" />
+                <include name="misc/" />
+                <include name="doc/" />
+                <include name="LICENSE" />
+                <include name="build.xml" />
+            </fileset>
+        </copy>
+        <move tofile="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources"
+            file="${dist.dir}/source-with-third-party-sources" />
+        <tar destfile="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources.tar" basedir="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources"/>
+        <delete dir="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources" />
+        <gzip destfile="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources.tar.gz" src="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources.tar"/>
+        <delete file="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources.tar" />
     </target>
-    
-    <target name="compile" depends="init" description="compile the source ">
+
+    <target name="dist-source" description="Create source distribution">
+        <mkdir dir="${dist.dir}/source"/>
+        <copy todir="${dist.dir}/source">
+            <fileset dir="${project.dir}">
+                <include name="src/" />
+                <include name="lib/" />
+                <include name="misc/" />
+                <include name="doc/" />
+                <include name="LICENSE" />
+                <include name="build.xml" />
+                <exclude name="misc/third-party_sources/" />
+                <exclude name="misc/mencoder.exe" />
+            </fileset>
+        </copy>
+        <move tofile="${dist.dir}/EvoPaint-${version}-source"
+            file="${dist.dir}/source" />
+        <tar destfile="${dist.dir}/EvoPaint-${version}-source.tar" basedir="${dist.dir}/EvoPaint-${version}-source"/>
+        <delete dir="${dist.dir}/EvoPaint-${version}-source" />
+        <gzip destfile="${dist.dir}/EvoPaint-${version}-source.tar.gz" src="${dist.dir}/EvoPaint-${version}-source.tar"/>
+        <delete file="${dist.dir}/EvoPaint-${version}-source.tar" />
+    </target>
+
+    <target name="compile" description="compile the source ">
+        <mkdir dir="${build.dir}"/>
         <javac srcdir="${src.dir}" destdir="${build.dir}">
             <!--<javac srcdir="${src}" destdir="${build}" debug="on" debuglevel="lines,vars,source">-->
             <!--<compilerarg value="-Xlint:unchecked" />-->
@@ -37,28 +75,67 @@
         </copy>
     </target>
 
-    <target name="jar" depends="clean,compile" description="Create the jar archive">
-        <jar jarfile="${dist.dir}/EvoPaint.jar" basedir="${build.dir}" manifest="manifest.mf" />
+    <target name="jar" depends="clean, compile" description="Create the jar archive">
+        <jar jarfile="${build.dir}/EvoPaint.jar" basedir="${build.dir}" manifest="${misc.dir}/EvoPaint.manifest" />
     </target>
     
     <target name="dist-jar" depends="jar" description="Create jar distribution">
         <mkdir dir="${dist.dir}/jar"/>
         <copy todir="${dist.dir}/jar">
             <fileset dir="${project.dir}">
-                <include name="**/lib/"/>
+                <include name="lib/"/>
             </fileset>
             <fileset dir="${misc.dir}">
-                <include name="**/collections/" />
-                <include name="EvoPaint.sh" />
+                <include name="collections/" />
             </fileset>
             <fileset dir="${project.dir}">
-                <include name="**/doc/"/>
+                <include name="doc/"/>
             </fileset>
-            <fileset dir="${dist.dir}">
+            <fileset dir="${build.dir}">
                 <include name="EvoPaint.jar" />
             </fileset>
         </copy>
-        <chmod file="${dist.dir}/jar/EvoPaint.sh" perm="a+x" />
+        <move tofile="${dist.dir}/EvoPaint-${version}-jar"
+            file="${dist.dir}/jar" />
+        <tar destfile="${dist.dir}/EvoPaint-${version}-jar.tar" basedir="${dist.dir}/EvoPaint-${version}-jar"/>
+        <delete dir="${dist.dir}/EvoPaint-${version}-jar" />
+        <gzip destfile="${dist.dir}/EvoPaint-${version}-jar.tar.gz" src="${dist.dir}/EvoPaint-${version}-jar.tar"/>
+        <delete file="${dist.dir}/EvoPaint-${version}-jar.tar" />
+    </target>
+
+    <taskdef name="launch4j"
+             classname="net.sf.launch4j.ant.Launch4jTask"
+             classpath="${launch4j.dir}/launch4j.jar
+             :${launch4j.dir}/lib/xstream.jar" />
+
+   <target name="dist-windows" depends="jar" description="Create windows distribution">
+        <mkdir dir="${dist.dir}/windows"/>
+        <launch4j configFile="${project.dir}/misc/launch4j-config.xml" />
+        <copy todir="${dist.dir}/windows">
+            <fileset dir="${project.dir}">
+                <include name="lib/"/>
+            </fileset>
+            <fileset dir="${misc.dir}">
+                <include name="collections/" />
+            </fileset>
+            <fileset dir="${project.dir}">
+                <include name="doc/"/>
+            </fileset>
+        </copy>
+        <copy todir="${dist.dir}/windows/lib">
+            <fileset dir="${misc.dir}">
+                <include name="mencoder-31139.exe" />
+            </fileset>
+        </copy>
+        <move tofile="${dist.dir}/EvoPaint-${version}-windows"
+            file="${dist.dir}/windows" />
+        <zip destfile="${dist.dir}/EvoPaint-${version}-windows.zip"
+                basedir="${dist.dir}/EvoPaint-${version}-windows" />
+        <delete dir="${dist.dir}/EvoPaint-${version}-windows" />
+    </target>
+
+    <target name="dist" depends="clean, dist-source-with-third-party-sources, dist-source, dist-jar, dist-windows" description="Create all distribution files">
+        <delete file="${dist.dir}/EvoPaint.jar" />
     </target>
 
     <target name="javadoc"  description="Create javadoc">

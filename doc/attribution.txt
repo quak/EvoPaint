@@ -18,3 +18,10 @@ XStream (http://xstream.codehaus.org/)
 XPP3 (http://www.extreme.indiana.edu/xgws/xsoap/xpp/)
 Uncommons Maths (http://uncommons-maths.dev.java.net/)
 
+
+----- Applications -----
+
+
+mencoder.exe
+	MPlayer project (http://www.mplayerhq.hu)
+	Windows-Binary by Gianluigi Tiesi (http://oss.netfarm.it/mplayer-win32.php)

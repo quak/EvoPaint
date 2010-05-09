@@ -313,7 +313,8 @@ public class FileHandler implements TreeModelListener {
     }
 
     public FileHandler() {
-        homeDir = new File(System.getProperty("user.dir"));
+        // homeDir = new File(System.getProperty("user.dir"));
+        homeDir = new File(getClass().getResource("/").getPath());
         collectionsDir = new File(homeDir, "/collections");
         if (false == collectionsDir.exists()) {
             ExceptionHandler.handle(new Exception(), true, "I cannot find the collections folder in the current working directory \"" + homeDir + "\"! If you created a short cut for me on your Desktop *blushes* make sure you set the working directory poperty correctly and click that sexy short cut again!");
