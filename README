@@ -1,0 +1,3 @@
+To build EvoPaint from source, add all the files in lib/ to your class path and set evopaint.EvoPaint as your main class.
+
+I did not include a build script, because if you want to build EvoPaint from source, chances are you hacked the source and use an IDE anyways.
