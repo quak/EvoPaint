@@ -52,13 +52,6 @@ public class EraseCommand extends AbstractCommand {
         this.location = location;
     }
 
-    public void startDragging(){
-        
-    }
-    public void stopDragging() {
-        
-    }
-
     @Override
     public void execute() {
         SwingUtilities.invokeLater(new Runnable() {
