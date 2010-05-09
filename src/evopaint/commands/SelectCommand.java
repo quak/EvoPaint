@@ -19,10 +19,12 @@
  */
 package evopaint.commands;
 
+import evopaint.Configuration;
 import evopaint.Selection;
 import evopaint.gui.SelectionList;
 import evopaint.gui.util.WrappingScalableCanvas;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -40,14 +42,16 @@ public class SelectCommand extends AbstractCommand {
     private State CurrentState = State.IDLE;
     private Point mouseLocation;
     private final WrappingScalableCanvas canvas;
+    private Configuration configuration;
     private Point startPoint;
     private Point endPoint;
     private int nextSelectionId = 0;
     private SelectionList observableSelectionList;
 
-    public SelectCommand(SelectionList list, WrappingScalableCanvas canvas) {
+    public SelectCommand(SelectionList list, WrappingScalableCanvas canvas, Configuration configuration) {
         observableSelectionList = list;
         this.canvas = canvas;
+        this.configuration = configuration;
     }
 
     public void setLocation(Point location) {
@@ -61,9 +65,11 @@ public class SelectCommand extends AbstractCommand {
         } else if (CurrentState == State.STARTED) {
             endPoint = mouseLocation;
             CurrentState = State.IDLE;
+            String s = (String)JOptionPane.showInputDialog(configuration.mainFrame, "Do you want your selection with the following name?", "Save Selection", JOptionPane.PLAIN_MESSAGE, null, null, "New Selection " + nextSelectionId);
+            if (s == null) return;
             SwapPoints();
             Selection selection = new Selection(startPoint, endPoint, canvas);
-            selection.setSelectionName("New Selection " + nextSelectionId);
+            selection.setSelectionName(s);
             nextSelectionId++;
             observableSelectionList.add(selection);
         }

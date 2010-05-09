@@ -89,7 +89,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         this.paintCommand = new PaintCommand(configuration, this);
         this.moveCommand = new MoveCommand();
         this.moveCommand.setCanvas(this);
-        this.selectCommand = new SelectCommand(currentSelections, this);
+        this.selectCommand = new SelectCommand(currentSelections, this, configuration);
         this.fillCommand = new FillSelectionCommand(this);
         this.eraseCommand = new EraseCommand(configuration, this);
         this.copySelectionCommand = new CopySelectionCommand(configuration);
