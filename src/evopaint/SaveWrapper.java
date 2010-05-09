@@ -46,11 +46,11 @@ public class SaveWrapper {
     }
 
     public void Apply(Configuration config) {
-        config.world = world;
         config.setDimension(dimension);
         config.backgroundColor = backgroundColor;
         config.startingEnergy = startingEnergy;
         config.mutationRate = mutationRate;
         config.operationMode = operationMode;
+        config.world = world;
     }
 }
