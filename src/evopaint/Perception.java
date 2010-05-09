@@ -171,10 +171,6 @@ public class Perception {
             }
             String encoderCommand = null;
             try {
-                // this might look more complicated than you might think it should be
-                // but under windows the backslash in file.getAbsolutePath() causes
-                // problems when used as replacement argument in string.replaceAll()
-                System.out.println(Configuration.ENCODER_COMMAND);
                 String [] cmdArray = Configuration.ENCODER_COMMAND.split("\\s+");
                 System.out.println(cmdArray[0] + " " + cmdArray[1]);
                 for (int i = 0; i < cmdArray.length; i++) {
@@ -185,10 +181,8 @@ public class Perception {
                         cmdArray[i] = tmpLocation.getAbsolutePath();
                     }
                 }
-                //String inputInserted = inputSplitted[0] +  + inputSplitted[1];
-                //String [] outputSplitted = inputInserted.split("OUTPUT_FILE", 2);
-                //encoderCommand = outputSplitted[0] +  + outputSplitted[1];
                 Process proc = Runtime.getRuntime().exec(cmdArray);
+                
                 // NOTE mencoder produces a lot of output, which will fill java's buffers and cause
                 // mencoder to hang indefinitely. to prevent this, I added the "-quiet" option
                 // to the options string, but apparently that is not enough for Java on Windows
@@ -212,7 +206,7 @@ public class Perception {
                 ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video using the encoding command " +
                         "\"" + encoderCommand + "\"" +
                         " called from working directory " +
-                        "\"" + System.getProperty("user.dir") + "\"" +
+                        "\"" + Configuration.FILE_HANDLER.getHomeDir() + "\"" +
                         ", if you are on Windows, this is most likely a bug, if you are on a unix style OS: do you have mencoder (mplayer) installed? You can find the recorded video in MPNG format in the same folder EvoPaint resides in if you want to compress it manually.</p>");
             }
             else if (false == tmpLocation.renameTo(saveLocation)) {
@@ -222,6 +216,8 @@ public class Perception {
 
             if (deleteUncompressed) {
                 videoFile.delete();
+                // delete log file of mencoder run
+                new File(Configuration.FILE_HANDLER.getHomeDir(), "divx2pass.log").delete();
                 progressDialog.done();
             } else {
                 progressDialog.dispose();
