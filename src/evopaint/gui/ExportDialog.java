@@ -17,7 +17,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with EvoPaint.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package evopaint.gui;
+
 import evopaint.Configuration;
 import evopaint.util.ExceptionHandler;
 import java.awt.event.ActionListener;
