@@ -25,6 +25,7 @@ import evopaint.pixel.rulebased.Rule;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.util.CollectionNode;
 import evopaint.util.ExceptionHandler;
+import evopaint.util.PickedRuleSetNode;
 import evopaint.util.RuleSetNode;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -93,6 +94,12 @@ public class JRuleList extends JPanel implements TreeSelectionListener, ListData
         RuleSet ruleSet = (RuleSet)lastSelectedRuleSetNode.getUserObject();
         ruleSet.setRules(getRules());
         lastSelectedRuleSetNode.setUserObject(ruleSet);
+
+        // changes to picked rule sets do not need to be propagated
+        if (lastSelectedRuleSetNode instanceof PickedRuleSetNode) {
+            dirty = false;
+            return;
+        }
 
         // inform the tree listeners about the changes
         CollectionNode parentNode = (CollectionNode)lastSelectedRuleSetNode.getParent();

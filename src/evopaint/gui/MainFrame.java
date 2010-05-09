@@ -312,10 +312,13 @@ public class MainFrame extends JFrame {
     private class OpenRuleSetManagerListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            ((CardLayout)contentPane.getLayout()).show(contentPane, "rule manager");
             menuBar.setVisible(false);
             runLevelBeforeRuleSetManager = configuration.runLevel;
             configuration.runLevel = Configuration.RUNLEVEL_STOP;
+            if (configuration.paint.getCurrentRuleSet() != null) {
+                jRuleSetManager.setPickedRuleSet(configuration.paint.getCurrentRuleSet());
+            }
+            ((CardLayout)contentPane.getLayout()).show(contentPane, "rule manager");
         }
     }
 }

@@ -24,6 +24,7 @@ import evopaint.gui.rulesetmanager.util.NamedObjectListCellRenderer;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.util.CollectionNode;
 import evopaint.util.ExceptionHandler;
+import evopaint.util.PickedRuleSetNode;
 import evopaint.util.RuleSetNode;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -88,8 +89,12 @@ public class JImportRuleSetDialog extends JDialog {
         }
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
         while (children.hasMoreElements()) {
-            CollectionNode collectionNode =
-                    (CollectionNode)children.nextElement();
+            DefaultMutableTreeNode node =
+                    (DefaultMutableTreeNode)children.nextElement();
+            if (node instanceof PickedRuleSetNode) {
+                continue;
+            }
+            CollectionNode collectionNode = (CollectionNode)node;
             comboBoxModel.addElement(collectionNode);
         }
         collectionComboBox = new JComboBox(comboBoxModel);

@@ -149,6 +149,10 @@ public class JRuleSetManager extends JPanel implements TreeSelectionListener {
         // added by edit button listener or double click listener
     }
 
+    public void setPickedRuleSet(RuleSet pickedRuleSet) {
+        jRuleSetTree.setPickedRuleSet(pickedRuleSet);
+    }
+
     public void valueChanged(TreeSelectionEvent e) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.getPath().getLastPathComponent();
         Object userObject = node.getUserObject();

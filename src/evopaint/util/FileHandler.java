@@ -98,36 +98,6 @@ public class FileHandler implements TreeModelListener {
         return model;
     }
 
-    private synchronized void createExampleCollections(File dir) {
-        try {
-            URL examplesURL = getClass().getResource("/evopaint/examples");
-            File examplesDir = new File(examplesURL.getFile());
-            for (File exampleCollectionDir : examplesDir.listFiles()) {
-                assert(exampleCollectionDir.isDirectory());
-                File realCollectionDir = new File(collectionsDir, exampleCollectionDir.getName());
-                assert (false == realCollectionDir.exists());
-                realCollectionDir.mkdir();
-                File [] exampleRuleSetFiles = exampleCollectionDir.listFiles();
-                for (File exampleRuleSetFile : exampleRuleSetFiles) {
-                    FileInputStream in = new FileInputStream(exampleRuleSetFile);
-                    File realRuleSetFile = new File(realCollectionDir, exampleRuleSetFile.getName());
-                    FileOutputStream out = new FileOutputStream(realRuleSetFile);
-                    byte [] buffer = new byte[1024];
-                    int readBytes;
-                    while ((readBytes = in.read(buffer)) > 0) {
-                        out.write(buffer, 0, readBytes);
-                    }
-                    in.close();
-                    out.close();
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            ExceptionHandler.handle(ex, true);
-        } catch (IOException ex) {
-            ExceptionHandler.handle(ex, true);
-        }
-    }
-
     private String makeDirectoryName(String title) {
         return title.replace(" ", "_").toLowerCase();
     }
@@ -141,6 +111,10 @@ public class FileHandler implements TreeModelListener {
                 (DefaultMutableTreeNode)e.getTreePath().getLastPathComponent();
         DefaultMutableTreeNode changedNode = (DefaultMutableTreeNode)
                 parentNode.getChildAt(e.getChildIndices()[0]);
+
+        if (changedNode instanceof PickedRuleSetNode) {
+            return;
+        }
 
         if (changedNode instanceof RuleSetNode) {
             RuleSetNode ruleSetNode = (RuleSetNode)changedNode;
@@ -218,7 +192,11 @@ public class FileHandler implements TreeModelListener {
                 (DefaultMutableTreeNode)e.getTreePath().getLastPathComponent();
         DefaultMutableTreeNode addedNode =
                 (DefaultMutableTreeNode)e.getChildren()[0];
-        
+
+        if (addedNode instanceof PickedRuleSetNode) {
+            return;
+        }
+
         //System.out.println("file handler: detected node insertion");
         if (addedNode instanceof CollectionNode) {
             File collectionDir = new File(collectionsDir,
@@ -251,8 +229,12 @@ public class FileHandler implements TreeModelListener {
                 (DefaultMutableTreeNode)e.getTreePath().getLastPathComponent();
         DefaultMutableTreeNode removedNode =
                 (DefaultMutableTreeNode)e.getChildren()[0];
-        //System.out.println("file handler: detected node deletion");
         
+        if (removedNode instanceof PickedRuleSetNode) {
+            return;
+        }
+
+        //System.out.println("file handler: detected node deletion");
         if (removedNode instanceof CollectionNode) {
             String dirName = makeDirectoryName(((CollectionNode)removedNode).getName());
             File collectionDir = new File(collectionsDir, dirName);

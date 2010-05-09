@@ -27,6 +27,7 @@ import evopaint.pixel.rulebased.RuleSet;
 import evopaint.pixel.rulebased.RuleSetCollection;
 import evopaint.util.CollectionNode;
 import evopaint.util.ExceptionHandler;
+import evopaint.util.PickedRuleSetNode;
 import evopaint.util.RuleSetNode;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -147,6 +148,13 @@ public class JRuleSetBrowser extends JPanel implements TreeSelectionListener {
             browserBtnDelete.setEnabled(false);
             browserBtnCopy.setEnabled(false);
             browserBtnExport.setEnabled(false);
+            return;
+        }
+
+        if (node instanceof PickedRuleSetNode) {
+            browserBtnDelete.setEnabled(false);
+            browserBtnCopy.setEnabled(false);
+            browserBtnExport.setEnabled(true);
             return;
         }
 
@@ -491,7 +499,11 @@ public class JRuleSetBrowser extends JPanel implements TreeSelectionListener {
         public void actionPerformed(ActionEvent e) {
             RuleSetNode ruleSetNode = (RuleSetNode)
                     tree.getLastSelectedPathComponent();
-            RuleSet ruleSet = (RuleSet)ruleSetNode.getUserObject();
+            RuleSet ruleSet = new RuleSet((RuleSet)ruleSetNode.getUserObject());
+            if (ruleSetNode instanceof PickedRuleSetNode) {
+                ruleSet.setName("Imported Picked Rule Set");
+                ruleSet.setDescription("Hello dear rule set picker, would you be so kind and describe me a little?");
+            }
             String exportString = Configuration.IMPORT_EXPORT_HANDLER.exportToString(ruleSet);
             StringSelection contents = new StringSelection(exportString);
             Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
