@@ -48,6 +48,7 @@ public class ImportCommand extends AbstractCommand {
     private BufferedImage img;
     private Point location;
     private IOverlay overlay;
+    private Class oldActiveTool;
 
     public ImportCommand(Configuration configuration) {
         this.configuration = configuration;
@@ -55,6 +56,7 @@ public class ImportCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        oldActiveTool = configuration.mainFrame.getActiveTool();
         JFileChooser jFileChooser = new JFileChooser();
         int result = jFileChooser.showOpenDialog(jFileChooser);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -63,13 +65,13 @@ public class ImportCommand extends AbstractCommand {
                 img = ImageIO.read(file);
                 if (img == null)
                 {
-                    configuration.mainFrame.setActiveTool(null);
+                    configuration.mainFrame.setActiveTool(oldActiveTool);
                     return;
                 }
                 this.overlay = new ImportOverlay(img);
             } catch (IOException ex) {
                 ex.printStackTrace();
-                configuration.mainFrame.setActiveTool(null);
+                configuration.mainFrame.setActiveTool(oldActiveTool);
             }
             configuration.mainFrame.setActiveTool(ImportCommand.class);
         }
@@ -94,7 +96,7 @@ public class ImportCommand extends AbstractCommand {
         }
 
         stopDragging();
-        configuration.mainFrame.setActiveTool(null);
+        configuration.mainFrame.setActiveTool(oldActiveTool);
 
 
     }
