@@ -110,6 +110,7 @@ public class Configuration {
     public Paint paint;
     public List<Action> usedActions; // because we do not want actions to be randomly created (energy consumption issue), we carry around a list of used actions that we can use during mutation
 
+    public static boolean INITIALIZED = false;
     public static String DEFAULT_ENCODER_COMMAND_UNIX = "mencoder -quiet -nosound -ovc x264 -x264encopts qp=30:pass=1 INPUT_FILE -o OUTPUT_FILE";
     public static String DEFAULT_ENCODER_COMMAND_WINDOWS = "lib" + File.separator + "mencoder -quiet -nosound -ovc x264 -x264encopts qp=30:pass=1 INPUT_FILE -o OUTPUT_FILE";
     // BEGIN user configurable
@@ -170,10 +171,13 @@ public class Configuration {
     }
 
     public Configuration() {
-        if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
-            ENCODER_COMMAND = DEFAULT_ENCODER_COMMAND_WINDOWS;
-        } else {
-            ENCODER_COMMAND = DEFAULT_ENCODER_COMMAND_UNIX;
+        if (false == INITIALIZED) {
+            if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
+                ENCODER_COMMAND = DEFAULT_ENCODER_COMMAND_WINDOWS;
+            } else {
+                ENCODER_COMMAND = DEFAULT_ENCODER_COMMAND_UNIX;
+            }
+            INITIALIZED = true;
         }
         rng = createRNG();
         world = new World(this);
