@@ -19,7 +19,6 @@
 package evopaint.gui.rulesetmanager;
 
 import evopaint.pixel.rulebased.RuleSet;
-import evopaint.pixel.rulebased.RuleSetCollection;
 import evopaint.util.CollectionNode;
 import evopaint.util.ExceptionHandler;
 import evopaint.util.RuleSetNode;
