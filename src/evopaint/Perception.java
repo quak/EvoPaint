@@ -30,9 +30,9 @@ import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.Semaphore;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -174,12 +174,21 @@ public class Perception {
                 // this might look more complicated than you might think it should be
                 // but under windows the backslash in file.getAbsolutePath() causes
                 // problems when used as replacement argument in string.replaceAll()
-                String [] inputSplitted = Configuration.ENCODER_COMMAND.split("INPUT_FILE", 2);
-                String inputInserted = inputSplitted[0] + videoFile.getAbsolutePath() + inputSplitted[1];
-                String [] outputSplitted = inputInserted.split("OUTPUT_FILE", 2);
-                encoderCommand = outputSplitted[0] + tmpLocation.getAbsolutePath() + outputSplitted[1];
-                encoderCommand.replaceAll(" ", "\\ ");
-                Process proc = Runtime.getRuntime().exec(encoderCommand);
+                System.out.println(Configuration.ENCODER_COMMAND);
+                String [] cmdArray = Configuration.ENCODER_COMMAND.split("\\s+");
+                System.out.println(cmdArray[0] + " " + cmdArray[1]);
+                for (int i = 0; i < cmdArray.length; i++) {
+                    if (cmdArray[i].equals("INPUT_FILE")) {
+                        cmdArray[i] = videoFile.getAbsolutePath();
+                    }
+                    else if (cmdArray[i].equals("OUTPUT_FILE")) {
+                        cmdArray[i] = tmpLocation.getAbsolutePath();
+                    }
+                }
+                //String inputInserted = inputSplitted[0] +  + inputSplitted[1];
+                //String [] outputSplitted = inputInserted.split("OUTPUT_FILE", 2);
+                //encoderCommand = outputSplitted[0] +  + outputSplitted[1];
+                Process proc = Runtime.getRuntime().exec(cmdArray);
                 // NOTE mencoder produces a lot of output, which will fill java's buffers and cause
                 // mencoder to hang indefinitely. to prevent this, I added the "-quiet" option
                 // to the options string, but apparently that is not enough for Java on Windows

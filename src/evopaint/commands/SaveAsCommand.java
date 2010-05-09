@@ -37,7 +37,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Saves the current evolution
+ * Saves the current evolution at the given location
  *
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
