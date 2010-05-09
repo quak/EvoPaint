@@ -61,9 +61,15 @@ public class ImportCommand extends AbstractCommand {
             File file = jFileChooser.getSelectedFile();
             try {
                 img = ImageIO.read(file);
+                if (img == null)
+                {
+                    configuration.mainFrame.setActiveTool(null);
+                    return;
+                }
                 this.overlay = new ImportOverlay(img);
             } catch (IOException ex) {
                 ex.printStackTrace();
+                configuration.mainFrame.setActiveTool(null);
             }
             configuration.mainFrame.setActiveTool(ImportCommand.class);
         }
