@@ -33,26 +33,4 @@ import evopaint.gui.util.WrappingScalableCanvas;
  * @author Markus Echterhoff <tam@edu.uni-klu.ac.at>
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
-public class SelectionDrawingIndicatorOverlay extends Rectangle implements IOverlay {
 
-    private WrappingScalableCanvas canvas;
-
-    @Override
-    public void setBounds(Rectangle bounds) {
-        super.setBounds(bounds);
-        this.x = bounds.x;
-        this.y = bounds.y;
-        this.width = bounds.width;
-        this.height = bounds.height;
-    }
-
-    public SelectionDrawingIndicatorOverlay(WrappingScalableCanvas canvas, Rectangle bounds) {
-        super(bounds);
-        this.canvas = canvas;
-    }
-
-    public void paint(Graphics2D g2) {
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
-        canvas.fill(this);
-    }
-}

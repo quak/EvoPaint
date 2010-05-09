@@ -73,8 +73,6 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
     private BrushIndicatorOverlay brushIndicatorOverlay;
     private Timer paintingTimer;
     private Painter painter;
-    
-    private SelectionDrawingIndicatorOverlay draggingSelectionOverlay;
 
 	private CopySelectionCommand copySelectionCommand;
 
@@ -153,10 +151,9 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
                 //moveCommand.setScale(this.scale);
             } else if (configuration.mainFrame.getActiveTool() == SelectCommand.class) {
                 this.selectionStartPoint = transformToImageSpace(e.getPoint());
-                draggingSelectionOverlay = new SelectionDrawingIndicatorOverlay(this, new Rectangle());
-                subscribe(draggingSelectionOverlay);
                 selectCommand.setLocation(this.selectionStartPoint);
-                selectCommand.execute();
+                selectCommand.startDragging();
+                selectCommand.setStartPoint();
             } else if (configuration.mainFrame.getActiveTool() == ZoomCommand.class) {
             	ZoomInCommand zoomInCommand = new ZoomInCommand(this);	
             	zoomInCommand.execute();
@@ -206,8 +203,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
 			if (activeTool == SelectCommand.class) {
                 selectCommand.setLocation(transformToImageSpace(e.getPoint()));
                 selectCommand.execute();
-                unsubscribe(draggingSelectionOverlay);
-                draggingSelectionOverlay = null;
+                selectCommand.stopDragging();
             }
         } else if (e.getButton() == MouseEvent.BUTTON2) {
             toggleMouseButton2Drag = false;
@@ -220,7 +216,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
         if (leftButtonPressed == true) {
 			if (activeTool == SelectCommand.class) {
         		Point pointInImageSpace = transformToImageSpace(currentMouseDragPosition);
-        		draggingSelectionOverlay.setBounds(new Rectangle(selectionStartPoint, new Dimension(pointInImageSpace.x - selectionStartPoint.x, pointInImageSpace.y - selectionStartPoint.y)));
+                selectCommand.setLocation(pointInImageSpace);
         	}
             else if (activeTool == PaintCommand.class) {
                 painter.setLocation(currentMouseDragPosition);

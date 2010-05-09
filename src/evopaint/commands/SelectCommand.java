@@ -22,6 +22,7 @@ package evopaint.commands;
 import evopaint.Configuration;
 import evopaint.Selection;
 import evopaint.gui.SelectionList;
+import evopaint.gui.util.IOverlay;
 import evopaint.gui.util.WrappingScalableCanvas;
 
 import javax.swing.*;
@@ -34,17 +35,67 @@ import java.awt.*;
  * @author Daniel Hoelbling (http://www.tigraine.at)
  */
 public class SelectCommand extends AbstractCommand {
-
-    public enum State {
-
-        IDLE, STARTED
-    }
-    private State CurrentState = State.IDLE;
+    private SelectionDrawingIndicatorOverlay overlay;
     private Point mouseLocation;
+
+    public void startDragging() {
+        if (overlay != null)
+            canvas.subscribe(overlay);
+    }
+
+    public void stopDragging() {
+        canvas.unsubscribe(overlay);
+    }
+
+    public void setStartPoint() {
+        startPoint = mouseLocation;
+    }
+
+    private Point findTopLeftPoint(Point p1, Point p2, Point p3, Point p4) {
+        Point left = p1;
+        int coord = ToCoord(p1);
+        if (ToCoord(p2) < coord) {
+            left = p2;
+            coord = ToCoord(p2);
+        }
+        if (ToCoord(p3) < coord) {
+            left= p3;
+            coord = ToCoord(p3);
+        }
+        if (ToCoord(p4) < coord) {
+            left = p4;
+            coord = ToCoord(p4);
+        }
+        return left;
+    }
+    private int ToCoord(Point p) {
+        return p.x + p.y;
+    }
+
+    private Point findBottomRightPoint(Point p1, Point p2, Point p3, Point p4) {
+        Point right = p1;
+        int coord = ToCoord(p1);
+        if (ToCoord(p2) > coord) {
+            right = p2;
+            coord = ToCoord(p2);
+        }
+        if (ToCoord(p3) > coord) {
+            right= p3;
+            coord = ToCoord(p3);
+        }
+        if (ToCoord(p4) > coord) {
+            right = p4;
+            coord = ToCoord(p4);
+        }
+        return right;
+    }
+    
     private final WrappingScalableCanvas canvas;
     private Configuration configuration;
     private Point startPoint;
+    private Point leftPoint;
     private Point endPoint;
+    private Point rightPoint;
     private int nextSelectionId = 0;
     private SelectionList observableSelectionList;
 
@@ -55,31 +106,46 @@ public class SelectCommand extends AbstractCommand {
     }
 
     public void setLocation(Point location) {
+        if (startPoint == null) startPoint = location;
         mouseLocation = location;
+        leftPoint = new Point(startPoint.x, mouseLocation.y);
+        rightPoint = new Point(mouseLocation.x, startPoint.y);
+        Point leftPoint1 = findTopLeftPoint(startPoint, leftPoint, rightPoint, mouseLocation);
+        Point rightPoint1 = findBottomRightPoint(startPoint, leftPoint, rightPoint, mouseLocation);
+
+        Rectangle bounds = new Rectangle(leftPoint1.x, leftPoint1.y, rightPoint1.x - leftPoint1.x, rightPoint1.y - leftPoint1.y);
+        if (overlay == null) overlay = new SelectionDrawingIndicatorOverlay(bounds);
+        overlay.setBounds(bounds);
     }
 
     public void execute() {
-        if (CurrentState == State.IDLE) {
-            startPoint = mouseLocation;
-            CurrentState = State.STARTED;
-        } else if (CurrentState == State.STARTED) {
-            endPoint = mouseLocation;
-            CurrentState = State.IDLE;
-            String s = (String)JOptionPane.showInputDialog(configuration.mainFrame, "Do you want your selection with the following name?", "Save Selection", JOptionPane.PLAIN_MESSAGE, null, null, "New Selection " + nextSelectionId);
-            if (s == null) return;
-            SwapPoints();
-            Selection selection = new Selection(startPoint, endPoint, canvas);
-            selection.setSelectionName(s);
-            nextSelectionId++;
-            observableSelectionList.add(selection);
-        }
+        startPoint = null;
+        String s = (String) JOptionPane.showInputDialog(configuration.mainFrame, "Do you want your selection with the following name?", "Save Selection", JOptionPane.PLAIN_MESSAGE, null, null, "New Selection " + nextSelectionId);
+        if (s == null) return;
+        Selection selection = new Selection(new Point(overlay.x, overlay.y), new Point(overlay.x + overlay.width, overlay.y + overlay.height), canvas);
+        selection.setSelectionName(s);
+        nextSelectionId++;
+        observableSelectionList.add(selection);
     }
 
-    private void SwapPoints() {
-        if (startPoint.x > endPoint.x || startPoint.y > endPoint.y) {
-            Point temp = endPoint;
-            endPoint = startPoint;
-            startPoint = temp;
+    private class SelectionDrawingIndicatorOverlay extends Rectangle implements IOverlay {
+
+        @Override
+        public void setBounds(Rectangle bounds) {
+            super.setBounds(bounds);
+            this.x = bounds.x;
+            this.y = bounds.y;
+            this.width = bounds.width;
+            this.height = bounds.height;
+        }
+
+        public SelectionDrawingIndicatorOverlay(Rectangle bounds) {
+            super(bounds);
+        }
+
+        public void paint(Graphics2D g2) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
+            canvas.fill(this);
         }
     }
 }
