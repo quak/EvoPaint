@@ -19,6 +19,7 @@
 
 package evopaint;
 
+import evopaint.gui.util.JProgressDialog;
 import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.Pixel;
 import evopaint.util.ExceptionHandler;
@@ -144,7 +145,7 @@ public class Perception {
     private class EncoderThread extends Thread {
 
         private String saveLocationPath;
-        private Semaphore semaphore;
+        private JProgressDialog progressDialog;
 
         public EncoderThread(String saveLocationPath) {
             this.saveLocationPath = saveLocationPath;
@@ -156,6 +157,10 @@ public class Perception {
         }
 
         private void encodeVideo() {
+            progressDialog = new JProgressDialog("encode your video",
+                            "This may take a long time depending on the length of your video. I hope you have got enough CPUs to continue painting while I encode.");
+            progressDialog.pack();
+            progressDialog.setVisible(true);
 
             boolean deleteUncompressed = true;
 
@@ -170,9 +175,10 @@ public class Perception {
                 // but under windows the backslash in file.getAbsolutePath() causes
                 // problems when used as replacement argument in string.replaceAll()
                 String [] inputSplitted = Configuration.ENCODER_COMMAND.split("INPUT_FILE", 2);
-                String inputInserted = inputSplitted[0] + "\"" +videoFile.getAbsolutePath() + "\"" + inputSplitted[1];
+                String inputInserted = inputSplitted[0] + videoFile.getAbsolutePath() + inputSplitted[1];
                 String [] outputSplitted = inputInserted.split("OUTPUT_FILE", 2);
-                encoderCommand = outputSplitted[0] + "\"" + tmpLocation.getAbsolutePath() + "\"" + outputSplitted[1];
+                encoderCommand = outputSplitted[0] + tmpLocation.getAbsolutePath() + outputSplitted[1];
+                encoderCommand.replaceAll(" ", "\\ ");
                 Process proc = Runtime.getRuntime().exec(encoderCommand);
                 // NOTE mencoder produces a lot of output, which will fill java's buffers and cause
                 // mencoder to hang indefinitely. to prevent this, I added the "-quiet" option
@@ -205,13 +211,13 @@ public class Perception {
                 ExceptionHandler.handle(new Exception(), false, "<p>Hello there, I have good news and bad news. The good news is, I successfully recorded and encoded your video. The bad news is I could not rename it from \"" + tmpLocation.getName() + "\" to \"" + saveLocation.getName() + "\" for some reason.</p>");
             }
 
-            if (deleteUncompressed == true) { // success
-                JOptionPane.showMessageDialog(configuration.mainFrame, "I finished encoding your video, are you proud of me? I know I am!");
-            }
-
             if (deleteUncompressed) {
                 videoFile.delete();
+                progressDialog.done();
+            } else {
+                progressDialog.dispose();
             }
+
             videoFile = null;
         }
 
@@ -225,6 +231,11 @@ public class Perception {
             @Override
             public void run() {
                 try {
+                    //Reader r = new InputStreamReader(in);
+                    //char [] buf = new char[100];
+                    //while (r.read(buf) != -1) {
+                    //    System.out.print(buf);
+                    //}
                     while (in.read() != -1) {
                     }
                 } catch (IOException ex) {
