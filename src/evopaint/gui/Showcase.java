@@ -246,13 +246,14 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
     }
 
     public void mouseEntered(MouseEvent e) {
-        if (configuration.mainFrame.getActiveTool() == PaintCommand.class) {
+        Class activeTool = configuration.mainFrame.getActiveTool();
+        if (activeTool == PaintCommand.class || activeTool == EraseCommand.class) {
             subscribe(brushIndicatorOverlay);
         }
-        else if (configuration.mainFrame.getActiveTool() == CopySelectionCommand.class) {
+        else if (activeTool == CopySelectionCommand.class) {
             copySelectionCommand.startDragging();
         }
-        else if (configuration.mainFrame.getActiveTool() == ImportCommand.class) {
+        else if (activeTool == ImportCommand.class) {
             importCommand.startDragging();
         }
     }
@@ -265,7 +266,7 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
 
     public void mouseMoved(MouseEvent e) {
         Class activeTool = configuration.mainFrame.getActiveTool();
-        if (activeTool == PaintCommand.class) {
+        if (activeTool == PaintCommand.class || activeTool == EraseCommand.class) {
             brushIndicatorOverlay.setBounds(new Rectangle(
                     transformToImageSpace(e.getPoint()),
                     new Dimension(configuration.brush.size, configuration.brush.size)));
