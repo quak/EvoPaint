@@ -80,11 +80,5 @@ public class RuleSet implements Serializable, INameable, IDescribable {
         this.description = ruleSet.description;
         this.rules = new ArrayList(ruleSet.rules);
     }
-
-    public RuleSet(List<Rule> rules) {
-        this.name = "new rule set";
-        this.description = "describe me";
-        this.rules = rules;
-    }
     
 }

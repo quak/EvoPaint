@@ -25,6 +25,7 @@ import evopaint.pixel.rulebased.interfaces.IDescribed;
 import evopaint.pixel.rulebased.interfaces.INameable;
 import evopaint.pixel.rulebased.interfaces.INamed;
 import evopaint.util.ExceptionHandler;
+import evopaint.util.PickedRuleSetNode;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -151,6 +152,11 @@ public class JDescriptionPanel extends JPanel implements TreeSelectionListener {
         render();
         viewerControlPanel.setVisible(true);
         viewerTextPane.setCaretPosition(0);
+        if (node instanceof PickedRuleSetNode) {
+            btnEdit.setEnabled(false);
+        } else {
+            btnEdit.setEnabled(true);
+        }
     }
 
     public JDescriptionPanel(Configuration configuration, JRuleSetTree tree) {

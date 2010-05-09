@@ -23,7 +23,13 @@ import evopaint.Configuration;
 import evopaint.interfaces.IRandomNumberGenerator;
 import evopaint.pixel.Pixel;
 import evopaint.pixel.PixelColor;
+import evopaint.util.ExceptionHandler;
 import evopaint.util.mapping.AbsoluteCoordinate;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +41,22 @@ import java.util.List;
 public class RuleBasedPixel extends Pixel {
     private List<Rule> rules;
 
-    public RuleSet createRuleSet() {
-        return new RuleSet(rules);
+    public RuleSet createPickedRuleSet() {
+        String name = "Picked Rule Set";
+        String description = "This is the rule set you have picked. Note that changes to this rule set will not influence the picked pixel. If you wish to save this rule set, copy it to the clipbord (rightmost button in the rule set browser) and then import it into a collection (second button from the right, paste with Ctrl-V).";
+        List<Rule> newRules = null;
+        try {
+            ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(outByteStream);
+            out.writeObject(rules);
+            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(outByteStream.toByteArray()));
+            newRules = (List<Rule>) in.readObject();
+        } catch (ClassNotFoundException ex) {
+            ExceptionHandler.handle(ex, true);
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex, true);
+        }
+        return new RuleSet(name, description, newRules);
     }
 
     public List<Rule> getRules() {

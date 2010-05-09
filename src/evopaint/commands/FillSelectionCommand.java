@@ -154,7 +154,7 @@ public class FillSelectionCommand extends AbstractCommand {
                 if (pixel == null || !(pixel instanceof RuleBasedPixel)) {
                     currentRuleSet = null;
                 } else {
-                    currentRuleSet = pixel.createRuleSet();
+                    currentRuleSet = pixel.createPickedRuleSet();
                 }
                 break;
             default:

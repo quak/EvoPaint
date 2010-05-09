@@ -104,7 +104,7 @@ class TreeTransferHandler extends TransferHandler {
 
         // and forbid rule set nodes to be moved onto anything but collection nodes
         DefaultMutableTreeNode target = (DefaultMutableTreeNode) dest.getLastPathComponent();
-        if (false == target.getUserObject() instanceof RuleSetCollection) {
+        if (false == target instanceof CollectionNode) {
             return false;
         }
 

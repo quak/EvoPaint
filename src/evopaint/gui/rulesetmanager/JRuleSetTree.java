@@ -22,6 +22,8 @@ package evopaint.gui.rulesetmanager;
 import evopaint.pixel.rulebased.RuleSet;
 import evopaint.pixel.rulebased.RuleSetCollection;
 import evopaint.pixel.rulebased.interfaces.INamed;
+import evopaint.util.PickedRuleSetNode;
+import evopaint.util.RuleSetNode;
 import java.awt.Component;
 import java.awt.event.MouseListener;
 import java.util.Enumeration;
@@ -57,6 +59,20 @@ public class JRuleSetTree extends RuleSetDragDropTree { // implements TreeModelL
         // even nullpointer exceptions in the UI
 
         addMouseListener(mouseListener);
+    }
+
+    public void setPickedRuleSet(RuleSet ruleSet) {
+
+        DefaultTreeModel model = (DefaultTreeModel)getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+
+        if (root.getChildCount() > 0 && root.getChildAt(0).getAllowsChildren() == false) {
+            ((PickedRuleSetNode)root.getChildAt(0)).setUserObject(ruleSet);
+        } else {
+            model.insertNodeInto(new PickedRuleSetNode(ruleSet), root, 0);
+        }
+
+        setSelectionRow(0);
     }
 
     // workaround for broken POS2

@@ -86,7 +86,7 @@ public class Brush {
                         if (pixie == null) {
                             ruleSet = null;
                         } else {
-                            ruleSet = pixie.createRuleSet();
+                            ruleSet = pixie.createPickedRuleSet();
                         }
                         break;
                     default:

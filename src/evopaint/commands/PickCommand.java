@@ -23,8 +23,10 @@ package evopaint.commands;
 import java.awt.Point;
 
 import evopaint.Configuration;
+import evopaint.interfaces.IChangeListener;
 import evopaint.pixel.rulebased.RuleBasedPixel;
 import evopaint.pixel.rulebased.RuleSet;
+import javax.swing.SwingUtilities;
 
 /**
  * Command to pick the color of a pixel on the canvas. "Color" here means the
@@ -36,26 +38,36 @@ import evopaint.pixel.rulebased.RuleSet;
 public class PickCommand extends AbstractCommand {
 
     private Point location;
-    private final Configuration config;
+    private final Configuration configuration;
 
-    public PickCommand(Configuration config) {
-        this.config = config;
+    public PickCommand(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
     public void execute() {
-        RuleBasedPixel pixel = config.world.get(location.x, location.y);
-        if (pixel == null) {
-            return;
-        }
-        config.paint.changeCurrentColor(pixel.getPixelColor());
+        SwingUtilities.invokeLater(new Runnable() {
 
-        if (pixel instanceof RuleBasedPixel) {
-            RuleSet ruleSet = pixel.createRuleSet();
-            if (ruleSet != null) {
-                config.paint.changeCurrentRuleSet(ruleSet);
+            public void run() {
+                configuration.world.addChangeListener(new IChangeListener() {
+
+                    public void changed() {
+                        RuleBasedPixel pixel = configuration.world.get(location.x, location.y);
+                        if (pixel == null) {
+                            return;
+                        }
+                        configuration.paint.changeCurrentColor(pixel.getPixelColor());
+
+                        if (pixel instanceof RuleBasedPixel) {
+                            RuleSet ruleSet = pixel.createPickedRuleSet();
+                            if (ruleSet != null) {
+                                configuration.paint.changeCurrentRuleSet(ruleSet);
+                            }
+                        }
+                    }
+                });
             }
-        }
+        });
     }
 
     public void setLocation(Point location) {
