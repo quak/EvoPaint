@@ -4,6 +4,8 @@ import SevenZip.LzmaAlone;
 import com.thoughtworks.xstream.XStream;
 import evopaint.Configuration;
 import evopaint.World;
+import evopaint.gui.util.JProgressDialog;
+import evopaint.interfaces.IChangeListener;
 import evopaint.util.ExceptionHandler;
 import java.io.File;
 
@@ -23,6 +25,8 @@ import java.io.OutputStream;
  */
 public class SaveAsCommand extends AbstractCommand {
     protected Configuration configuration;
+    private JProgressDialog progressDialog;
+
     public SaveAsCommand(Configuration configuration) {
         this.configuration = configuration;
     }
@@ -48,21 +52,31 @@ public class SaveAsCommand extends AbstractCommand {
 
             @Override
             public void run() {
-                try {
-                    OutputStream outputStream = new FileOutputStream(configuration.saveFilePath);
+                configuration.world.addChangeListener(new IChangeListener() {
 
-                    XStream stream = new XStream();
-                    stream.processAnnotations(World.class);
-                    stream.toXML(configuration.world, outputStream);
-                    outputStream.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    public void changed() {
 
-                LZMACompressor compressor = new LZMACompressor(configuration.saveFilePath);
-                compressor.start();
+                        progressDialog = new JProgressDialog("save your evolution", "This happens in two stages: a few seconds of saving in which EvoPaint is not usable followed by some more seconds of compression during which you can use EvoPaint as usual.");
+                        progressDialog.pack();
+                        progressDialog.setVisible(true);
+
+                        try {
+                            OutputStream outputStream = new FileOutputStream(configuration.saveFilePath);
+
+                            XStream stream = new XStream();
+                            stream.processAnnotations(World.class);
+                            stream.toXML(configuration.world, outputStream);
+                            outputStream.close();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        LZMACompressor compressor = new LZMACompressor(configuration.saveFilePath);
+                        compressor.start();
+                    }
+                });
             }
         });
 
@@ -87,7 +101,7 @@ public class SaveAsCommand extends AbstractCommand {
                 String[] args = { "e", inputPath, inputPath.substring(0, inputPath.length() - 4) };
                 LzmaAlone.main(args);
                 new File(inputPath).delete();
-                JOptionPane.showMessageDialog(configuration.mainFrame, "I successfully compressed your saved evolution. Life is good!");
+                progressDialog.done();
             } catch (Exception ex) {
                 ExceptionHandler.handle(ex, true);
             }
