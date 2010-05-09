@@ -1,0 +1,20 @@
+----- Source Code -----
+
+
+AVI encoding in package evopaint.util.avi
+	Werner Randelshofer (http://www.randelshofer.ch/)
+
+LZMA compression in package SevenZip
+	Igor Pavlov (http://www.7-zip.org/sdk.html)
+
+JRangeSlider.java in package evopaint.gui.rulesetmanager.util
+	Prefuse (http://prefuse.org)
+
+
+----- Libraries -----
+
+
+XStream (http://xstream.codehaus.org/)
+XPP3 (http://www.extreme.indiana.edu/xgws/xsoap/xpp/)
+Uncommons Maths (http://uncommons-maths.dev.java.net/)
+

@@ -1,0 +1,76 @@
+<project name="EvoPaint" default="dist" basedir=".">
+    <description>
+        ANT buildfile to build EvoPaint
+    </description>
+
+    <!-- set global properties -->
+    <property name="project.dir" location="."/>
+    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+    <property name="dist.dir" location="dist"/>
+    <property name="misc.dir" location="misc"/>
+    <property name="javadoc.dir" location="javadoc"/>
+
+    <path id="class.path">
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}/windows"/>
+        <mkdir dir="${dist.dir}/source"/>
+    </target>
+    
+    <target name="compile" depends="init" description="compile the source ">
+        <javac srcdir="${src.dir}" destdir="${build.dir}">
+            <!--<javac srcdir="${src}" destdir="${build}" debug="on" debuglevel="lines,vars,source">-->
+            <!--<compilerarg value="-Xlint:unchecked" />-->
+            <classpath refid="class.path" />
+        </javac>
+        <copy todir="${build.dir}">
+            <fileset dir="${project.dir}/src">
+                <include name="**/*.png"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="jar" depends="clean,compile" description="Create the jar archive">
+        <jar jarfile="${dist.dir}/EvoPaint.jar" basedir="${build.dir}" manifest="manifest.mf" />
+    </target>
+    
+    <target name="dist-jar" depends="jar" description="Create jar distribution">
+        <mkdir dir="${dist.dir}/jar"/>
+        <copy todir="${dist.dir}/jar">
+            <fileset dir="${project.dir}">
+                <include name="**/lib/"/>
+            </fileset>
+            <fileset dir="${misc.dir}">
+                <include name="**/collections/" />
+                <include name="EvoPaint.sh" />
+            </fileset>
+            <fileset dir="${project.dir}">
+                <include name="**/doc/"/>
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <include name="EvoPaint.jar" />
+            </fileset>
+        </copy>
+        <chmod file="${dist.dir}/jar/EvoPaint.sh" perm="a+x" />
+    </target>
+
+    <target name="javadoc"  description="Create javadoc">
+        <javadoc destdir="${javadoc}">
+            <fileset dir="${src.dir}/" includes="**/*.java"/>
+        </javadoc>
+    </target>
+
+    <target name="clean" description="clean up">
+        <delete dir="${dist.dir}"/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${javadoc.dir}"/>
+    </target>
+
+</project>
