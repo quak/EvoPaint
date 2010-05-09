@@ -20,8 +20,9 @@
 package evopaint.gui;
 
 import evopaint.Configuration;
+import evopaint.commands.LoadCommand;
+import evopaint.commands.NewWorldCommand;
 import evopaint.commands.ResetWorldCommand;
-import evopaint.util.ExceptionHandler;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -162,22 +163,10 @@ public class JEvolutionPlayerPanel extends JPanel {
                         });
                 }});
                 ejectMenu.add(new JMenuItem("New") {{
-                    addActionListener(new ActionListener() {
-
-                            public void actionPerformed(ActionEvent e) {
-                                // TODO implement me
-                                ExceptionHandler.handle(new Throwable(), false, "relax, this will be implemented soon");
-                            }
-                        });
+                    addActionListener(new NewWorldCommand(configuration));
                 }});
                 ejectMenu.add(new JMenuItem("Open") {{
-                    addActionListener(new ActionListener() {
-
-                            public void actionPerformed(ActionEvent e) {
-                                // TODO implement me
-                                ExceptionHandler.handle(new Throwable(), false, "relax, this will be implemented soon");
-                            }
-                        });
+                    addActionListener(new LoadCommand(configuration));
                 }});
                 ejectMenu.show(ejectButton, 0, 25);
             }
