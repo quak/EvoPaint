@@ -23,6 +23,7 @@ package evopaint.commands;
 import SevenZip.LzmaAlone;
 import com.thoughtworks.xstream.XStream;
 import evopaint.Configuration;
+import evopaint.SaveWrapper;
 import evopaint.World;
 import evopaint.util.ExceptionHandler;
 import java.io.File;
@@ -65,19 +66,18 @@ public class LoadCommand extends AbstractCommand {
             @Override
             public void run() {
                 try {
-                    String[] args = { "d", absolutePath, absolutePath.concat(".tmp") };
+                    String outputPath = absolutePath.concat(".tmp");
+                    String[] args = { "d", absolutePath, outputPath};
                     try {
                         LzmaAlone.main(args);
                     } catch (Exception ex) {
                         ExceptionHandler.handle(ex, true);
                     }
-                    FileInputStream fis = new FileInputStream(absolutePath.concat(".tmp"));
+                    FileInputStream fis = new FileInputStream(outputPath);
                     XStream xStream = new XStream();
                     xStream.processAnnotations(World.class);
-                    World world1 = new World(config);
-                    World world = (World) xStream.fromXML(fis, world1);
-                    world.setConfiguration(config);
-                    config.world = world;
+                    SaveWrapper loaded = (SaveWrapper) xStream.fromXML(fis);
+                    loaded.Apply(config);
                     config.saveFilePath = absolutePath;
                     fis.close();
                     new File(absolutePath.concat(".tmp")).delete();

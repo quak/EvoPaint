@@ -23,6 +23,7 @@ package evopaint.commands;
 import SevenZip.LzmaAlone;
 import com.thoughtworks.xstream.XStream;
 import evopaint.Configuration;
+import evopaint.SaveWrapper;
 import evopaint.World;
 import evopaint.gui.util.JProgressDialog;
 import evopaint.interfaces.IChangeListener;
@@ -84,7 +85,7 @@ public class SaveAsCommand extends AbstractCommand {
 
                             XStream stream = new XStream();
                             stream.processAnnotations(World.class);
-                            stream.toXML(configuration.world, outputStream);
+                            stream.toXML(new SaveWrapper(configuration), outputStream);
                             outputStream.close();
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
