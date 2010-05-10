@@ -3,20 +3,28 @@
 
 AVI encoding in package evopaint.util.avi
 	Werner Randelshofer (http://www.randelshofer.ch/)
+	license: licenses/avi-license.txt
 
 LZMA compression in package SevenZip
 	Igor Pavlov (http://www.7-zip.org/sdk.html)
+	license: licenses/lzma-license.txt
 
 JRangeSlider.java in package evopaint.gui.rulesetmanager.util
 	Prefuse (http://prefuse.org)
+	license: licenses/JRangeSlider-license.txt
 
 
 ----- Libraries -----
 
 
 XStream (http://xstream.codehaus.org/)
+	license: licenses/xstream-*-license.txt
+
 XPP3 (http://www.extreme.indiana.edu/xgws/xsoap/xpp/)
+	license: licenses/xpp3-*-license.txt
+
 Uncommons Maths (http://uncommons-maths.dev.java.net/)
+	license: licenses/uncommons-maths-*-license.txt
 
 
 ----- Applications -----
@@ -25,3 +33,19 @@ Uncommons Maths (http://uncommons-maths.dev.java.net/)
 mencoder.exe
 	MPlayer project (http://www.mplayerhq.hu)
 	Windows-Binary by Gianluigi Tiesi (http://oss.netfarm.it/mplayer-win32.php)
+	license: licenses/mencoder-mplayer-license.txt
+
+launch4j (http://launch4j.sourceforge.net/)
+	license: licenses/launch4j-license.txt
+
+
+----- Miscellaneous -----
+
+
+tool button icons
+	The Gimp (http://www.gimp.org/)
+	license: licenses/the_gimp-icons-license.txt
+
+other button icons
+	Oxygen Icon Theme (http://oxygen-icons.org/)
+	license: licenses/oxygen-icons-license.txt

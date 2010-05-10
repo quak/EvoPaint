@@ -68,29 +68,24 @@ public class JAboutDialog extends JDialog {
                 "<p style='margin: 0; margin-top: 10px;'>" +
                 "The vision of EvoPaint is to be a tool to experience evolutionary, dynamic and/or complex system development in a playful, artistic and accessible way. EvoPaint has been initially developed for a software lab in applied computer science at the Universität Klagenfurt, Austria and was first released in May 2010, consisting of roughly 13,000 lines of code not counting blank lines or comments. EvoPaint is maintained by Markus Echterhoff." +
                 "</p>" +
-                "<h2 style='margin: 0; margin-top: 8px;'>Contact</h2>" +
+                "<h2 style='margin: 0; margin-top: 12px;'>Contact</h2>" +
                 "<p style='margin: 0;'>" +
                 "If you wish to talk about EvoPaint or have cool ideas for further development, if you wish to contribute or support in any way, feel free to contact Markus Echterhoff using tam@edu.uni-klu.ac.at" +
                 "</p>" +
-                "<h2 style='margin: 0; margin-top: 8px;'>License</h2>" +
+                "<h2 style='margin: 0; margin-top: 12px;'>License</h2>" +
                 "<p style='margin: 0;'>" +
                 "EvoPaint is free software as envisioned by Richard Stallman and shall stay free. Therefore EvoPaint is licensed under the GNU Public License version 3 or higher. EvoPaint uses source files and libraries that are licensed differently, please see the corresponding licenses for more information." +
                 "</p>" +
-                "<h2 style='margin: 0; margin-top: 8px;'>Credits</h2>" +
+                "<h2 style='margin: 0; margin-top: 12px;'>Credits</h2>" +
                 "<table><tr><td style='white-space: nowrap;'>Markus Echterhoff <tam@edu.uni-klu.ac.at></td><td>(vision, project management, core engine, user interface, rule set manager)</td></tr>" +
                 "<tr><td>Daniel Hölbling</td><td>(selection management, miscellaneous code contributions)</td></tr>" +
                 "<tr><td>Augustin Malle</td><td>(logo design, software requirements specifications, user-guide)</td></tr></table>" +
-                "<h2 style='margin: 0; margin-top: 8px;'>Thanks</h2>" +
+                "<h2 style='margin: 0; margin-top: 12px;'>Thanks</h2>" +
                 "<ul>" +
                 "<li>To Ao.Univ.-Prof. Mag. Dr. Günther Fliedl for supervising this software lab and giving us the freedom this project needed to be developed.</li>" +
                 "<li>To Severin Kacianka for fresh views on complex problems during numerous lunches and coffee breaks as well as some joyful playtesting." +
                 "<li>To Markus Feuerstack for all the feedback and comments in countless testing sessions. A feature is polished once you don't notice it at all." +
-                "<li>To Werner Randelshofer for sharing his image to avi converter, we use it to record videos.</li>" +
-                "<li>To the XStream developers for sharing their library. We use XStream for the import and export of data.</li>" +
-                "<li>To Daniel W. Dyer for sharing the uncommons-maths library we use for random number generation.</li>" +
-                "<li>To the developers of the prefuse visualization toolkit for sharing their code. We made good use of their range slider class.</li>" +
-                "<li>To the developers of The Gimp and the Oxygen icon set. Your icons look great in EvoPaint.</li>" +
-                "<li>To the open source community as a whole, keep the spirit alive!</li>" +
+                "<li>To all the developers who released their programs as free software, I hope you like what we did with your work. See doc/attribution.txt for details and keep the spirit alive!</li>" +
                 "</ul>" +
                 "</body>" +
                 "</html>"
