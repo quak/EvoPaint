@@ -12,3 +12,4 @@ dist/
 javadoc/
 collections/
 !misc/collections/
+Thumbs.db
