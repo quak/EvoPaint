@@ -22,13 +22,21 @@ public class SelectionOpenAsNewCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        int runlevel = config.runLevel;
+        config.runLevel = Configuration.RUNLEVEL_STOP;
         Selection activeSelection = config.mainFrame.getShowcase().getActiveSelection();
         if (activeSelection == null) return;
 
         EvoPaint evoPaint = new EvoPaint();
         Configuration configuration = evoPaint.getConfiguration();
-        SaveWrapper saveWrapper = new SaveWrapper(config);
-        saveWrapper.Apply(configuration);
+        configuration.setDimension(config.getDimension());
+        configuration.backgroundColor = config.backgroundColor;
+        configuration.startingEnergy = config.startingEnergy;
+        configuration.mutationRate = config.mutationRate;
+        configuration.operationMode = config.operationMode;
+        configuration.world.resetPendingOperations();
+        configuration.world = new World(configuration);
+        configuration.runLevel = Configuration.RUNLEVEL_RUNNING;
 
         Rectangle rectangle = activeSelection.getRectangle();
         configuration.setDimension(rectangle.getSize());
@@ -38,7 +46,9 @@ public class SelectionOpenAsNewCommand extends AbstractCommand {
                 if (ruleBasedPixel == null) continue;
                 configuration.world.set(new RuleBasedPixel(ruleBasedPixel.getPixelColor(), new AbsoluteCoordinate(x, y, configuration.world), ruleBasedPixel.getEnergy(), ruleBasedPixel.getRules()));
             }
-        }
+        } 
         evoPaint.work();
+
+        config.runLevel = runlevel;
     }
 }
