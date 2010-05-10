@@ -44,8 +44,8 @@ public class SelectionOpenAsNewCommand extends AbstractCommand {
 
                 Rectangle rectangle = activeSelection.getRectangle();
                 newConfig.setDimension(rectangle.getSize());
-                for(int x = 0; x < activeSelection.getRectangle().x; x++) {
-                    for(int y = 0; y < activeSelection.getRectangle().y; y++) {
+                for(int x = 0; x < activeSelection.getRectangle().width; x++) {
+                    for(int y = 0; y < activeSelection.getRectangle().height; y++) {
                         RuleBasedPixel ruleBasedPixel = oldConfig.world.get(x + activeSelection.getRectangle().x, y + activeSelection.getRectangle().y);
                         if (ruleBasedPixel == null) continue;
                         newConfig.world.set(new RuleBasedPixel(ruleBasedPixel.getPixelColor(), new AbsoluteCoordinate(x, y, newConfig.world), ruleBasedPixel.getEnergy(), ruleBasedPixel.getRules()));
