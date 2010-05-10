@@ -66,7 +66,7 @@ public class JAboutDialog extends JDialog {
                 "\"A godlike act - I create creation,<br />I experience it, then I disintegrate it.\"<br /><span style='font-size: smaller;'>(Absurd Minds - The Focus)</span>" +
                 "</p>" +
                 "<p style='margin: 0; margin-top: 10px;'>" +
-                "The vision of EvoPaint is to be a tool to experience evolutionary, dynamic and/or complex system development in a playful, artistic and accessible way. EvoPaint has been initially developed for a software lab in applied computer science at the Universität Klagenfurt, Austria and was first released in May 2010, consisting of roughly 13,000 lines of code not counting blank lines or comments. EvoPaint is maintained by Markus Echterhoff." +
+                "The vision of EvoPaint is to be a tool to experience evolutionary, dynamic and/or complex system development in a playful, artistic and accessible way. EvoPaint has been initially developed for a software lab in applied computer science at the Universität Klagenfurt, Austria and was first released in May 2010, consisting of roughly 16,000 lines of code not counting blank lines or comments. EvoPaint is maintained by Markus Echterhoff." +
                 "</p>" +
                 "<h2 style='margin: 0; margin-top: 12px;'>Contact</h2>" +
                 "<p style='margin: 0;'>" +
