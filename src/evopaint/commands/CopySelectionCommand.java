@@ -84,9 +84,19 @@ public class CopySelectionCommand extends AbstractCommand {
         config.mainFrame.getShowcase().unsubscribe(overlay);
     }
 
+
+    public void submitPaseKeepingCopy() {
+        insertCopiedPixels();
+    }
+
     public void submitPaste() {
         stopDragging();
+        insertCopiedPixels();
+        System.out.println(config.mainFrame.getActiveTool());
+        config.mainFrame.setActiveTool(activeTool);
+    }
 
+    private void insertCopiedPixels() {
         for (int x = 0; x < overlay.getWidth(); x++) {
             for (int y = 0; y < overlay.getHeight(); y++) {
                 if (!pixelExistsInSource(x, y)) {
@@ -109,7 +119,6 @@ public class CopySelectionCommand extends AbstractCommand {
                 }
             }
         }
-        config.mainFrame.setActiveTool(activeTool);
     }
 
     private boolean pixelExistsInSource(int x, int y) {

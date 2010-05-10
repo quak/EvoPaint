@@ -31,11 +31,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.Timer;
@@ -170,7 +166,10 @@ public class Showcase extends WrappingScalableCanvas implements MouseInputListen
             	eraseCommand.execute();
             } else if (configuration.mainFrame.getActiveTool() == CopySelectionCommand.class) {
             	copySelectionCommand.setLocation(transformToImageSpace(e.getPoint()));
-            	copySelectionCommand.submitPaste();
+                if (e.isControlDown())
+                    copySelectionCommand.submitPaseKeepingCopy();
+                else
+            	    copySelectionCommand.submitPaste();
             } else if (configuration.mainFrame.getActiveTool() == ImportCommand.class) {
                 importCommand.pasteImage();
             }
