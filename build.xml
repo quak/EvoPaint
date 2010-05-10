@@ -28,11 +28,15 @@
                 <include name="misc/" />
                 <include name="doc/" />
                 <include name="LICENSE" />
+                <include name="README" />
                 <include name="build.xml" />
             </fileset>
         </copy>
         <move tofile="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources"
             file="${dist.dir}/source-with-third-party-sources" />
+    </target>
+
+    <target name="dist-source-with-third-party-sources-compressed" depends="dist-source-with-third-party-sources" description="Create compressed source distribution with third party sources">
         <tar destfile="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources.tar" basedir="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources"/>
         <delete dir="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources" />
         <gzip destfile="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources.tar.gz" src="${dist.dir}/EvoPaint-${version}-source-with-third-party-sources.tar"/>
@@ -48,6 +52,7 @@
                 <include name="misc/" />
                 <include name="doc/" />
                 <include name="LICENSE" />
+                <include name="README" />
                 <include name="build.xml" />
                 <exclude name="misc/third-party_sources/" />
                 <exclude name="misc/mencoder.exe" />
@@ -55,6 +60,9 @@
         </copy>
         <move tofile="${dist.dir}/EvoPaint-${version}-source"
             file="${dist.dir}/source" />
+       </target>
+
+    <target name="dist-source-compressed" depends="dist-source" description="Create compressed source distribution">
         <tar destfile="${dist.dir}/EvoPaint-${version}-source.tar" basedir="${dist.dir}/EvoPaint-${version}-source"/>
         <delete dir="${dist.dir}/EvoPaint-${version}-source" />
         <gzip destfile="${dist.dir}/EvoPaint-${version}-source.tar.gz" src="${dist.dir}/EvoPaint-${version}-source.tar"/>
@@ -63,9 +71,7 @@
 
     <target name="compile" description="compile the source ">
         <mkdir dir="${build.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${build.dir}">
-            <!--<javac srcdir="${src}" destdir="${build}" debug="on" debuglevel="lines,vars,source">-->
-            <!--<compilerarg value="-Xlint:unchecked" />-->
+        <javac srcdir="${src.dir}" destdir="${build.dir}" debug="on" debuglevel="lines,source">
             <classpath refid="class.path" />
         </javac>
         <copy todir="${build.dir}">
@@ -73,6 +79,31 @@
                 <include name="**/*.png"/>
             </fileset>
         </copy>
+    </target>
+
+    <target name="debug" description="compile with full debug and run">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" debug="on" debuglevel="lines,vars,source">
+            <classpath refid="class.path" />
+        </javac>
+        <copy todir="${build.dir}">
+            <fileset dir="${project.dir}/src">
+                <include name="**/*.png"/>
+            </fileset>
+        </copy>
+        <copy todir="${build.dir}">
+            <fileset dir="${misc.dir}">
+                <include name="collections/"/>
+            </fileset>
+        </copy>
+        <java classname="evopaint.EvoPaint" fork="true">
+            <jvmarg value="-ea" />
+            <classpath>
+                <pathelement path="${build.dir}" />
+                <fileset dir="lib">
+                </fileset>
+             </classpath>
+        </java>
     </target>
 
     <target name="jar" depends="clean, compile" description="Create the jar archive">
@@ -84,12 +115,11 @@
         <copy todir="${dist.dir}/jar">
             <fileset dir="${project.dir}">
                 <include name="lib/"/>
+                <include name="doc/"/>
+                <include name="README" />
             </fileset>
             <fileset dir="${misc.dir}">
                 <include name="collections/" />
-            </fileset>
-            <fileset dir="${project.dir}">
-                <include name="doc/"/>
             </fileset>
             <fileset dir="${build.dir}">
                 <include name="EvoPaint.jar" />
@@ -97,6 +127,9 @@
         </copy>
         <move tofile="${dist.dir}/EvoPaint-${version}-jar"
             file="${dist.dir}/jar" />
+    </target>
+
+    <target name="dist-jar-compressed" depends="dist-jar" description="Create compressed jar distribution">
         <tar destfile="${dist.dir}/EvoPaint-${version}-jar.tar" basedir="${dist.dir}/EvoPaint-${version}-jar"/>
         <delete dir="${dist.dir}/EvoPaint-${version}-jar" />
         <gzip destfile="${dist.dir}/EvoPaint-${version}-jar.tar.gz" src="${dist.dir}/EvoPaint-${version}-jar.tar"/>
@@ -129,6 +162,9 @@
         </copy>
         <move tofile="${dist.dir}/EvoPaint-${version}-windows"
             file="${dist.dir}/windows" />
+    </target>
+
+    <target name="dist-windows-compressed" depends="dist-windows" description="Create compressed windows distribution">
         <zip destfile="${dist.dir}/EvoPaint-${version}-windows.zip"
                 basedir="${dist.dir}/EvoPaint-${version}-windows" />
         <delete dir="${dist.dir}/EvoPaint-${version}-windows" />
@@ -138,8 +174,11 @@
         <delete file="${dist.dir}/EvoPaint.jar" />
     </target>
 
+    <target name="dist-compressed" depends="clean, dist-source-with-third-party-sources-compressed, dist-source-compressed, dist-jar-compressed, dist-windows-compressed" description="Create all distribution files and compress them">
+    </target>
+
     <target name="javadoc"  description="Create javadoc">
-        <javadoc destdir="${javadoc}">
+        <javadoc destdir="${javadoc.dir}">
             <fileset dir="${src.dir}/" includes="**/*.java"/>
         </javadoc>
     </target>
