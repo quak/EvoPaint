@@ -22,33 +22,41 @@ public class SelectionOpenAsNewCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        int runlevel = config.runLevel;
-        config.runLevel = Configuration.RUNLEVEL_STOP;
-        Selection activeSelection = config.mainFrame.getShowcase().getActiveSelection();
-        if (activeSelection == null) return;
+        final Configuration oldConfig = config;
+        int runlevel = oldConfig.runLevel;
+        oldConfig.runLevel = Configuration.RUNLEVEL_STOP;
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                Selection activeSelection = oldConfig.mainFrame.getShowcase().getActiveSelection();
+                if (activeSelection == null) return;
 
-        EvoPaint evoPaint = new EvoPaint();
-        Configuration configuration = evoPaint.getConfiguration();
-        configuration.setDimension(config.getDimension());
-        configuration.backgroundColor = config.backgroundColor;
-        configuration.startingEnergy = config.startingEnergy;
-        configuration.mutationRate = config.mutationRate;
-        configuration.operationMode = config.operationMode;
-        configuration.world.resetPendingOperations();
-        configuration.world = new World(configuration);
-        configuration.runLevel = Configuration.RUNLEVEL_RUNNING;
+                EvoPaint evoPaint = new EvoPaint();
+                Configuration newConfig = evoPaint.getConfiguration();
+                newConfig.setDimension(oldConfig.getDimension());
+                newConfig.backgroundColor = oldConfig.backgroundColor;
+                newConfig.startingEnergy = oldConfig.startingEnergy;
+                newConfig.mutationRate = oldConfig.mutationRate;
+                newConfig.operationMode = oldConfig.operationMode;
+                newConfig.world.resetPendingOperations();
+                newConfig.world = new World(newConfig);
 
-        Rectangle rectangle = activeSelection.getRectangle();
-        configuration.setDimension(rectangle.getSize());
-        for(int x = 0; x < activeSelection.getRectangle().x; x++) {
-            for(int y = 0; y < activeSelection.getRectangle().y; y++) {
-                RuleBasedPixel ruleBasedPixel = config.world.get(x + activeSelection.getRectangle().x, y + activeSelection.getRectangle().y);
-                if (ruleBasedPixel == null) continue;
-                configuration.world.set(new RuleBasedPixel(ruleBasedPixel.getPixelColor(), new AbsoluteCoordinate(x, y, configuration.world), ruleBasedPixel.getEnergy(), ruleBasedPixel.getRules()));
+                Rectangle rectangle = activeSelection.getRectangle();
+                newConfig.setDimension(rectangle.getSize());
+                for(int x = 0; x < activeSelection.getRectangle().x; x++) {
+                    for(int y = 0; y < activeSelection.getRectangle().y; y++) {
+                        RuleBasedPixel ruleBasedPixel = oldConfig.world.get(x + activeSelection.getRectangle().x, y + activeSelection.getRectangle().y);
+                        if (ruleBasedPixel == null) continue;
+                        newConfig.world.set(new RuleBasedPixel(ruleBasedPixel.getPixelColor(), new AbsoluteCoordinate(x, y, newConfig.world), ruleBasedPixel.getEnergy(), ruleBasedPixel.getRules()));
+                    }
+                }
+
+                newConfig.runLevel = Configuration.RUNLEVEL_RUNNING;
+                evoPaint.work();
             }
-        } 
-        evoPaint.work();
+        };
+        t.start();
 
-        config.runLevel = runlevel;
+        oldConfig.runLevel = runlevel;
     }
 }
