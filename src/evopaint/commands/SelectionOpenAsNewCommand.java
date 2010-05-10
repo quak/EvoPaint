@@ -38,6 +38,7 @@ public class SelectionOpenAsNewCommand extends AbstractCommand {
                 newConfig.startingEnergy = oldConfig.startingEnergy;
                 newConfig.mutationRate = oldConfig.mutationRate;
                 newConfig.operationMode = oldConfig.operationMode;
+                newConfig.usedActions = oldConfig.usedActions;
                 newConfig.world.resetPendingOperations();
                 newConfig.world = new World(newConfig);
 
