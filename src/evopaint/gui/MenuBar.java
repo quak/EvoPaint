@@ -135,7 +135,9 @@ public class MenuBar extends JMenuBar implements Observer {
 //        JMenuItem fillHalfSelection = new JMenuItem("Fill 50%");
 //        fillHalfSelection.addActionListener(new FillSelectionCommandScattered(showcase));
 //        selectionMenu.add(fillHalfSelection);
-        selectionMenu.add(new JMenuItem("Open as new"));
+        JMenuItem openAsNew = new JMenuItem("Open as new");
+        openAsNew.addActionListener(new SelectionOpenAsNewCommand(configuration));
+        selectionMenu.add(openAsNew);
         JMenuItem copySelection = new JMenuItem("Copy");
         copySelection.addActionListener(showcase.getCopySelectionCommand());
         selectionMenu.add(copySelection);

@@ -28,6 +28,10 @@ import evopaint.util.ExceptionHandler;
  */
 public class EvoPaint {
 
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
     private Configuration configuration;
 
     public EvoPaint() {

@@ -50,7 +50,7 @@ public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
     @XStreamOmitField
     private Configuration configuration;
     @XStreamOmitField
-    private final List<IChangeListener> pendingOperations = new ArrayList();
+    private List<IChangeListener> pendingOperations = new ArrayList();
 
     /**
      * Creates a new World
@@ -183,4 +183,7 @@ public class World extends ParallaxMap<RuleBasedPixel> implements IChanging {
         assert (false); // should not be called since pending operations are cleared automatically
     }
 
+    public void resetPendingOperations() {
+        pendingOperations = new ArrayList();
+    }
 }

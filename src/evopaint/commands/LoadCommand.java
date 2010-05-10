@@ -61,33 +61,29 @@ public class LoadCommand extends AbstractCommand {
         int runLevel = config.runLevel;
         config.runLevel = Configuration.RUNLEVEL_STOP;
 
-        SwingUtilities.invokeLater(new Runnable() {
 
-            @Override
-            public void run() {
-                try {
-                    String outputPath = absolutePath.concat(".tmp");
-                    String[] args = { "d", absolutePath, outputPath};
-                    try {
-                        LzmaAlone.main(args);
-                    } catch (Exception ex) {
-                        ExceptionHandler.handle(ex, true);
-                    }
-                    FileInputStream fis = new FileInputStream(outputPath);
-                    XStream xStream = new XStream();
-                    xStream.processAnnotations(World.class);
-                    SaveWrapper loaded = (SaveWrapper) xStream.fromXML(fis);
-                    loaded.Apply(config);
-                    config.saveFilePath = absolutePath;
-                    fis.close();
-                    new File(absolutePath.concat(".tmp")).delete();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                } catch (IOException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
+        try {
+            String outputPath = absolutePath.concat(".tmp");
+            String[] args = { "d", absolutePath, outputPath};
+            try {
+                LzmaAlone.main(args);
+            } catch (Exception ex) {
+                ExceptionHandler.handle(ex, true);
             }
-        });
+            FileInputStream fis = new FileInputStream(outputPath);
+            XStream xStream = new XStream();
+            xStream.processAnnotations(World.class);
+            SaveWrapper loaded = (SaveWrapper) xStream.fromXML(fis);
+            loaded.Apply(config);
+            config.saveFilePath = absolutePath;
+            fis.close();
+            new File(absolutePath.concat(".tmp")).delete();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
 
         config.runLevel = runLevel;
     }

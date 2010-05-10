@@ -51,6 +51,9 @@ public class SaveWrapper {
         config.startingEnergy = startingEnergy;
         config.mutationRate = mutationRate;
         config.operationMode = operationMode;
+        world.resetPendingOperations();
         config.world = world;
+        config.world.setConfiguration(config);
+        config.runLevel = Configuration.RUNLEVEL_RUNNING;
     }
 }
