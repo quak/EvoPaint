@@ -19,7 +19,6 @@
 
 package evopaint;
 
-import com.sun.org.apache.xalan.internal.xsltc.cmdline.getopt.GetOpt;
 import evopaint.util.ExceptionHandler;
 
 /**
