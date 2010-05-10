@@ -148,6 +148,7 @@ public class Perception {
     private class EncoderThread extends Thread {
 
         private String saveLocationPath;
+        private String encoderCommand;
         private JProgressDialog progressDialog;
 
         public EncoderThread(String saveLocationPath) {
@@ -172,7 +173,8 @@ public class Perception {
             if (false == saveLocation.getName().endsWith(".avi")) {
                 saveLocation = new File(saveLocation.getAbsolutePath() + ".avi");
             }
-            String encoderCommand = null;
+            
+            encoderCommand = new String();
             try {
                 String [] cmdArray = Configuration.ENCODER_COMMAND.split("\\s+");
                 System.out.println(cmdArray[0] + " " + cmdArray[1]);
@@ -182,6 +184,10 @@ public class Perception {
                     }
                     else if (cmdArray[i].equals("OUTPUT_FILE")) {
                         cmdArray[i] = tmpLocation.getAbsolutePath();
+                    }
+                    encoderCommand.concat(cmdArray[i]);
+                    if (i < cmdArray.length - 1) {
+                        encoderCommand.concat(" ");
                     }
                 }
                 Process proc = Runtime.getRuntime().exec(cmdArray);
@@ -239,13 +245,13 @@ public class Perception {
             @Override
             public void run() {
                 try {
-                    //Reader r = new InputStreamReader(in);
-                    //char [] buf = new char[100];
-                    //while (r.read(buf) != -1) {
-                    //    System.out.print(buf);
-                    //}
-                    while (in.read() != -1) {
+                    Reader r = new InputStreamReader(in);
+                    char [] buf = new char[1024];
+                    while (r.read(buf) != -1) {
+                        System.out.print(buf);
                     }
+                    //while (in.read() != -1) {
+                    //}
                 } catch (IOException ex) {
                     ExceptionHandler.handle(ex, false);
                 } finally {
