@@ -43,10 +43,9 @@ import evopaint.util.mapping.AbsoluteCoordinate;
 public class CopySelectionCommand extends AbstractCommand {
 
     private final Configuration config;
-    private SelectionCopyOverlay overlay;
+    private static SelectionCopyOverlay overlay;
     private Point location;
-    private Rectangle rect;
-    private RuleBasedPixel[][] pixels;
+    private static RuleBasedPixel[][] pixels;
 
     public CopySelectionCommand(Configuration config) {
         this.config = config;
@@ -54,13 +53,14 @@ public class CopySelectionCommand extends AbstractCommand {
 
     public void setLocation(Point p) {
         location = p;
+        overlay.setLocation(p);
     }
 
     public void copyCurrentSelection() {
         Selection activeSelection = config.mainFrame.getShowcase().getActiveSelection();
-        rect = activeSelection.getRectangle();
-        pixels = new RuleBasedPixel[rect.width][rect.height];
-        overlay = new SelectionCopyOverlay(rect.width, rect.height);
+        Rectangle rect = activeSelection.getRectangle();
+        RuleBasedPixel[][] myPixels = new RuleBasedPixel[rect.width][rect.height];
+        SelectionCopyOverlay selectionCopyOverlay = new SelectionCopyOverlay(rect.width, rect.height);
         for (int x = 0; x < rect.width; x++) {
             for (int y = 0; y < rect.height; y++) {
                 Pixel pixel = config.world.get(rect.x + x, rect.y + y);
@@ -68,11 +68,20 @@ public class CopySelectionCommand extends AbstractCommand {
                     continue;
                 }
                 if (pixel instanceof RuleBasedPixel) {
-                    pixels[x][y] = (RuleBasedPixel) pixel;
+                    myPixels[x][y] = (RuleBasedPixel) pixel;
                 }
-                overlay.setRGB(x, y, pixel.getPixelColor().getInteger());
+                selectionCopyOverlay.setRGB(x, y, pixel.getPixelColor().getInteger());
             }
         }
+        setOverlay(selectionCopyOverlay);
+        setPixels(myPixels);
+    }
+
+    private static synchronized void setOverlay(SelectionCopyOverlay selectionCopyOverlay) {
+        overlay = selectionCopyOverlay;
+    }
+    private static synchronized SelectionCopyOverlay getOverlay() {
+        return overlay;
     }
 
     public void startDragging() {
@@ -96,19 +105,21 @@ public class CopySelectionCommand extends AbstractCommand {
     }
 
     private void insertCopiedPixels() {
-        for (int x = 0; x < overlay.getWidth(); x++) {
-            for (int y = 0; y < overlay.getHeight(); y++) {
+        SelectionCopyOverlay myOverlay = getOverlay();
+        RuleBasedPixel[][] pixels = getPixels();
+        for (int x = 0; x < myOverlay.getWidth(); x++) {
+            for (int y = 0; y < myOverlay.getHeight(); y++) {
                 if (!pixelExistsInSource(x, y)) {
                     continue;
                 }
                 RuleBasedPixel pixel = config.world.get(location.x + x, location.y + y);
                 if (pixel != null) {
-                    pixel.getPixelColor().setInteger(overlay.getRGB(x, y));
+                    pixel.getPixelColor().setInteger(myOverlay.getRGB(x, y));
                     if (pixelExistsInSource(x, y)) {
                         pixel.setRules(pixels[x][y].getRules());
                     }
                 } else {
-                    PixelColor color = new PixelColor(overlay.getRGB(x, y));
+                    PixelColor color = new PixelColor(myOverlay.getRGB(x, y));
                     List<Rule> rules = new ArrayList<Rule>();
                     if (pixelExistsInSource(x, y)) {
                         rules = pixels[x][y].getRules();
@@ -120,7 +131,7 @@ public class CopySelectionCommand extends AbstractCommand {
         }
     }
 
-    private boolean pixelExistsInSource(int x, int y) {
+    private static synchronized boolean pixelExistsInSource(int x, int y) {
         return pixels[x][y] != null;
     }
 
@@ -133,15 +144,29 @@ public class CopySelectionCommand extends AbstractCommand {
         copyCurrentSelection();
     }
 
+    public static synchronized RuleBasedPixel[][] getPixels() {
+        return pixels;
+    }
+
+    private static synchronized void setPixels(RuleBasedPixel[][] myPixels) {
+        pixels = myPixels;
+    }
+
     private class SelectionCopyOverlay extends BufferedImage implements IOverlay {
+
+        private Point loc;
 
         public SelectionCopyOverlay(int width, int height) {
             super(width, height, BufferedImage.TYPE_INT_RGB);
         }
 
+        public void setLocation(Point p){
+            loc = p;
+        }
+
         @Override
         public void paint(Graphics2D g2) {
-            g2.drawImage(this, location.x, location.y, config.mainFrame.getShowcase());
+            g2.drawImage(this, loc.x, loc.y, config.mainFrame.getShowcase());
         }
     }
 }
