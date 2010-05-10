@@ -6,6 +6,7 @@
 .settings/
 .metadata
 bin/
+!misc/launch4j/bin
 build/
 dist/
 javadoc/
