@@ -114,7 +114,7 @@ public class Configuration {
 
     public static boolean INITIALIZED = false;
     public static String DEFAULT_ENCODER_COMMAND_UNIX = "mencoder -quiet -nosound -ovc x264 -x264encopts qp=30:pass=1 INPUT_FILE -o OUTPUT_FILE";
-    public static String DEFAULT_ENCODER_COMMAND_WINDOWS = "lib" + File.separator + "mencoder -quiet -nosound -ovc x264 -x264encopts qp=30:pass=1 INPUT_FILE -o OUTPUT_FILE";
+    public static String DEFAULT_ENCODER_COMMAND_WINDOWS = "lib" + File.separator + "mencoder-31139 -quiet -nosound -ovc x264 -x264encopts qp=30:pass=1 INPUT_FILE -o OUTPUT_FILE";
     // BEGIN user configurable
     public int runLevel = Configuration.RUNLEVEL_RUNNING;
     public int operationMode = OPERATIONMODE_AGENT_SIMULATION;

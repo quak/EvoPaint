@@ -120,7 +120,7 @@ public class SelectCommand extends AbstractCommand {
 
     public void execute() {
         startPoint = null;
-        String s = (String) JOptionPane.showInputDialog(configuration.mainFrame, "Do you want your selection with the following name?", "Save Selection", JOptionPane.PLAIN_MESSAGE, null, null, "New Selection " + nextSelectionId);
+        String s = (String) JOptionPane.showInputDialog(configuration.mainFrame, "Remember selection as:", "Save Selection", JOptionPane.PLAIN_MESSAGE, null, null, "New Selection " + nextSelectionId);
         if (s == null) return;
         Selection selection = new Selection(new Point(overlay.x, overlay.y), new Point(overlay.x + overlay.width, overlay.y + overlay.height), canvas);
         selection.setSelectionName(s);

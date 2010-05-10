@@ -205,9 +205,9 @@ public class Perception {
                 deleteUncompressed = false;
                 ExceptionHandler.handle(new Exception(), false, "<p>I failed to encode your video using the encoding command " +
                         "\"" + encoderCommand + "\"" +
-                        " called from working directory " +
+                        " called from evopaint home directory " +
                         "\"" + Configuration.FILE_HANDLER.getHomeDir() + "\"" +
-                        ", if you are on Windows, this is most likely a bug, if you are on a unix style OS: do you have mencoder (mplayer) installed? You can find the recorded video in MPNG format in the same folder EvoPaint resides in if you want to compress it manually.</p>");
+                        ", if you are on Windows, this is most likely a bug, if you are on a unix style OS: do you have mencoder (mplayer) installed? You can find the recorded video in MPNG format in the evopaint home folder (default is the same folder EvoPaint resides in) in case you want to compress it manually.</p>");
             }
             else if (false == tmpLocation.renameTo(saveLocation)) {
                 deleteUncompressed = false;

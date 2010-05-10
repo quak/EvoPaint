@@ -33,7 +33,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.net.URL;
+import java.net.URISyntaxException;
 import java.util.Enumeration;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -313,10 +313,27 @@ public class FileHandler implements TreeModelListener {
     }
 
     public FileHandler() {
-        homeDir = new File(System.getProperty("user.dir"));
+        
+        String homeDirProperty = System.getProperty("evopaint_home");
+        if (homeDirProperty == null) {
+            try {
+                homeDir = new File(getClass().getResource("/").toURI().getPath());
+            } catch (URISyntaxException ex) {
+                ExceptionHandler.handle(new Exception(), true);
+            }
+        } else if (false == homeDirProperty.startsWith(File.separator)) {
+            try {
+                homeDir = new File(getClass().getResource("/").toURI().getPath() + homeDirProperty);
+            } catch (URISyntaxException ex) {
+                ExceptionHandler.handle(new Exception(), true);
+            }
+        } else {
+            homeDir = new File(homeDirProperty);
+        }
+        
         collectionsDir = new File(homeDir, "/collections");
         if (false == collectionsDir.exists()) {
-            ExceptionHandler.handle(new Exception(), true, "I cannot find the collections folder in the current working directory \"" + homeDir + "\"! If you created a short cut for me on your Desktop *blushes* make sure you set the working directory poperty correctly and click that sexy short cut again!");
+            ExceptionHandler.handle(new Exception(), true, "I cannot find the collections folder in the evopaint home directory \"" + homeDir + "\"! See README on how to change this (jar and source distribution only)");
         }
     }
 }

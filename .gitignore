@@ -6,3 +6,6 @@
 .settings/
 .metadata
 bin/
+build/
+dist/
+javadoc/
