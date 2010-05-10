@@ -12,10 +12,10 @@
   <customProcName>false</customProcName>
   <stayAlive>false</stayAlive>
   <manifest></manifest>
-  <icon></icon>
+  <icon>application-64.ico</icon>
   <jre>
     <path></path>
-    <minVersion>1.6.11</minVersion>
+    <minVersion>1.6.0_11</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
   </jre>
