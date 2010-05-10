@@ -47,6 +47,7 @@ public class CopySelectionCommand extends AbstractCommand {
     private Point location;
     private Rectangle rect;
     private RuleBasedPixel[][] pixels;
+    private Class activeTool;
 
     public CopySelectionCommand(Configuration config) {
         this.config = config;
@@ -108,7 +109,7 @@ public class CopySelectionCommand extends AbstractCommand {
                 }
             }
         }
-        config.mainFrame.setActiveTool(null);
+        config.mainFrame.setActiveTool(activeTool);
     }
 
     private boolean pixelExistsInSource(int x, int y) {
@@ -120,6 +121,7 @@ public class CopySelectionCommand extends AbstractCommand {
         if (config.mainFrame.getShowcase().getActiveSelection() == null) {
             return;
         }
+        activeTool = config.mainFrame.getActiveTool();
         config.mainFrame.setActiveTool(CopySelectionCommand.class);
         copyCurrentSelection();
     }
