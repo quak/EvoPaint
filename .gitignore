@@ -11,3 +11,4 @@ build/
 dist/
 javadoc/
 collections/
+!misc/collections/
