@@ -129,11 +129,14 @@ public class Perception {
                                     JFileChooser fileChooser = new JFileChooser();
                                     fileChooser.setFileFilter(new FileNameExtensionFilter("*.avi", "avi"));
                                     int option = fileChooser.showSaveDialog(configuration.mainFrame);
-                                    
-                                    String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+
                                     if (option == JFileChooser.APPROVE_OPTION) {
+                                        String selectedFilePath = fileChooser.getSelectedFile().getAbsolutePath();
                                         EncoderThread t = new EncoderThread(selectedFilePath);
                                         t.start();
+                                    } else {
+                                        videoFile.delete();
+                                        videoFile = null;
                                     }
                                 }
                             }
